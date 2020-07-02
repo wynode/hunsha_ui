@@ -6,9 +6,9 @@
       class="avatar-uploader avatar-img f_fl"
       :action="uploadUrl"
       ref="uploadImg"
-      :headers="headers"
+      :data="uploadData"
       :show-file-list="false"
-      name="upload_file"
+      name="file"
       :disabled="disabled"
       v-if="this.type === 'img'"
       :on-success="handleSuccess"
@@ -35,9 +35,9 @@
       class="avatar-uploader avatar-img f_fl"
       :action="uploadUrl"
       ref="uploadImg"
-      :headers="headers"
+      :data="uploadData"
       :show-file-list="false"
-      name="upload_file"
+      name="file"
       :disabled="disabled"
       v-else-if="this.type === 'file'"
       :on-success="handleSuccess"
@@ -62,9 +62,9 @@
       v-else-if="this.type === 'video'"
       ref="uploadVideo"
       :action="uploadUrl"
-      :headers="headers"
+      :data="uploadData"
       show-file-list
-      name="upload_file"
+      name="file"
       :file-list="videoFileList"
       v-loading="loading"
       :on-success="handleSuccess"
@@ -90,8 +90,8 @@
     <el-upload
       ref="upload"
       :action="uploadUrl"
-      :headers="headers"
-      name="upload_file"
+      :data="uploadData"
+      name="file"
       v-loading="loading"
       v-else
       :on-success="handleSuccess"
@@ -127,13 +127,13 @@
       </div>
     </div>
     <div class="Mb10 preview_img">
-      <DecodeImage v-if="this.type === 'img' && value" :src="value" />
+      <img v-if="this.type === 'img' && value" :src="`${imgUrl}${value}`" />
     </div>
   </div>
 </template>
 
 <script>
-import { UPLOAD_URL, AUTH_TOKEN } from '@/config'
+import { UPLOAD_URL, IMG_URL, AUTH_TOKEN } from '@/config'
 
 export default {
   props: {
@@ -172,10 +172,21 @@ export default {
       return this.targetUrl || UPLOAD_URL
     },
 
+    imgUrl() {
+      return IMG_URL
+    },
+
     headers() {
       const token = localStorage.getItem(AUTH_TOKEN)
       return {
         Authorization: `JWT ${JSON.parse(token)}`,
+      }
+    },
+
+    uploadData() {
+      const token = localStorage.getItem(AUTH_TOKEN)
+      return {
+        [AUTH_TOKEN]: JSON.parse(token),
       }
     },
 
@@ -228,12 +239,12 @@ export default {
         this.type === 'file' ||
         this.type === 'video'
       ) {
-        this.$emit('input', res.preview_url)
-        this.pdfName = res.file_url.substring(1)
+        this.$emit('input', res.result.path)
+        this.pdfName = res.path.substring(1)
       } else {
-        this.fileListTemp.push(res.preview_url)
+        this.fileListTemp.push(res.result.path)
         this.$emit('input', this.fileListTemp)
-        this.pdfName = res.file_url.substring(1)
+        this.pdfName = res.path.substring(1)
       }
       this.loading = false
     },
@@ -362,6 +373,9 @@ export default {
 .Upload {
   .preview_img {
     max-width: 300px;
+    img {
+      max-width: 100px;
+    }
   }
 
   .el-upload__text {

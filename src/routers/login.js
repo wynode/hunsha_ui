@@ -4,7 +4,7 @@ export default [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/system/Login.vue'),
+    component: () => import('@/components/login/Login.vue'),
   },
   {
     path: '/logout',

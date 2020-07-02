@@ -7,7 +7,14 @@ const serverURL = new Map([
   ['production', 'http://hunsha.php20.cn/'],
 ])
 
+const imgURL = new Map([
+  ['development', 'http://hunsha.php20.cn'],
+  ['testbuild', 'http://hunsha.php20.cn'],
+  ['production', 'http://hunsha.php20.cn'],
+])
+
 export const SERVER_API = serverURL.get(buildEnv)
+export const IMG_URL = imgURL.get(buildEnv)
 
 export const AUTH_TOKEN = 'admin_session'
 export const USER_INFO = 'adminUser'

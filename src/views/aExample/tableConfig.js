@@ -8,41 +8,28 @@ export function tableListCols(vm) {
     //   width: 120,
     // },
     {
-      label: 'host地址',
-      prop: 'host',
+      label: '店铺编码',
+      prop: 'shopCode',
     },
     {
-      label: '端口',
-      prop: 'port',
+      label: '店铺名称',
+      prop: 'shopName',
     },
     {
-      label: '模式',
-      prop: 'schema',
+      label: '联系人名称',
+      prop: 'contact',
     },
     {
-      label: '权重',
-      prop: 'weight',
+      label: '联系电话',
+      prop: 'phone',
     },
     {
-      label: '客户host地址',
-      prop: 'customHost',
+      label: '店铺地址',
+      prop: 'address',
     },
     {
-      label: '是否存活',
-      prop: 'isAlive',
-      component: {
-        props: { row: Object },
-        render() {
-          const { isAlive } = this.row
-          let showText = ''
-          if (isAlive === 0) {
-            showText = '否'
-          } else if (isAlive === 1) {
-            showText = '是'
-          }
-          return <div>{showText}</div>
-        },
-      },
+      label: '备注',
+      prop: 'note',
     },
     {
       label: '操作',
