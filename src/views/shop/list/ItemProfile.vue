@@ -55,10 +55,18 @@ export default {
 <style lang="scss">
 .profile_top_info {
   display: flex;
+  flex-wrap: wrap;
   margin-left: -60px;
+  margin-top: -10px;
   padding: 15px 0;
   div {
+    margin-top: 10px;
     margin-left: 60px;
+    color: #333;
+    span {
+      color: #999;
+      font-size: 14px;
+    }
   }
 }
 .profile_second_card {

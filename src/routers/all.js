@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/shop',
+    path: '/shop-list',
     name: 'shopList',
     meta: {
       title: '店铺管理',
