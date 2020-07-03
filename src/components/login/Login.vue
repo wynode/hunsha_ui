@@ -2,7 +2,8 @@
   <div class="login">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>用户登录</span>
+        <span v-if="isAdmin">店铺管理登录</span>
+        <span v-else>用户管理登录</span>
       </div>
       <EffectForm
         ref="effectForm"
@@ -36,6 +37,11 @@
         </el-form-item> -->
       </EffectForm>
     </el-card>
+    <el-link type="primary" class="login_link">
+      <router-link :to="{ name: isAdmin ? 'userLogin' : 'adminLogin' }">
+        跳转到{{ isAdmin ? '用户' : '店铺' }}管理登录
+      </router-link>
+    </el-link>
   </div>
 </template>
 
@@ -43,7 +49,7 @@
 import store from 'store2'
 import { AUTH_TOKEN, USER_INFO } from '@/config'
 import { LoginFields } from './formConfig'
-import { postLogin } from '@/apis/login'
+import { postUserLogin, postAdminLogin, getUserUserInfo } from '@/apis/login'
 
 export default {
   data() {
@@ -62,6 +68,11 @@ export default {
     LoginFields() {
       return LoginFields(this)
     },
+
+    isAdmin() {
+      const { meta } = this.$route
+      return meta.type === 'admin'
+    },
   },
 
   methods: {
@@ -73,20 +84,10 @@ export default {
       this.verifyCode = ''
       this.handleFilterReset()
     },
-    handleLogin(form) {
-      // if (!this.verifyCode) {
-      //   this.errorMsg = '请填入验证码'
-      //   return
-      // }
-      // if (this.verifyCode.length != 4) {
-      //   this.errorMsg = '验证码的长度必须是4'
-      //   return
-      // }
-      postLogin({
+
+    adminLogin(form) {
+      postAdminLogin({
         ...form,
-        // verifyCode: this.verifyCode,
-        // verifyCodeTime: this.verifyCodeTime,
-        // verifyCodeHash: this.verifyCodeHash,
       })
         .then((data) => {
           const { session, adminId, name } = data.result
@@ -96,7 +97,7 @@ export default {
             adminId,
           })
 
-          this.$router.push('/')
+          this.$router.push('/admin/shop-list')
         })
         .catch(() => {
           this.errorMsg = ''
@@ -104,17 +105,37 @@ export default {
       this.errorMsg = ''
     },
 
-    // fetchVerifyCodeFn() {
-    //   fetchVerifyCode().then((data) => {
-    //     this.verifyCodeUrl = data.result.verifyCode || ''
-    //     this.verifyCodeTime = data.result.verifyCodeTime
-    //     this.verifyCodeHash = data.result.verifyCodeHash
-    //   })
-    // },
-  },
+    userLogin(form) {
+      postUserLogin({
+        ...form,
+      })
+        .then((data) => {
+          const { user_session } = data.result
+          store.set(AUTH_TOKEN, user_session)
+          getUserUserInfo().then((data) => {
+            const { name, shopId, shopUserId } = data.result
+            store.set(USER_INFO, {
+              name,
+              shopId,
+              shopUserId,
+            })
 
-  mounted() {
-    // this.fetchVerifyCodeFn()
+            this.$router.push('/user/order-list')
+          })
+        })
+        .catch(() => {
+          this.errorMsg = ''
+        })
+      this.errorMsg = ''
+    },
+    handleLogin(form) {
+      const { meta } = this.$route
+      if (meta.type === 'admin') {
+        this.adminLogin(form)
+      } else {
+        this.userLogin(form)
+      }
+    },
   },
 }
 </script>
@@ -148,6 +169,10 @@ export default {
       margin-left: 20px;
       margin-right: 38px;
     }
+  }
+  .login_link {
+    margin-left: 187px;
+    margin-top: 60px;
   }
 }
 </style>

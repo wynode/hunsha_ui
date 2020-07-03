@@ -93,16 +93,16 @@ export function tableListCols(vm) {
       prop: 'customizeTimes',
       width: 84,
     },
-    {
-      label: '详细介绍',
-      prop: 'description',
-      component: {
-        props: { row: Object },
-        render() {
-          return <div domPropsInnerHTML={this.row.description}></div>
-        },
-      },
-    },
+    // {
+    //   label: '详细介绍',
+    //   prop: 'description',
+    //   component: {
+    //     props: { row: Object },
+    //     render() {
+    //       return <div domPropsInnerHTML={this.row.description}></div>
+    //     },
+    //   },
+    // },
 
     {
       label: '操作',

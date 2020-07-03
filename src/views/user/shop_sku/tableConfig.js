@@ -1,35 +1,31 @@
-// import { FormatTime } from '@/components/CellTools.jsx'
+import { AddYuan, AddJian } from '@/components/CellTools.jsx'
+// import { IMG_URL } from '@/config'
 
 export function tableListCols(vm) {
   return [
-    // {
-    //   label: '上游Id',
-    //   prop: 'upId',
-    //   width: 120,
-    // },
     {
-      label: '店铺编码',
-      prop: 'shopCode',
+      label: 'sku名称',
+      prop: 'skuInfo.skuName',
     },
     {
-      label: '店铺名称',
-      prop: 'shopName',
+      label: '店铺售出价',
+      prop: 'shopSalePrice',
+      component: AddYuan,
     },
     {
-      label: '联系人名称',
-      prop: 'contact',
+      label: '店铺租赁价',
+      prop: 'shopRentPrice',
+      component: AddYuan,
     },
     {
-      label: '联系电话',
-      prop: 'phone',
+      label: '店铺定制价',
+      prop: 'shopCustomizePrice',
+      component: AddYuan,
     },
     {
-      label: '店铺地址',
-      prop: 'address',
-    },
-    {
-      label: '备注',
-      prop: 'note',
+      label: '库存',
+      prop: 'skuNum',
+      component: AddJian,
     },
     {
       label: '操作',
@@ -46,14 +42,14 @@ export function tableListCols(vm) {
                 编辑
               </el-button>
 
-              <el-button
+              {/* <el-button
                 type="text"
                 class="Ml8"
                 size="small"
                 style="color:#f56c6c;"
                 onClick={() => vm.deleteItem(this.row)}>
                 删除
-              </el-button>
+              </el-button> */}
             </span>
           )
         },

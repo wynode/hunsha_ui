@@ -6,6 +6,7 @@ const dialogInit = {
   visible: false,
   title: '',
   footer: true,
+  cancel: true,
   closeAuto: true,
   meta: {}, // 存放一些额外的数据，比如一个编辑弹窗，可以将回填的数据存放在这里；
   component: () => {},

@@ -21,6 +21,27 @@ export const deleteShop = (payload) => {
   return requests.post('/Api/Admin/Shop/delete', payload)
 }
 
+// AdminShopOrder
+export const fetchAdminShopOrderList = (params = {}) => {
+  return requests.get('/Api/Admin/ShopOrder/getList', { params })
+}
+
+export const fetchAdminShopOrder = (params = {}) => {
+  return requests.get('/Api/Admin/ShopOrder/getOne', { params })
+}
+
+export const postAdminShopOrder = (payload) => {
+  return requests.post('/Api/Admin/ShopOrder/add', payload)
+}
+
+export const patchAdminShopOrder = (payload) => {
+  return requests.post('/Api/Admin/ShopOrder/update', payload)
+}
+
+export const deleteAdminShopOrder = (payload) => {
+  return requests.post('/Api/Admin/ShopOrder/delete', payload)
+}
+
 // ShopSku
 export const fetchShopSkuList = (params = {}) => {
   return requests.get('/Api/Admin/ShopSku/getList', { params })
@@ -103,4 +124,102 @@ export const patchSkuCategory = (payload) => {
 
 export const deleteSkuCategory = (payload) => {
   return requests.post('/Api/Admin/SkuCategory/delete', payload)
+}
+
+// Shop
+export const fetchShopInfo = (params = {}) => {
+  return requests.get('/Api/ShopUser/Shop/getShopInfo', { params })
+}
+
+// ShopOrder
+export const fetchShopOrderList = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopOrder/getList', { params })
+}
+
+export const fetchShopOrder = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopOrder/getOne', { params })
+}
+
+export const postShopOrder = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrder/add', payload)
+}
+
+export const patchShopOrder = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrder/update', payload)
+}
+
+export const deleteShopOrder = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrder/delete', payload)
+}
+
+// ShopOrderSku
+export const fetchShopOrderSkuList = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopOrderSku/getList', { params })
+}
+
+export const fetchShopOrderSku = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopOrderSku/getOne', { params })
+}
+
+export const postShopOrderSku = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrderSku/add', payload)
+}
+
+export const patchShopOrderSku = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrderSku/update', payload)
+}
+
+export const deleteShopOrderSku = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrderSku/delete', payload)
+}
+
+// AdminShopOrderSku
+export const fetchAdminShopOrderSkuList = (params = {}) => {
+  return requests.get('/Api/Admin/ShopOrderSku/getList', { params })
+}
+
+export const fetchAdminShopOrderSku = (params = {}) => {
+  return requests.get('/Api/Admin/ShopOrderSku/getOne', { params })
+}
+
+export const postAdminShopOrderSku = (payload) => {
+  return requests.post('/Api/Admin/ShopOrderSku/add', payload)
+}
+
+export const patchAdminShopOrderSku = (payload) => {
+  return requests.post('/Api/Admin/ShopOrderSku/update', payload)
+}
+
+export const deleteAdminShopOrderSku = (payload) => {
+  return requests.post('/Api/Admin/ShopOrderSku/delete', payload)
+}
+
+// ShopUserSku
+export const fetchShopUserSkuList = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopSku/getList', { params })
+}
+
+export const fetchShopUserSku = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopSku/getOne', { params })
+}
+
+export const fetchShopUserSkuCategory = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopSku/getCategoryList', { params })
+}
+
+export const postShopUserSku = (payload) => {
+  return requests.post('/Api/ShopUser/ShopSku/add', payload)
+}
+
+export const patchShopUserSku = (payload) => {
+  return requests.post('/Api/ShopUser/ShopSku/update', payload)
+}
+
+export const deleteShopUserSku = (payload) => {
+  return requests.post('/Api/ShopUser/ShopSku/delete', payload)
+}
+
+// ShopUserPassword
+export const patchShopUserPassword = (payload) => {
+  return requests.post('/Api/ShopUser/ShopUser/updatePassword', payload)
 }

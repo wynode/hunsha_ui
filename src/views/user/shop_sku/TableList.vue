@@ -18,9 +18,9 @@
       </EffectForm>
     </el-card>
     <el-card class="Mt15">
-      <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
-        新增sku
-      </el-button>
+      <!-- <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
+        新增店铺Sku
+      </el-button> -->
 
       <Txcel
         v-loading="mixTableLoading"
@@ -43,11 +43,12 @@
 <script>
 import tableMixins from '@/mixins/table'
 import {
-  fetchSkuList,
-  // fetchSku,
-  postSku,
-  patchSku,
-  deleteSku,
+  fetchShopUserSkuList,
+  // fetchShopUserSku,
+  postShopUserSku,
+  patchShopUserSku,
+  deleteShopUserSku,
+  fetchShopUserSkuCategory,
 } from '@/apis'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
@@ -58,17 +59,17 @@ const table = tableMixins({
 })
 
 export default {
-  name: 'SkuList',
+  name: 'ShopUserSkuList',
 
   mixins: [table],
 
   data() {
-    return {}
+    return { skuCategory: [] }
   },
 
   computed: {
     fetchTableListMethod() {
-      return fetchSkuList
+      return fetchShopUserSkuList
     },
 
     tableListCols() {
@@ -80,6 +81,16 @@ export default {
   },
 
   methods: {
+    handleFormEffects(subscribe) {
+      subscribe('categoryId', (fields) => {
+        if (fields.categoryId) {
+          fields.categoryId.fieldValue = ''
+        }
+      })
+      subscribe('onFieldChange', 'categoryId', (value, form) => {
+        this.handleFilter(form)
+      })
+    },
     addItem() {
       this.$createDialog(
         {
@@ -90,7 +101,7 @@ export default {
               const { effectForm } = slotRef.$refs
               if (await effectForm.useValidator()) {
                 const form = effectForm.getForm()
-                await postSku(form)
+                await postShopUserSku(form)
                 this.fetchTableList(this.filtersCache)
                 this.$notify.success('新增成功')
                 instance.close()
@@ -106,14 +117,14 @@ export default {
       this.$createDialog(
         {
           title: '更新店铺Sku',
-          width: '600px',
+          width: '500px',
           validate: false,
           onSubmit: async (instance, slotRef) => {
             const { effectForm } = slotRef.$refs
             if (await effectForm.useValidator()) {
               const form = effectForm.getForm()
-              await patchSku({
-                skuId: row.skuId,
+              await patchShopUserSku({
+                usageId: row.usageId,
                 ...form,
               })
               this.fetchTableList(this.filtersCache)
@@ -135,7 +146,7 @@ export default {
       })
 
       if (ifDel) {
-        await deleteSku({ skuId: row.skuId })
+        await deleteShopUserSku({ usageId: row.usageId })
         this.$notify.success('删除成功')
         this.fetchTableList(this.filtersCache)
       }
@@ -144,6 +155,9 @@ export default {
 
   mounted() {
     this.fetchTableList()
+    fetchShopUserSkuCategory().then((data) => {
+      this.skuCategory = data.result
+    })
   },
 }
 </script>

@@ -17,8 +17,7 @@
 </template>
 
 <script>
-import { fetchSkuCategoryList } from '@/apis'
-import { addFields, editFields } from './formConfig'
+import { editFields, addFields } from './formConfig'
 
 export default {
   props: {
@@ -36,7 +35,7 @@ export default {
 
   data() {
     return {
-      skuCategory: [],
+      kw_categoryOpt: [],
     }
   },
 
@@ -48,9 +47,8 @@ export default {
           const { fields, setForm } = this.$refs.effectForm
           if (this.meta) {
             Object.keys(fields).forEach((fieldName) => {
-              // const isPass = fieldName === 'adminPassword'
-              // setForm(fieldName, isPass ? '' : this.meta[fieldName])
-              setForm(fieldName, this.meta[fieldName])
+              const isPass = fieldName === 'password'
+              setForm(fieldName, isPass ? '' : this.meta[fieldName])
             })
           }
         })
@@ -58,11 +56,15 @@ export default {
     },
   },
 
-  created() {
-    fetchSkuCategoryList().then((data) => {
-      this.skuCategory = data.result.list
-    })
-  },
+  // methods: {
+  //   handleFormEffects(subscribe) {
+  //     subscribe('onFieldInit', (fields) => {
+  //       if (this.meta) {
+  //         fields.adminAccount.ifRender = false
+  //       }
+  //     })
+  //   },
+  // },
 }
 </script>
 

@@ -1,8 +1,25 @@
 <template>
   <div>
+    <!-- <el-card>
+      <EffectForm
+        ref="effectForm"
+        inline
+        size="small"
+        label-position="top"
+        cancelText="重置"
+        @submit="handleFilter"
+        @cancel="handleFilterReset"
+      >
+        <EffectFormField
+          v-for="field in filterFields"
+          v-bind="field"
+          :key="field.name"
+        />
+      </EffectForm>
+    </el-card> -->
     <el-card>
       <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
-        新增
+        新增店铺订单
       </el-button>
 
       <Txcel
@@ -26,21 +43,22 @@
 <script>
 import tableMixins from '@/mixins/table'
 import {
-  // fetchShop,
-  fetchShopList,
-  postShop,
-  patchShop,
-  deleteShop,
+  // fetchShopOrder,
+  fetchShopOrderList,
+  postShopOrder,
+  patchShopOrder,
+  deleteShopOrder,
 } from '@/apis'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
+import { filterFields } from './formConfig'
 
 const table = tableMixins({
   pagerInit: { page: 1, page_size: 10 },
 })
 
 export default {
-  name: 'ShopList',
+  name: 'orderList',
 
   mixins: [table],
 
@@ -50,11 +68,15 @@ export default {
 
   computed: {
     fetchTableListMethod() {
-      return fetchShopList
+      return fetchShopOrderList
     },
 
     tableListCols() {
       return tableListCols(this)
+    },
+
+    filterFields() {
+      return filterFields(this)
     },
   },
 
@@ -62,14 +84,14 @@ export default {
     addItem() {
       this.$createDialog(
         {
-          title: '新增店铺',
+          title: '新增店铺订单',
           width: '600px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
               const { effectForm } = slotRef.$refs
               if (await effectForm.useValidator()) {
-                const form = slotRef.$refs.effectForm.getForm()
-                await postShop(form)
+                const form = effectForm.getForm()
+                await postShopOrder(form)
                 this.fetchTableList(this.filtersCache)
                 this.$notify.success('新增成功')
                 instance.close()
@@ -84,18 +106,21 @@ export default {
     modifyItem(row) {
       this.$createDialog(
         {
-          title: '更新店铺',
+          title: '更新店铺订单',
           width: '600px',
           validate: false,
           onSubmit: async (instance, slotRef) => {
-            const form = slotRef.$refs.effectForm.getForm()
-            await patchShop({
-              upId: row.upId,
-              ...form,
-            })
-            this.fetchTableList(this.filtersCache)
-            this.$notify.success('修改成功')
-            instance.close()
+            const { effectForm } = slotRef.$refs
+            if (await effectForm.useValidator()) {
+              const form = effectForm.getForm()
+              await patchShopOrder({
+                orderId: row.orderId,
+                ...form,
+              })
+              this.fetchTableList(this.filtersCache)
+              this.$notify.success('修改成功')
+              instance.close()
+            }
           },
         },
         () => <EditForm meta={row} />
@@ -111,7 +136,7 @@ export default {
       })
 
       if (ifDel) {
-        await deleteShop({ upId: row.upId })
+        await deleteShopOrder({ orderId: row.orderId })
         this.$notify.success('删除成功')
         this.fetchTableList(this.filtersCache)
       }

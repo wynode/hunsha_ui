@@ -29,6 +29,61 @@ export const FormatTime = ({ props }) => {
   return <div>{date}</div>
 }
 
+export const AddCm = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+
+  const render = `${row[prop]}cm`
+
+  return <div>{render}</div>
+}
+
+export const AddYuan = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+
+  const render = `${row[prop]}元`
+
+  return <div>{render}</div>
+}
+
+export const AddJian = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+
+  const render = `${row[prop]}件`
+
+  return <div>{render}</div>
+}
+
+export const AddKg = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+
+  const render = `${row[prop]}kg`
+
+  return <div>{render}</div>
+}
+
+export const AddTian = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+
+  const render = `${row[prop]}天`
+
+  return <div>{render}</div>
+}
+
 export const TextCutOff = ({ props }) => {
   const {
     row,

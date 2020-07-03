@@ -1,47 +1,58 @@
-import { OneLineText } from '@/components/CellTools.jsx'
+import { OneLineText, FormatTime } from '@/components/CellTools.jsx'
 
 export function tableListCols(vm) {
   return [
-    // {
-    //   label: '上游Id',
-    //   prop: 'upId',
-    //   width: 120,
-    // },
     {
-      label: '店铺编码',
-      width: 120,
-      prop: 'shopCode',
-    },
-    {
-      label: '店铺名称',
-      width: 200,
-      prop: 'shopName',
+      label: '订单Id',
+      prop: 'orderId',
+      width: 150,
       component: {
         props: { row: Object },
         render() {
           return (
             <router-link
-              to={{ name: 'shopProfile', params: { id: this.row.shopId } }}
-              target="_blank">
-              <el-button type="text">{this.row.shopName}</el-button>
+              to={{ name: 'orderProfile', params: { id: this.row.orderId } }}>
+              <el-button type="text">{this.row.orderId}</el-button>
             </router-link>
           )
         },
       },
     },
     {
-      label: '联系人名称',
+      label: '客户名称',
       width: 120,
-      prop: 'contact',
+      prop: 'customerName',
     },
     {
-      label: '联系电话',
-      width: 180,
-      prop: 'phone',
+      label: '客户手机号码',
+      width: 120,
+      prop: 'customerPhone',
     },
     {
-      label: '店铺地址',
+      label: '客户微信',
+      width: 120,
+      prop: 'customerWeiXin',
+    },
+    {
+      label: '客户资料备注',
+      prop: 'customerNote',
+      component: OneLineText,
+    },
+    {
+      label: '收货地址',
       prop: 'address',
+      component: OneLineText,
+    },
+    {
+      label: '预期收货时间',
+      width: 160,
+      prop: 'receiveGoodsTime',
+      component: FormatTime,
+    },
+    {
+      label: '收货方式',
+      width: 120,
+      prop: 'receiveGoodsType',
       component: OneLineText,
     },
     {

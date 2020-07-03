@@ -4,6 +4,7 @@
     :width="width"
     :close-on-click-modal="closeOnClickModal"
     :close-on-press-escape="true"
+    :top="top"
     @open="handleOpen"
     @close="handleClose"
   >
@@ -65,6 +66,11 @@ export default {
     showCancelBtn: {
       type: Boolean,
       default: true,
+    }, // 是否显示取消按钮
+
+    top: {
+      type: String,
+      default: '15vh',
     }, // 是否显示取消按钮
 
     closeOnClickModal: {

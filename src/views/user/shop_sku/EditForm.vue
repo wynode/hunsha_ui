@@ -6,9 +6,10 @@
       label-position="left"
       label-width="auto"
       :needToolBtnGroup="false"
+      class="sku_form"
     >
       <EffectFormField
-        v-for="field in ChangeFields"
+        v-for="field in formFields"
         v-bind="field"
         :key="field.name"
       />
@@ -17,7 +18,8 @@
 </template>
 
 <script>
-import { ChangeFields } from './formConfig'
+import { fetchShopUserSkuCategory } from '@/apis'
+import { addFields, editFields } from './formConfig'
 
 export default {
   props: {
@@ -28,14 +30,14 @@ export default {
   },
 
   computed: {
-    ChangeFields() {
-      return ChangeFields(this)
+    formFields() {
+      return this.meta ? editFields(this) : addFields(this)
     },
   },
 
   data() {
     return {
-      kw_categoryOpt: [],
+      skuCategory: [],
     }
   },
 
@@ -57,16 +59,18 @@ export default {
     },
   },
 
-  // methods: {
-  //   handleFormEffects(subscribe) {
-  //     subscribe('onFieldInit', (fields) => {
-  //       if (this.meta) {
-  //         fields.adminAccount.ifRender = false
-  //       }
-  //     })
-  //   },
-  // },
+  created() {
+    fetchShopUserSkuCategory().then((data) => {
+      this.skuCategory = data.result
+    })
+  },
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.sku_form {
+  .el-form-item__content {
+    width: 300px;
+  }
+}
+</style>

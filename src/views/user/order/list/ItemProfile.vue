@@ -3,15 +3,17 @@
     <el-card class="profile_top_card">
       <div class="profile_top_info">
         <div v-for="(item, index) in addFields" :key="index">
-          <span>{{ item.title }}:</span>
-          {{ shopData[item.name] }}
+          <span>{{ item.title }}：</span>
+          <i v-if="item.name === 'receiveGoodsTime'">
+            {{ dateFormat(orderData[item.name] * 1000) }}
+          </i>
+          <i v-else>{{ orderData[item.name] }}</i>
         </div>
       </div>
     </el-card>
     <el-card class="profile_second_card">
       <el-tabs v-model="activeTab" class="profile_second_tabs">
         <el-tab-pane label="Sku管理" name="sku"></el-tab-pane>
-        <el-tab-pane label="用户管理" name="user"></el-tab-pane>
         <component :is="activeTab"></component>
       </el-tabs>
     </el-card>
@@ -19,21 +21,21 @@
 </template>
 
 <script>
-import { fetchShop } from '@/apis'
+import { dateFormat } from '@/utils/dateFormat'
+import { fetchShopOrder } from '@/apis'
 import { addFields } from './formConfig'
 
 export default {
   name: 'ShopProfile',
 
   components: {
-    sku: () => import('@/views/shop/sku/TableList'),
-    user: () => import('@/views/shop/user/TableList'),
+    sku: () => import('@/views/user/order/sku/TableList'),
   },
 
   data() {
     return {
       activeTab: 'sku',
-      shopData: {},
+      orderData: {},
     }
   },
 
@@ -43,10 +45,16 @@ export default {
     },
   },
 
+  methods: {
+    dateFormat(date) {
+      return dateFormat(date)
+    },
+  },
+
   mounted() {
     const { id } = this.$route.params
-    fetchShop({ shopId: id }).then((data) => {
-      this.shopData = data.result
+    fetchShopOrder({ orderId: id }).then((data) => {
+      this.orderData = data.result
     })
   },
 }

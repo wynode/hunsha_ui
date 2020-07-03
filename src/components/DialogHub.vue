@@ -13,7 +13,14 @@
     ></component>
 
     <div v-if="dialogHub.footer" slot="footer">
-      <el-button type="danger" plain size="small" @click="handleCancel">
+      <el-button
+        type="danger"
+        plain
+        size="small"
+        class="dialog_cancel"
+        @click="handleCancel"
+        v-if="dialogHub.cancel"
+      >
         取消
       </el-button>
       <el-button type="primary" plain size="small" @click="handleConfirm">

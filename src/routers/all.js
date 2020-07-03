@@ -1,38 +1,104 @@
 export default [
+  // admin
   {
-    path: '/shop-list',
+    path: '/admin/shop-list',
     name: 'shopList',
     meta: {
       title: '店铺管理',
       breadcrumb: ['店铺管理', '店铺列表'],
+      type: 'admin',
     },
-    component: () => import('@/views/shop/list/TableList.vue'),
+    component: () => import('@/views/admin/shop/list/TableList.vue'),
   },
   {
-    path: '/shop/:id',
+    path: '/admin/shop/:id',
     name: 'shopProfile',
     meta: {
       title: '店铺详情',
       breadcrumb: ['店铺管理', '店铺详情'],
+      type: 'admin',
     },
-    component: () => import('@/views/shop/list/ItemProfile.vue'),
+    component: () => import('@/views/admin/shop/list/ItemProfile.vue'),
   },
   {
-    path: '/sku',
+    path: '/admin/order-list',
+    name: 'adminOrderList',
+    meta: {
+      title: '订单列表',
+      breadcrumb: ['商品订单管理', '订单列表'],
+      type: 'admin',
+    },
+    component: () => import('@/views/admin/order/list/TableList.vue'),
+  },
+  {
+    path: '/admin/order/:id',
+    name: 'adminOrderProfile',
+    meta: {
+      title: '订单详情',
+      breadcrumb: ['商品订单管理', '订单详情'],
+      type: 'admin',
+    },
+    component: () => import('@/views/admin/order/list/ItemProfile.vue'),
+  },
+  {
+    path: '/admin/sku',
     name: 'skuList',
     meta: {
       title: 'sku管理',
       breadcrumb: ['sku管理'],
+      type: 'admin',
     },
-    component: () => import('@/views/sku/list/TableList.vue'),
+    component: () => import('@/views/admin/sku/list/TableList.vue'),
   },
   {
-    path: '/sku-category',
+    path: '/admin/sku-category',
     name: 'skuCategory',
     meta: {
       title: 'sku分类管理',
       breadcrumb: ['sku分类管理'],
+      type: 'admin',
     },
-    component: () => import('@/views/sku/category/TableList.vue'),
+    component: () => import('@/views/admin/sku/category/TableList.vue'),
+  },
+  // user
+  {
+    path: '/user/order-list',
+    name: 'orderList',
+    meta: {
+      title: '订单列表',
+      breadcrumb: ['订单管理', '订单列表'],
+      type: 'user',
+    },
+    component: () => import('@/views/user/order/list/TableList.vue'),
+  },
+  {
+    path: '/user/order/:id',
+    name: 'orderProfile',
+    meta: {
+      title: '订单详情',
+      breadcrumb: ['店铺订单管理', '订单详情'],
+      type: 'user',
+    },
+    component: () => import('@/views/user/order/list/ItemProfile.vue'),
+  },
+  {
+    path: '/user/shop-sku',
+    name: 'shopSkuList',
+    meta: {
+      title: '店铺sku管理',
+      breadcrumb: ['店铺sku管理'],
+      type: 'user',
+    },
+    component: () => import('@/views/user/shop_sku/TableList.vue'),
+  },
+  {
+    path: '/user/shop-user',
+    name: 'ShopUserList',
+    meta: {
+      title: '店铺人员管理',
+      breadcrumb: ['店铺人员管理'],
+      type: 'user',
+    },
+    component: () => import('@/views/user/shop_user/TableList.vue'),
   },
 ]

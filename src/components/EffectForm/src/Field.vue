@@ -11,9 +11,10 @@
       v-model="fieldValue"
       v-bind="myProps"
       :is="currentWidget.component"
-      style="width: 90%"
     ></component>
-    <span v-if="myProps.ext">{{ myProps.ext }}</span>
+    <span v-if="myProps.ext" class="Ml2" style="flex: none">
+      {{ myProps.ext }}
+    </span>
     <p v-if="myProps.remark" class="field_remark">{{ myProps.remark }}</p>
   </el-form-item>
 </template>
@@ -96,5 +97,8 @@ export default {
   line-height: 1.5;
   color: #999;
   font-size: 14px;
+}
+.el-form-item__content {
+  display: flex;
 }
 </style>

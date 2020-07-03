@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { UPLOAD_URL, AUTH_TOKEN } from '@/config'
+import { UPLOAD_URL } from '@/config'
 
 export default {
   props: {
@@ -138,7 +138,8 @@ export default {
     },
 
     headers() {
-      const token = localStorage.getItem(AUTH_TOKEN)
+      const { meta } = this.$route
+      const token = localStorage.getItem(`${meta.type}_session`)
       return {
         Authorization: `JWT ${JSON.parse(token)}`,
       }

@@ -9,7 +9,7 @@
             style="width: 30px; height: 30px;margin-left: -20px; margin-right: 8px"
           />
         </a>
-        店铺管理后台
+        {{ isAdmin ? '店铺' : '用户' }}管理后台
       </p>
 
       <el-dropdown class="Mla" trigger="click">
@@ -22,11 +22,16 @@
         </div>
 
         <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item class="Px0">logo
-            <a class="Db Px20" href="/changepwd/">修改密码</a>
-          </el-dropdown-item> -->
+          <el-dropdown-item class="Px0" v-if="!isAdmin">
+            <a class="Db Px20" @click="changePassword">修改密码</a>
+          </el-dropdown-item>
           <el-dropdown-item class="Px0">
-            <a class="Db Px20" href="/logout">退出</a>
+            <a
+              class="Db Px20"
+              :href="isAdmin ? 'admin/logout' : '/user/logout'"
+            >
+              退出
+            </a>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -82,9 +87,11 @@
 import { mapGetters } from 'vuex'
 import AsideMenu from '@/components/AsideMenu.vue'
 import HeaderBoard from '@/components/HeaderBoard.vue'
-import menusConfig from './menusConfig'
+import { userMenusConfig, adminMenusConfig } from './menusConfig'
+import { patchShopUserPassword } from '@/apis'
 import store from 'store2'
 import { AUTH_TOKEN } from '@/config'
+import EditForm from './EditForm'
 
 export default {
   name: 'BasicWrapper',
@@ -104,7 +111,15 @@ export default {
     ...mapGetters('user', ['username', 'isLoggedIn']),
 
     menuItems() {
-      return menusConfig(this)
+      const { meta } = this.$route
+      return meta.type === 'admin'
+        ? adminMenusConfig(this)
+        : userMenusConfig(this)
+    },
+
+    isAdmin() {
+      const { meta } = this.$route
+      return meta.type === 'admin'
     },
 
     breadMeta() {
@@ -123,12 +138,37 @@ export default {
     getActiveRouter() {
       return this.$route.name
     },
+
+    changePassword() {
+      this.$createDialog(
+        {
+          title: '修改密码',
+          width: '500px',
+          onSubmit: async (instance, slotRef) => {
+            if (slotRef.$refs.effectForm) {
+              const { effectForm } = slotRef.$refs
+              if (await effectForm.useValidator()) {
+                const form = effectForm.getForm()
+                await patchShopUserPassword(form)
+                this.$notify.success('修改成功')
+                instance.close()
+              }
+            }
+          },
+        },
+        () => <EditForm />
+      ).show()
+    },
   },
 
   created() {
     const token = store.get(AUTH_TOKEN)
     if (!token) {
-      window.location.replace('/login')
+      if (window.location.href.includes('/admin')) {
+        window.location.replace('/admin/login')
+      } else {
+        window.location.replace('/user/login')
+      }
     }
   },
 }

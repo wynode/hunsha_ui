@@ -6,6 +6,7 @@ import InputNumberRange from './component/InputNumberRange'
 import UEditor from './component/UEditor'
 import DynamicLabels from './component/DynamicLabels'
 import MultipleInput from './component/MultipleInput'
+import puretext from './component/puretext'
 
 export default {
   text: {
@@ -57,6 +58,10 @@ export default {
 
   dynamicLabels: {
     component: DynamicLabels,
+  },
+
+  puretext: {
+    component: puretext,
   },
 
   multipleInput: {

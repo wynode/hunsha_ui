@@ -11,7 +11,7 @@ export const filterFields = () => {
 export const addFields = (vm) => {
   return [
     {
-      title: '分类Id',
+      title: '分类名称',
       name: 'categoryId',
       widget: 'select',
       xProps: {
@@ -23,7 +23,7 @@ export const addFields = (vm) => {
           }
         }),
       },
-      rules: [{ required: true, message: '请填写分类Id', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写分类名称', trigger: 'blur' }],
     },
     {
       title: 'sku名称',
