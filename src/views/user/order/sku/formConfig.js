@@ -1,3 +1,31 @@
+export const FahuoFields = () => {
+  return [
+    {
+      title: '物流公司',
+      name: 'expressName',
+      widget: 'text',
+      rules: [{ required: true, message: '请选择物流公司', trigger: 'blur' }],
+    },
+    {
+      title: '物流信息',
+      name: 'expressValue',
+      widget: 'text',
+      rules: [{ required: true, message: '请选择物流信息', trigger: 'blur' }],
+    },
+
+    {
+      title: '备注',
+      name: 'note',
+      widget: 'text',
+      xProps: {
+        type: 'textarea',
+        maxlength: '255',
+        'show-word-limit': true,
+      },
+    },
+  ]
+}
+
 export const addFields = (vm) => {
   return [
     {

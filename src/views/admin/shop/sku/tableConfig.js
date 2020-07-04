@@ -1,16 +1,16 @@
-import { AddYuan, AddJian, AddCi } from '@/components/CellTools.jsx'
+import {
+  AddYuan,
+  AddJian,
+  AddCi,
+  OneLineText,
+} from '@/components/CellTools.jsx'
 
 export function tableListCols(vm) {
   const cols = [
     {
-      label: '店铺Id',
-      prop: 'shopId',
-      width: 100,
-    },
-    {
       label: 'skuId',
       prop: 'skuId',
-      width: 100,
+      width: 160,
     },
     {
       label: '店铺销售价格',
@@ -81,4 +81,96 @@ export function tableListCols(vm) {
   } else {
     return cols
   }
+}
+
+// import { PriceFormat } from '@/components/CellTools.jsx'
+import { IMG_URL } from '@/config'
+
+export function showTableListCols(vm) {
+  return [
+    {
+      label: '分类名称',
+      prop: 'categoryInfo.categoryName',
+      width: 100,
+    },
+    {
+      label: 'sku名称',
+      prop: 'skuName',
+      width: 160,
+    },
+    {
+      label: 'sku编码',
+      prop: 'skuCode',
+      width: 120,
+    },
+    {
+      label: 'sku图',
+      prop: 'thumb',
+      component: {
+        props: { row: Object },
+        render() {
+          const renderNode = (
+            <el-popover trigger="hover" placement="right">
+              <img
+                style="max-width: 400px; max-height: 600px"
+                src={`${IMG_URL}${this.row.thumb}`}
+                alt=""
+              />
+              <p slot="reference">
+                <img
+                  style="max-width: 100px; max-height: 100px"
+                  src={`${IMG_URL}${this.row.thumb}`}
+                  alt=""
+                />
+              </p>
+            </el-popover>
+          )
+          return this.row.thumb ? renderNode : ''
+        },
+      },
+    },
+    {
+      label: '简介',
+      prop: 'brief',
+      component: OneLineText,
+    },
+    {
+      label: '预览',
+      width: 150,
+      component: {
+        props: { row: Object },
+        render() {
+          return (
+            <span>
+              <el-button
+                type="text"
+                size="small"
+                onClick={() => vm.showItem(this.row)}>
+                预览
+              </el-button>
+            </span>
+          )
+        },
+      },
+    },
+    {
+      label: '操作',
+      width: 150,
+      component: {
+        props: { row: Object },
+        render() {
+          return (
+            <span>
+              <el-button
+                type="text"
+                size="small"
+                onClick={() => vm.xuanzhong(this.row)}>
+                选中
+              </el-button>
+            </span>
+          )
+        },
+      },
+    }, // 操作
+  ]
 }

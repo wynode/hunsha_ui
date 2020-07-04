@@ -1,10 +1,10 @@
-// import { PriceFormat } from '@/components/CellTools.jsx'
+import { OneLineText } from '@/components/CellTools.jsx'
 import { IMG_URL } from '@/config'
 
 export function tableListCols(vm) {
   return [
     {
-      label: '分类Id',
+      label: '分类名称',
       prop: 'categoryId',
       width: 100,
       component: {
@@ -17,7 +17,9 @@ export function tableListCols(vm) {
                   name: 'skuList',
                   query: { categoryId: this.row.categoryId },
                 }}>
-                <el-link type="primary">{this.row.categoryId}</el-link>
+                <el-link type="primary">
+                  {this.row.categoryInfo.categoryName}
+                </el-link>
               </router-link>
             </div>
           )
@@ -63,6 +65,7 @@ export function tableListCols(vm) {
     {
       label: '简介',
       prop: 'brief',
+      component: OneLineText,
     },
     // {
     //   label: '进货成本价',

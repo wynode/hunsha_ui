@@ -3,8 +3,8 @@
 export function tableListCols(vm) {
   const cols = [
     {
-      label: '店铺Id',
-      prop: 'shopId',
+      label: '店铺名称',
+      prop: 'shopInfo.shopName',
     },
     {
       label: '店员账号',

@@ -49,7 +49,6 @@ export default ({
             ...params,
           }
           let payload = {}
-
           payload = this.filtersMutate.parse(this.filtersCache)
           Object.keys(payload).forEach((item) => {
             if (item === 'dateTimeRange') {

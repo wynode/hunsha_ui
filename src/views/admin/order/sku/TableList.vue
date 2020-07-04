@@ -1,46 +1,98 @@
 <template>
   <div class="order_sku_profile">
-    <el-card v-for="sku in tableList" :key="sku.skuId">
+    <el-card v-for="sku in tableList" :key="sku.orderSkuId">
       <div class="table_sku">
-        <div>
-          <span>货号：{{ sku.skuCode }}</span>
-          <span>SKU名称：{{ sku.skuName }}</span>
-          <span>数量：{{ sku.skuName }}件</span>
+        <div class="ts_item">
+          <span>订单sku编号：{{ sku.orderInfo.orderNumber }}</span>
         </div>
-        <div>
+        <div class="order_sku_tupian ts_item">
+          <!-- <img :src="imgUrl + sku.thumb" alt="" /> -->
+          <el-popover trigger="hover" placement="right">
+            <img
+              style="max-width: 500px; max-height: 600px"
+              :src="imgUrl + sku.thumb"
+              alt=""
+            />
+            <p slot="reference">
+              <img :src="imgUrl + sku.thumb" alt="" />
+            </p>
+          </el-popover>
+          <div class="ost_right">
+            <div>
+              <span>分类：{{ sku.categoryInfo.categoryName }}</span>
+              <span>
+                性别：{{ sku.categoryInfo.gender == 1 ? '男' : '女' }}
+              </span>
+            </div>
+            <div>
+              <span>sku名称：{{ sku.skuName }}</span>
+            </div>
+            <div class="ost_right_1">
+              <span>sku编号：{{ sku.skuCode }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="ts_item">
           <span>订单类型：{{ sku.dealType | translate('dealType') }}</span>
           <template v-if="sku.dealType == 2">
-            <span>租赁周期：{{ sku.rentNum }}</span>
-            <span>租赁押金：{{ sku.rentDepositNum }}</span>
+            <span>租赁周期：{{ sku.rentNum }}天</span>
+            <span>租赁押金：{{ sku.rentDepositNum }}元</span>
           </template>
         </div>
-        <div>
-          <span>客户身高：{{ sku.customerHeight }}cm</span>
-          <span>客户体重：{{ sku.customerWeight }}cm</span>
+        <div class="ts_item">
+          <span>
+            客户身高：{{
+              sku.customerHeight ? `${sku.customerHeight}cm` : '无'
+            }}
+          </span>
+          <span>
+            客户体重：{{
+              sku.customerWeight ? `${sku.customerWeight}kg` : '无'
+            }}
+          </span>
         </div>
-        <div>
-          <span>衣长：{{ sku.clothesLength }}cm</span>
-          <span>袖长：{{ sku.sleeveLength }}cm</span>
-          <span>肩宽：{{ sku.shoulderWidth }}cm</span>
-          <span>胸围：{{ sku.bust }}cm</span>
+        <div class="ts_item">
+          <span>
+            衣长：{{ sku.clothesLength ? `${sku.clothesLength}cm` : '无' }}
+          </span>
+          <span>
+            袖长：{{ sku.sleeveLength ? `${sku.sleeveLength}cm` : '无' }}
+          </span>
+          <span>
+            肩宽：{{ sku.shoulderWidth ? `${sku.shoulderWidth}cm` : '无' }}
+          </span>
+          <span>胸围：{{ sku.bust ? `${sku.bust}cm` : '无' }}</span>
         </div>
-        <div>
-          <span>中腰：{{ sku.middleWaisted }}cm</span>
-          <span>下摆：{{ sku.hem }}cm</span>
-          <span>马甲：{{ sku.vest }}cm</span>
-          <span>裤长：{{ sku.trousersLength }}cm</span>
+        <div class="ts_item">
+          <span>
+            中腰：{{ sku.middleWaisted ? `${sku.middleWaisted}cm` : '无' }}
+          </span>
+          <span>下摆：{{ sku.hem ? `${sku.hem}cm` : '无' }}</span>
+          <span>马甲：{{ sku.vest ? `${sku.vest}cm` : '无' }}</span>
+          <span>
+            裤长：{{ sku.trousersLength ? `${sku.trousersLength}cm` : '无' }}
+          </span>
         </div>
-        <div>
-          <span>腰围：{{ sku.waistLine }}cm</span>
-          <span>臀围：{{ sku.hipLine }}cm</span>
-          <span>大腿：{{ sku.thighLength }}cm</span>
-          <span>小腿：{{ sku.shankLength }}cm</span>
+        <div class="ts_item">
+          <span>腰围：{{ sku.waistLine ? `${sku.waistLine}cm` : '无' }}</span>
+          <span>臀围：{{ sku.hipLine ? `${sku.hipLine}cm` : '无' }}</span>
+          <span>
+            大腿：{{ sku.thighLength ? `${sku.thighLength}cm` : '无' }}
+          </span>
+          <span>
+            小腿：{{ sku.shankLength ? `${sku.shankLength}cm` : '无' }}
+          </span>
         </div>
-        <div>
+        <div class="ts_item">
+          <span>订单状态：{{ getStatus(sku.status, sku.dealType) }}</span>
           <span>下单时间：{{ dateFormat(sku.addTime * 1000) }}</span>
         </div>
-        <div>
-          <span>备注：{{ sku.note }}cm</span>
+        <div class="ts_item">
+          <span>单价：{{ sku.price }}元</span>
+          <span>数量：{{ sku.skuName }}件</span>
+        </div>
+        <div class="ts_item">
+          <span>备注：{{ sku.note }}</span>
         </div>
       </div>
     </el-card>
@@ -56,6 +108,8 @@ import {
   // patchAdminShopOrderSku,
   deleteAdminShopOrderSku,
 } from '@/apis'
+import { IMG_URL } from '@/config'
+import { getStatus } from '@/utils/common'
 import { dateFormat } from '@/utils/dateFormat'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
@@ -81,9 +135,16 @@ export default {
     tableListCols() {
       return tableListCols(this)
     },
+
+    imgUrl() {
+      return IMG_URL
+    },
   },
 
   methods: {
+    getStatus(value, type) {
+      return getStatus(value, type)
+    },
     dateFormat(value) {
       return dateFormat(value)
     },
@@ -164,32 +225,72 @@ export default {
 
 <style lang="scss">
 .order_sku_profile {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -15px;
   .table_sku {
+    width: 1000px;
+    margin: 0 auto;
+
     div {
-      height: 40px;
+      min-height: 40px;
       line-height: 40px;
-      border-bottom: 1px solid #dcdcdc;
+      border-bottom: 1px solid rgba(220, 220, 220, 0.4);
     }
     span {
-      margin-left: 20px;
+      margin-right: 40px;
+      margin-left: 15px;
       display: inline-block;
-      min-width: 100px;
+      min-width: 160px;
     }
     div:first-child {
       span {
         font-weight: bold;
       }
     }
-    div:nth-child(2n + 1) {
+    div:nth-child(2n) {
       background: #f5f5f5;
+      // background-image: linear-gradient(to right, #fff, #f5f5f5, #f5f5f5, #fff);
+    }
+  }
+  .el-popover__reference {
+    background: #fff;
+  }
+  .order_sku_tupian {
+    display: flex;
+    span {
+      min-width: 120px;
+      margin-right: 0;
+    }
+    img {
+      margin-top: 1px;
+      width: 123px;
+      margin-left: -15px;
+      height: 123px;
+      object-fit: contain;
+      background: #fff;
+    }
+    .ost_right {
+      width: 100%;
+      border-bottom: 0;
+      div {
+        span {
+          font-weight: normal;
+        }
+      }
+      div:nth-child(2n) {
+        background: #fff;
+      }
+      .ost_right_1 {
+        border-bottom: 0;
+      }
     }
   }
   .el-card {
-    margin-left: 15px;
-    width: 520px;
+    box-shadow: none !important;
+    margin-bottom: 10px;
+    padding-bottom: 30px;
+    border-bottom: 1px dashed #dcdcdc;
+    .el-card__body {
+      display: flex;
+    }
   }
 }
 </style>

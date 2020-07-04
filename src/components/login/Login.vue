@@ -1,17 +1,17 @@
 <template>
   <div class="login">
     <el-card class="box-card">
-      <div slot="header" class="clearfix">
+      <div slot="header" class="clearfix login_header">
         <span v-if="isAdmin">店铺管理登录</span>
-        <span v-else>用户管理登录</span>
+        <span v-else>店员管理登录</span>
       </div>
       <EffectForm
         ref="effectForm"
         size="medium"
         label-position="left"
         label-width="auto"
-        submitText="搜索"
-        cancelText="刷新"
+        submitText="登录"
+        cancelText="重置"
         @submit="handleLogin"
         @cancel="handleFilterResetFn"
       >
@@ -40,7 +40,7 @@
     </el-card>
     <el-link type="primary" class="login_link">
       <router-link :to="{ name: isAdmin ? 'userLogin' : 'adminLogin' }">
-        跳转到{{ isAdmin ? '用户' : '店铺' }}管理登录
+        跳转到{{ isAdmin ? '店员' : '店铺' }}管理登录
       </router-link>
     </el-link>
   </div>
@@ -139,6 +139,11 @@ export default {
 </script>
 
 <style lang="scss">
+.login_header {
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+}
 .login {
   max-width: 500px;
   margin: 0 auto;

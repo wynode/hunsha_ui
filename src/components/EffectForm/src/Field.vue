@@ -5,6 +5,7 @@
     :prop="name"
     :rules="rules"
     :error="fieldErrorMsg"
+    :class="className"
   >
     <component
       v-if="currentWidget"
@@ -36,6 +37,7 @@ export default {
     rules: Array,
     fileList: Array,
     defaultValue: null,
+    className: String,
     effect: {
       // TODO 实现
       type: Function,

@@ -49,6 +49,62 @@ export const filterFields = () => {
   ]
 }
 
+export const showFields = () => {
+  return [
+    {
+      title: '客户名称',
+      name: 'customerName',
+    },
+    {
+      title: '客户手机号码',
+      name: 'customerPhone',
+    },
+    {
+      title: '客户微信',
+      name: 'customerWeiXin',
+    },
+    {
+      title: '客户资料备注',
+      name: 'customerNote',
+      widget: 'text',
+    },
+    {
+      title: '收货地址',
+      name: 'address',
+      widget: 'text',
+    },
+    {
+      title: '预期收货时间',
+      name: 'receiveGoodsTime',
+      widget: 'datetimepicker',
+    },
+    {
+      title: '订单总租赁价格',
+      name: 'rentTotalPrice',
+    },
+    {
+      title: '订单总出售价格',
+      name: 'saleTotalPrice',
+    },
+    {
+      title: '订单总定制价格',
+      name: 'customizeTotalPrice ',
+    },
+    {
+      title: '订单总价格',
+      name: 'totalPrice',
+    },
+    {
+      title: '收货方式',
+      name: 'receiveGoodsType',
+    },
+    {
+      title: '备注',
+      name: 'note',
+    },
+  ]
+}
+
 export const addFields = () => {
   return [
     {

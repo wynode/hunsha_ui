@@ -11,6 +11,7 @@
       <EffectFormField
         v-for="field in formFields"
         v-bind="field"
+        :className="field.name"
         :key="field.name"
       />
     </EffectForm>
@@ -82,6 +83,45 @@ export default {
   }
   .el-textarea {
     width: 784px;
+  }
+  .recommendSalePrice {
+    margin-right: 200px;
+  }
+  .recommendRentPrice {
+    margin-right: 200px;
+  }
+  .recommendCustomizePrice {
+    margin-right: 200px;
+  }
+  .costPrice {
+    &::before {
+      content: '出售：';
+      position: absolute;
+      left: 10px;
+      top: 8px;
+    }
+    position: relative;
+    padding-left: 60px;
+  }
+  .rentCostPrice {
+    &::before {
+      content: '租赁：';
+      position: absolute;
+      left: 10px;
+      top: 8px;
+    }
+    position: relative;
+    padding-left: 60px;
+  }
+  .customizeCostPrice {
+    &::before {
+      content: '定制：';
+      position: absolute;
+      left: 10px;
+      top: 8px;
+    }
+    position: relative;
+    padding-left: 60px;
   }
 }
 </style>

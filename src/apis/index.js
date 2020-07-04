@@ -215,6 +215,19 @@ export const patchShopUserSku = (payload) => {
   return requests.post('/Api/ShopUser/ShopSku/update', payload)
 }
 
+export const updateRentStatus = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrderSku/updateRentStatus', payload)
+}
+export const updateSaleStatus = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrderSku/updateSaleStatus', payload)
+}
+export const updateCustomerStatus = (payload) => {
+  return requests.post(
+    '/Api/ShopUser/ShopOrderSku/updateCustomerStatus',
+    payload
+  )
+}
+
 export const deleteShopUserSku = (payload) => {
   return requests.post('/Api/ShopUser/ShopSku/delete', payload)
 }

@@ -87,8 +87,8 @@ export default {
     addItem() {
       this.$createDialog(
         {
-          title: '新增店铺Sku',
-          width: '1000px',
+          title: '新增Sku',
+          width: '1127px',
           top: '10px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
@@ -130,7 +130,7 @@ export default {
       this.$createDialog(
         {
           title: '更新店铺Sku',
-          width: '1000px',
+          width: '1127px',
           top: '10px',
           onSubmit: async (instance, slotRef) => {
             const { effectForm } = slotRef.$refs
@@ -172,6 +172,26 @@ export default {
         this.fetchTableList(this.filtersCache)
       }
     },
+
+    getPath() {
+      const { categoryId } = this.$route.query
+      if (categoryId) {
+        this.$nextTick(() => {
+          const { getForm, setForm } = this.$refs.effectForm
+          if (categoryId) {
+            setForm('categoryId', Number(categoryId))
+          }
+          const data = getForm()
+          this.fetchTableList(data)
+        })
+      } else {
+        this.fetchTableList()
+      }
+    },
+  },
+
+  watch: {
+    $route: 'getPath',
   },
 
   mounted() {

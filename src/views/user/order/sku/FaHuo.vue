@@ -17,8 +17,9 @@
 </template>
 
 <script>
-import { fetchSkuList } from '@/apis'
-import { editFields, addFields } from './formConfig'
+// import { fetchShopUserSkuList } from '@/apis'
+import { getStatusOptions } from '@/utils/common'
+import { FahuoFields } from './formConfig'
 
 export default {
   props: {
@@ -26,21 +27,18 @@ export default {
       type: Object,
       default: null,
     },
-    routerId: {
-      type: Number,
-      default: 0,
-    },
   },
 
   computed: {
     formFields() {
-      return this.meta ? editFields(this) : addFields(this)
+      return FahuoFields(this)
     },
   },
 
   data() {
     return {
-      skuList: [],
+      statusList: [],
+      shopSkuList: [],
     }
   },
 
@@ -56,25 +54,11 @@ export default {
               // setForm(fieldName, isPass ? '' : this.meta[fieldName])
               setForm(fieldName, this.meta[fieldName])
             })
+            this.statusList = getStatusOptions(this.meta.dealType)
           }
         })
       },
     },
-  },
-
-  // methods: {
-  //   handleFormEffects(subscribe) {
-  //     subscribe('onFieldInit', (fields) => {
-  //       if (this.meta) {
-  //         fields.adminAccount.ifRender = false
-  //       }
-  //     })
-  //   },
-  // },
-  created() {
-    fetchSkuList().then((data) => {
-      this.skuList = data.result.list
-    })
   },
 }
 </script>

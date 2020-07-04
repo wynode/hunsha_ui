@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       forbidden: false,
-      routerId: '',
+      routerId: 0,
     }
   },
 

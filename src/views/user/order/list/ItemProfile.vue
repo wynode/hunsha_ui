@@ -1,14 +1,83 @@
 <template>
   <div>
     <el-card class="profile_top_card">
-      <div class="profile_top_info">
-        <div v-for="(item, index) in addFields" :key="index">
+      <div class="user_profile_top_info">
+        <!-- <div v-for="(item, index) in addFields" :key="index">
           <span>{{ item.title }}：</span>
           <i v-if="item.name === 'receiveGoodsTime'">
             {{ dateFormat(orderData[item.name] * 1000) }}
           </i>
           <i v-else>{{ orderData[item.name] }}</i>
-        </div>
+        </div> -->
+        <ul>
+          <li>
+            <span>客户名称：</span>
+            {{ orderData.customerName }}
+          </li>
+          <li>
+            <span>客户手机号码：</span>
+            {{ orderData.customerPhone }}
+          </li>
+          <li>
+            <span>客户微信：</span>
+            {{ orderData.customerWeiXin }}
+          </li>
+        </ul>
+
+        <ul>
+          <li>
+            <span>客户资料备注：</span>
+            {{ orderData.customerNote }}
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span>收货方式：</span>
+            {{ orderData.receiveGoodsType }}
+          </li>
+          <li>
+            <span>收货地址：</span>
+            {{ orderData.address }}
+          </li>
+          <li>
+            <span>
+              订单录入时间：
+            </span>
+            {{ dateFormat(orderData.addTime * 1000) }}
+          </li>
+          <li>
+            <span>
+              预期收货时间：
+            </span>
+            {{ dateFormat(orderData.receiveGoodsTime * 1000) }}
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span>订单总租赁价格：</span>
+            {{ orderData.rentTotalPrice || 0 }}元
+          </li>
+          <li>
+            <span>订单总出售价格：</span>
+            {{ orderData.saleTotalPrice || 0 }}元
+          </li>
+          <li>
+            <span>
+              订单总定制价格：
+            </span>
+            {{ orderData.customizeTotalPrice || 0 }}元
+          </li>
+          <li>
+            <span>订单总价格：</span>
+            {{ orderData.totalPrice }}
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span>备注：</span>
+            {{ orderData.note }}
+          </li>
+        </ul>
       </div>
     </el-card>
     <el-card class="profile_second_card">
@@ -61,19 +130,20 @@ export default {
 </script>
 
 <style lang="scss">
-.profile_top_info {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -60px;
-  margin-top: -10px;
-  padding: 15px 0;
-  div {
-    margin-top: 10px;
-    margin-left: 60px;
+.user_profile_top_info {
+  padding: 10px 0;
+  margin-top: -6px;
+  ul {
     color: #333;
+    display: flex;
     span {
       color: #999;
       font-size: 14px;
+    }
+    li {
+      margin-top: 6px;
+      min-width: 240px;
+      margin-right: 40px;
     }
   }
 }

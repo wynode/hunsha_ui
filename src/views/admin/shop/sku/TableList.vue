@@ -54,6 +54,7 @@ import {
 } from '@/apis'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
+import ShowForm from './ShowForm'
 import { filterFields } from './formConfig'
 
 const table = tableMixins({
@@ -90,12 +91,15 @@ export default {
       this.$createDialog(
         {
           title: '新增店铺Sku',
-          width: '600px',
+          width: '1100px',
           onSubmit: async (instance, slotRef) => {
-            if (slotRef.$refs.effectForm) {
-              const { effectForm } = slotRef.$refs
-              if (await effectForm.useValidator()) {
-                const form = slotRef.$refs.effectForm.getForm()
+            if (slotRef.$refs.showForm) {
+              const result = await slotRef.$refs.showForm
+                .validate()
+                .catch(() => false)
+
+              if (result) {
+                const form = slotRef.$refs.showForm.model
                 let payload = {}
                 Object.keys(form).forEach((item) => {
                   if (item.includes('Price')) {
@@ -112,7 +116,7 @@ export default {
             }
           },
         },
-        () => <EditForm routerId={this.routerId} />
+        () => <ShowForm routerId={this.routerId} />
       ).show()
     },
 
@@ -120,7 +124,7 @@ export default {
       this.$createDialog(
         {
           title: '更新店铺Sku',
-          width: '600px',
+          width: '500px',
           validate: false,
           onSubmit: async (instance, slotRef) => {
             const form = slotRef.$refs.effectForm.getForm()

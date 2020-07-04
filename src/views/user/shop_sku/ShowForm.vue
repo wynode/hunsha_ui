@@ -175,6 +175,18 @@ export default {
       p {
         background: #f1f1f1 !important;
       }
+      h1 {
+        background: #f1f1f1 !important;
+      }
+      h2 {
+        background: #f1f1f1 !important;
+      }
+      h3 {
+        background: #f1f1f1 !important;
+      }
+      h4 {
+        background: #f1f1f1 !important;
+      }
     }
     .ssfc_divi {
       height: 2px;

@@ -53,25 +53,29 @@ export const numberJoin = (raw, mixSymbl = ',') => {
 export const getStatusOptions = (delType) => {
   if (delType === 1) {
     return [
-      { label: '订单已付款', value: 0 },
-      { label: '已发货', value: 1 },
-      { label: '已收货', value: 2 },
-      { label: '已退款', value: -1 },
+      { label: '订单异常', value: -2 },
+      { label: '订单退款', value: -1 },
+      { label: '订单创建', value: 0 },
+      { label: '订单发货', value: 1 },
+      { label: '订单收货', value: 10 },
     ]
   } else if (delType === 2) {
     return [
-      { label: '订单已付款', value: 0 },
-      { label: '已发货', value: 1 },
-      { label: '客户已收货', value: 2 },
-      { label: '客户退还商品', value: 3 },
-      { label: '已退款', value: -1 },
+      { label: '订单异常', value: -2 },
+      { label: '订单退款', value: -1 },
+      { label: '订单创建', value: 0 },
+      { label: '订单发货', value: 1 },
+      { label: '订单收货', value: 2 },
+      { label: '客户归还商品', value: 10 },
     ]
   } else if (delType === 3) {
     return [
-      { label: '订单已付款', value: 0 },
-      { label: '已定制完成', value: 1 },
-      { label: '已收货', value: 2 },
-      { label: '已退款', value: -1 },
+      { label: '订单异常', value: -2 },
+      { label: '订单退款', value: -1 },
+      { label: '订单创建', value: 0 },
+      { label: '定制完成', value: 1 },
+      { label: '订单发货', value: 2 },
+      { label: '订单收货', value: 10 },
     ]
   }
 }

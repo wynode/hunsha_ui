@@ -26,10 +26,10 @@ export const adminMenusConfig = () => {
           title: '订单管理',
           router: { name: 'adminOrderList' },
         },
-        {
-          title: '订单sku管理',
-          router: { name: 'adminOrderSku' },
-        },
+        // {
+        //   title: '订单sku管理',
+        //   router: { name: 'adminOrderSku' },
+        // },
       ],
     },
     {

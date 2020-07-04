@@ -84,7 +84,10 @@ export const editFields = () => {
     {
       title: '店铺销售价格',
       name: 'shopSalePrice',
-      widget: 'inputNumber',
+      widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [
         { required: true, message: '请填写店铺销售价格', trigger: 'blur' },
       ],
@@ -92,7 +95,10 @@ export const editFields = () => {
     {
       title: '店铺租赁价格',
       name: 'shopRentPrice',
-      widget: 'inputNumber',
+      widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [
         { required: true, message: '请填写店铺租赁价格', trigger: 'blur' },
       ],
@@ -100,7 +106,10 @@ export const editFields = () => {
     {
       title: '店铺定制价格',
       name: 'shopCustomizePrice',
-      widget: 'inputNumber',
+      widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [
         { required: true, message: '请填写店铺定制价格', trigger: 'blur' },
       ],
@@ -108,7 +117,10 @@ export const editFields = () => {
     {
       title: '库存',
       name: 'skuNum',
-      widget: 'inputNumber',
+      xProps: {
+        ext: '件',
+      },
+      widget: 'text',
       rules: [{ required: true, message: '请填写库存', trigger: 'blur' }],
     },
   ]

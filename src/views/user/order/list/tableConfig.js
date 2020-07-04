@@ -3,16 +3,16 @@ import { OneLineText, FormatTime } from '@/components/CellTools.jsx'
 export function tableListCols(vm) {
   return [
     {
-      label: '订单Id',
-      prop: 'orderId',
-      width: 150,
+      label: '订单号',
+      prop: 'orderNumber',
+      width: 200,
       component: {
         props: { row: Object },
         render() {
           return (
             <router-link
               to={{ name: 'orderProfile', params: { id: this.row.orderId } }}>
-              <el-button type="text">{this.row.orderId}</el-button>
+              <el-button type="text">{this.row.orderNumber}</el-button>
             </router-link>
           )
         },

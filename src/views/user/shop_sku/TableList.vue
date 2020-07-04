@@ -20,12 +20,12 @@
         />
       </EffectForm>
     </el-card>
-    <el-card class="Mt15">
+    <div class="sku_contnet">
       <!-- <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
         新增店铺Sku
       </el-button> -->
 
-      <Txcel
+      <!-- <Txcel
         v-loading="mixTableLoading"
         element-loading-text="数据加载中"
         class="Txcel"
@@ -38,8 +38,31 @@
           total: tableTotal,
         }"
         @change="handleTableChange"
-      />
-    </el-card>
+      /> -->
+      <el-row :gutter="20">
+        <el-col :span="4" v-for="sku in tableList" :key="sku.skuId">
+          <el-card class="sku_card">
+            <div class="sc_img_box">
+              <img :src="imgUrl + sku.thumb" alt="" @click="goView(sku)" />
+            </div>
+            <div @click="goView(sku)">
+              <h1>{{ sku.skuName }}</h1>
+
+              <div class="sc_price">
+                <p style="font-weight: bold">
+                  <span>￥</span>
+                  <i>{{ sku.shopSalePrice }}</i>
+                </p>
+                <p>
+                  <span>￥</span>
+                  <i class="sc_rprice">{{ sku.recommendSalePrice }}</i>
+                </p>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -55,6 +78,8 @@ import {
 } from '@/apis'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
+import { IMG_URL } from '@/config'
+import ShowForm from './ShowForm'
 import { filterFields } from './formConfig'
 
 const table = tableMixins({
@@ -71,6 +96,9 @@ export default {
   },
 
   computed: {
+    imgUrl() {
+      return IMG_URL
+    },
     fetchTableListMethod() {
       return fetchShopUserSkuList
     },
@@ -93,6 +121,17 @@ export default {
       subscribe('onFieldChange', 'categoryId', (value, form) => {
         this.handleFilter(form)
       })
+    },
+
+    goView(row) {
+      this.$createDialog(
+        {
+          fullscreen: true,
+          footer: false,
+        },
+        () => <ShowForm meta={row} />
+      ).show()
+      // this.$router.push({ name: 'showSku' })
     },
     addItem() {
       this.$createDialog(
@@ -165,4 +204,47 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.sku_contnet {
+  .sku_card {
+    cursor: pointer;
+    margin-top: 15px;
+    &:hover {
+      box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.1) !important;
+    }
+    .sc_img_box {
+      width: 100%;
+      padding-bottom: 100%;
+      position: relative;
+    }
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    h1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 10px 0 6px;
+    }
+    h2 {
+    }
+    .sc_price {
+      display: flex;
+      justify-content: space-between;
+      p {
+        font-size: 16px;
+        color: #333;
+      }
+      span {
+        font-size: 12px;
+      }
+      .sc_rprice {
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+</style>

@@ -1,12 +1,12 @@
 export function tableListCols(vm) {
   return [
+    // {
+    //   label: '分类Id',
+    //   width: 200,
+    //   prop: 'categoryId',
+    // },
     {
-      label: '分类Id',
-      width: 200,
-      prop: 'categoryId',
-    },
-    {
-      label: '性别',
+      label: '男装/女装',
       prop: 'gender',
       width: 200,
       component: {
@@ -14,9 +14,9 @@ export function tableListCols(vm) {
         render() {
           let showNode = ''
           if (this.row.gender === 1) {
-            showNode = '男'
+            showNode = '男装'
           } else if (this.row.gender === 2) {
-            showNode = '女'
+            showNode = '女装'
           }
           return <p>{showNode}</p>
         },

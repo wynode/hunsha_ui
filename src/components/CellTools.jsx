@@ -56,7 +56,7 @@ export const AddCm = ({ props }) => {
     column: { prop },
   } = props
 
-  const render = `${row[prop]}cm`
+  const render = row[prop] ? `${row[prop]}cm` : ''
 
   return <div>{render}</div>
 }
@@ -67,7 +67,7 @@ export const AddCi = ({ props }) => {
     column: { prop },
   } = props
 
-  const render = `${row[prop]}次`
+  const render = row[prop] ? `${row[prop]}次` : ''
 
   return <div>{render}</div>
 }
@@ -78,7 +78,7 @@ export const AddYuan = ({ props }) => {
     column: { prop },
   } = props
 
-  const render = `${row[prop]}元`
+  const render = row[prop] ? `${row[prop]}元` : ''
 
   return <div>{render}</div>
 }
@@ -89,7 +89,7 @@ export const AddJian = ({ props }) => {
     column: { prop },
   } = props
 
-  const render = `${row[prop]}件`
+  const render = row[prop] ? `${row[prop]}件` : ''
 
   return <div>{render}</div>
 }
@@ -100,7 +100,7 @@ export const AddKg = ({ props }) => {
     column: { prop },
   } = props
 
-  const render = `${row[prop]}kg`
+  const render = row[prop] ? `${row[prop]}kg` : ''
 
   return <div>{render}</div>
 }
@@ -111,7 +111,7 @@ export const AddTian = ({ props }) => {
     column: { prop },
   } = props
 
-  const render = `${row[prop]}天`
+  const render = row[prop] ? `${row[prop]}天` : ''
 
   return <div>{render}</div>
 }

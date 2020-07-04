@@ -9,8 +9,35 @@
             style="width: 30px; height: 30px;margin-left: -20px; margin-right: 8px"
           />
         </a>
-        {{ isAdmin ? '店铺' : '用户' }}管理后台
+        {{ isAdmin ? '店铺' : '店员' }}管理后台
       </p>
+
+      <ul class="header_shop_info" v-if="!isAdmin">
+        <li>
+          店铺名称:
+          <span>{{ shopInfo.shopName }}</span>
+        </li>
+        <li>
+          店铺编码:
+          <span>{{ shopInfo.shopCode }}</span>
+        </li>
+        <li>
+          联系人名称:
+          <span>{{ shopInfo.contact }}</span>
+        </li>
+        <li>
+          联系电话:
+          <span>{{ shopInfo.phone }}</span>
+        </li>
+        <li>
+          店铺地址:
+          <span>{{ shopInfo.address }}</span>
+        </li>
+        <li>
+          备注:
+          <span>{{ shopInfo.note }}</span>
+        </li>
+      </ul>
 
       <el-dropdown class="Mla" trigger="click">
         <div v-if="isLoggedIn" class="Curp">
@@ -88,7 +115,7 @@ import { mapGetters } from 'vuex'
 import AsideMenu from '@/components/AsideMenu.vue'
 import HeaderBoard from '@/components/HeaderBoard.vue'
 import { userMenusConfig, adminMenusConfig } from './menusConfig'
-import { patchShopUserPassword } from '@/apis'
+import { patchShopUserPassword, fetchShopInfo } from '@/apis'
 import store from 'store2'
 import { AUTH_TOKEN } from '@/config'
 import EditForm from './EditForm'
@@ -104,6 +131,7 @@ export default {
   data() {
     return {
       menuCollapse: false,
+      shopInfo: {},
     }
   },
 
@@ -170,11 +198,29 @@ export default {
         window.location.replace('/user/login')
       }
     }
+    if (!window.location.href.includes('/admin')) {
+      fetchShopInfo().then((data) => {
+        this.shopInfo = data.result
+      })
+    }
   },
 }
 </script>
 
 <style lang="scss">
+.header_shop_info {
+  display: flex;
+  li {
+    color: #999;
+    margin-left: 40px;
+    &:first-child {
+      margin-left: 18px;
+    }
+    span {
+      color: #333;
+    }
+  }
+}
 .bgh {
   // background-color: #0b6fd6;
   background-color: #fff;

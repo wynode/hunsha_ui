@@ -26,8 +26,8 @@ export default {
       default: null,
     },
     routerId: {
-      type: String,
-      default: '',
+      type: Number,
+      default: 0,
     },
   },
 
