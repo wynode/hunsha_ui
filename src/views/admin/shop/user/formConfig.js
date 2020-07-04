@@ -1,5 +1,24 @@
-export const addFields = () => {
+export const filterFields = () => {
   return [
+    {
+      // title: '店铺Id',
+      name: 'shopId',
+      widget: 'text',
+      xProps: {
+        placeholder: '店铺Id',
+      },
+    },
+  ]
+}
+
+export const addFields = (vm) => {
+  const cols = [
+    {
+      title: '店铺Id',
+      name: 'shopId',
+      widget: 'text',
+      rules: [{ required: true, message: '请填写店铺Id', trigger: 'blur' }],
+    },
     {
       title: '店员账号',
       name: 'account',
@@ -34,6 +53,11 @@ export const addFields = () => {
       rules: [{ required: true, message: '请填写联系电话', trigger: 'blur' }],
     },
   ]
+  if (vm.routerId) {
+    return cols.slice(1)
+  } else {
+    return cols
+  }
 }
 
 export const editFields = () => {

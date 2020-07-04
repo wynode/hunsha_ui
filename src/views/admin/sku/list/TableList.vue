@@ -5,8 +5,10 @@
         ref="effectForm"
         inline
         size="small"
-        label-position="top"
-        cancelText="重置"
+        label-position="left"
+        class="table_filter"
+        submitText="搜索"
+        cancelText="刷新"
         @submit="handleFilter"
         @cancel="handleFilterReset"
       >
@@ -48,9 +50,11 @@ import {
   postSku,
   patchSku,
   deleteSku,
+  fetchSkuCategoryList,
 } from '@/apis'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
+import ShowForm from './ShowForm'
 import { filterFields } from './formConfig'
 
 const table = tableMixins({
@@ -63,7 +67,7 @@ export default {
   mixins: [table],
 
   data() {
-    return {}
+    return { skuCategory: [] }
   },
 
   computed: {
@@ -91,7 +95,15 @@ export default {
               const { effectForm } = slotRef.$refs
               if (await effectForm.useValidator()) {
                 const form = effectForm.getForm()
-                await postSku(form)
+                let payload = {}
+                Object.keys(form).forEach((item) => {
+                  if (item.includes('Price')) {
+                    payload[item] = Math.round(form[item] * 100)
+                  } else {
+                    payload[item] = form[item]
+                  }
+                })
+                await postSku(payload)
                 this.fetchTableList(this.filtersCache)
                 this.$notify.success('新增成功')
                 instance.close()
@@ -101,6 +113,17 @@ export default {
         },
         () => <EditForm />
       ).show()
+    },
+
+    showItem(row) {
+      this.$createDialog(
+        {
+          fullscreen: true,
+          footer: false,
+        },
+        () => <ShowForm meta={row} />
+      ).show()
+      // this.$router.push({ name: 'showSku' })
     },
 
     modifyItem(row) {
@@ -113,9 +136,17 @@ export default {
             const { effectForm } = slotRef.$refs
             if (await effectForm.useValidator()) {
               const form = effectForm.getForm()
+              let payload = {}
+              Object.keys(form).forEach((item) => {
+                if (item.includes('Price')) {
+                  payload[item] = Math.round(form[item] * 100)
+                } else {
+                  payload[item] = form[item]
+                }
+              })
               await patchSku({
                 skuId: row.skuId,
-                ...form,
+                ...payload,
               })
               this.fetchTableList(this.filtersCache)
               this.$notify.success('修改成功')
@@ -144,7 +175,22 @@ export default {
   },
 
   mounted() {
-    this.fetchTableList()
+    const { categoryId } = this.$route.query
+    if (categoryId) {
+      this.$nextTick(() => {
+        const { getForm, setForm } = this.$refs.effectForm
+        if (categoryId) {
+          setForm('categoryId', Number(categoryId))
+        }
+        const data = getForm()
+        this.fetchTableList(data)
+      })
+    } else {
+      this.fetchTableList()
+    }
+    fetchSkuCategoryList().then((data) => {
+      this.skuCategory = data.result.list
+    })
   },
 }
 </script>

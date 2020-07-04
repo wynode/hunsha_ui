@@ -2,12 +2,13 @@ export function tableListCols(vm) {
   return [
     {
       label: '分类Id',
-      width: 120,
+      width: 200,
       prop: 'categoryId',
     },
     {
       label: '性别',
       prop: 'gender',
+      width: 200,
       component: {
         props: { row: Object },
         render() {
@@ -25,10 +26,27 @@ export function tableListCols(vm) {
       label: '分类名称',
       prop: 'categoryName',
     },
+    {
+      label: 'sku列表',
+      component: {
+        props: { row: Object },
+        render() {
+          return (
+            <router-link
+              to={{
+                name: 'skuList',
+                query: { categoryId: this.row.categoryId },
+              }}>
+              <el-button type="text">sku列表</el-button>
+            </router-link>
+          )
+        },
+      },
+    },
 
     {
       label: '操作',
-      width: 150,
+      width: 200,
       component: {
         props: { row: Object },
         render() {

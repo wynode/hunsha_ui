@@ -28,7 +28,7 @@
           <el-dropdown-item class="Px0">
             <a
               class="Db Px20"
-              :href="isAdmin ? 'admin/logout' : '/user/logout'"
+              :href="isAdmin ? '/admin/logout' : '/user/logout'"
             >
               退出
             </a>

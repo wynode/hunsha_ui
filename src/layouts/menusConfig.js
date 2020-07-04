@@ -3,22 +3,48 @@ export const adminMenusConfig = () => {
     {
       title: '店铺管理',
       icon: 'el-icon-s-shop',
-      router: { name: 'shopList' },
+      children: [
+        {
+          title: '店铺管理',
+          router: { name: 'shopList' },
+        },
+        // {
+        //   title: '店铺sku管理',
+        //   router: { name: 'shopSkuList' },
+        // },
+        {
+          title: '店铺员工管理',
+          router: { name: 'shopUserList' },
+        },
+      ],
     },
     {
-      title: '商品订单管理',
+      title: '订单管理',
       icon: 'el-icon-s-order',
-      router: { name: 'adminOrderList' },
+      children: [
+        {
+          title: '订单管理',
+          router: { name: 'adminOrderList' },
+        },
+        {
+          title: '订单sku管理',
+          router: { name: 'adminOrderSku' },
+        },
+      ],
     },
     {
       title: 'Sku管理',
       icon: 'el-icon-s-goods',
-      router: { name: 'skuList' },
-    },
-    {
-      title: 'Sku分类管理',
-      icon: 'el-icon-info',
-      router: { name: 'skuCategory' },
+      children: [
+        {
+          title: 'Sku列表',
+          router: { name: 'skuList' },
+        },
+        {
+          title: 'Sku分类管理',
+          router: { name: 'skuCategory' },
+        },
+      ],
     },
   ]
 }
@@ -33,7 +59,7 @@ export const userMenusConfig = () => {
     {
       title: '店铺Sku管理',
       icon: 'el-icon-s-goods',
-      router: { name: 'shopSkuList' },
+      router: { name: 'userShopSkuList' },
     },
     // {
     //   title: '店铺人员管理',

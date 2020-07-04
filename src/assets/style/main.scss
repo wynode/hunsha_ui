@@ -25,6 +25,20 @@ body {
 .g_search {
   width: 40%;
 }
+.table_filter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-bottom: 10px;
+  .el-form-item {
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+  .effect_btn_group {
+    margin-top: 10px;
+  }
+}
 
 .Txcel {
   width: 100%;
@@ -54,7 +68,9 @@ body {
     text-align: right;
   }
 }
-
+.el-link {
+  margin: 12px 0;
+}
 .BoxShadow {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }

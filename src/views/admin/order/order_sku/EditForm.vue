@@ -6,6 +6,7 @@
       label-position="left"
       label-width="auto"
       :needToolBtnGroup="false"
+      class="shop_sku_form"
     >
       <EffectFormField
         v-for="field in formFields"
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { fetchSkuList } from '@/apis'
+// import { fetchShopUserSkuList } from '@/apis'
 import { editFields, addFields } from './formConfig'
 
 export default {
@@ -25,10 +26,6 @@ export default {
     meta: {
       type: Object,
       default: null,
-    },
-    routerId: {
-      type: String,
-      default: '',
     },
   },
 
@@ -40,7 +37,7 @@ export default {
 
   data() {
     return {
-      skuList: [],
+      shopSkuList: [],
     }
   },
 
@@ -62,21 +59,46 @@ export default {
     },
   },
 
-  // methods: {
-  //   handleFormEffects(subscribe) {
-  //     subscribe('onFieldInit', (fields) => {
-  //       if (this.meta) {
-  //         fields.adminAccount.ifRender = false
-  //       }
-  //     })
-  //   },
-  // },
-  created() {
-    fetchSkuList().then((data) => {
-      this.skuList = data.result.list
-    })
+  methods: {
+    handleFormEffects(subscribe, { setFieldState }) {
+      subscribe('onFieldChange', 'dealType', (value) => {
+        setFieldState('rentNum', (proRef) => {
+          proRef.ifRender = value === 2
+        })
+        setFieldState('rentDepositNum', (proRef) => {
+          proRef.ifRender = value === 2
+        })
+      })
+    },
   },
+
+  // created() {
+  //   fetchShopUserSkuList().then((data) => {
+  //     this.shopSkuList = data.result.list
+  //   })
+  // },
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.shop_sku_form {
+  display: flex;
+  flex-wrap: wrap;
+  .el-form-item {
+    margin-bottom: 18px;
+    margin-left: 40px;
+  }
+  .el-input__inner {
+    width: 140px;
+  }
+  .el-select {
+    width: 320px;
+    .el-input__inner {
+      width: 100%;
+    }
+  }
+  .el-textarea__inner {
+    width: 390px;
+  }
+}
+</style>

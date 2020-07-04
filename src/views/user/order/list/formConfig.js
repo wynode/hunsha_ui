@@ -1,9 +1,12 @@
 export const filterFields = () => {
   return [
     {
-      title: '店铺编码或者店铺名称',
+      // title: '店铺编码或者店铺名称',
       name: 'keyword',
       widget: 'text',
+      xProps: {
+        placeholder: '店铺编码或名称',
+      },
     },
   ]
 }

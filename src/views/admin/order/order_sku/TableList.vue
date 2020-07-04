@@ -1,16 +1,17 @@
 <template>
   <div>
-    <el-card class="table_filter" v-if="!this.routerId">
+    <el-card>
       <EffectForm
         ref="effectForm"
         inline
         size="small"
         label-position="left"
+        class="table_filter"
         submitText="搜索"
         cancelText="刷新"
-        class="table_filter"
         @submit="handleFilter"
         @cancel="handleFilterReset"
+        :effects="handleFormEffects"
       >
         <EffectFormField
           v-for="field in filterFields"
@@ -19,11 +20,10 @@
         />
       </EffectForm>
     </el-card>
-
-    <el-card :class="{ Mt15: !this.routerId }">
-      <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
-        新增店铺sku
-      </el-button>
+    <el-card class="Mt15">
+      <!-- <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
+        新增订单sku
+      </el-button> -->
 
       <Txcel
         v-loading="mixTableLoading"
@@ -46,34 +46,36 @@
 <script>
 import tableMixins from '@/mixins/table'
 import {
-  fetchShopSkuList,
-  // fetchShopSku,
-  postShopSku,
-  patchShopSku,
-  deleteShopSku,
+  fetchAdminShopOrderSkuList,
+  // fetchAdminShopOrderSku,
+  postAdminShopOrderSku,
+  patchAdminShopOrderSku,
+  deleteAdminShopOrderSku,
 } from '@/apis'
+import { getStatusOptions } from '@/utils/common'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
-import { filterFields } from './formConfig'
+import { filterFields, filtersMutation } from './formConfig'
 
 const table = tableMixins({
   pagerInit: { page: 1, page_size: 10 },
+  filtersMutateInit: filtersMutation,
 })
 
 export default {
-  name: 'ShopSkuList',
+  name: 'adminOrderListSku',
 
   mixins: [table],
 
   data() {
     return {
-      routerId: '',
+      statusList: [],
     }
   },
 
   computed: {
     fetchTableListMethod() {
-      return fetchShopSkuList
+      return fetchAdminShopOrderSkuList
     },
 
     tableListCols() {
@@ -86,25 +88,27 @@ export default {
   },
 
   methods: {
+    handleFormEffects(subscribe) {
+      subscribe('onFieldChange', 'dealType', (value, form) => {
+        form.status = []
+        this.statusList = getStatusOptions(value)
+      })
+    },
+
     addItem() {
       this.$createDialog(
         {
-          title: '新增店铺Sku',
+          title: '新增订单Sku',
           width: '600px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
               const { effectForm } = slotRef.$refs
               if (await effectForm.useValidator()) {
                 const form = slotRef.$refs.effectForm.getForm()
-                let payload = {}
-                Object.keys(form).forEach((item) => {
-                  if (item.includes('Price')) {
-                    payload[item] = Math.round(form[item] * 100)
-                  } else {
-                    payload[item] = form[item]
-                  }
+                await postAdminShopOrderSku({
+                  orderId: this.$route.params.id,
+                  ...form,
                 })
-                await postShopSku({ shopId: this.$route.params.id, ...payload })
                 this.fetchTableList(this.filtersCache)
                 this.$notify.success('新增成功')
                 instance.close()
@@ -112,29 +116,39 @@ export default {
             }
           },
         },
-        () => <EditForm routerId={this.routerId} />
+        () => <EditForm />
+      ).show()
+    },
+
+    showItem(row) {
+      this.$createDialog(
+        {
+          title: '查看订单Sku详情',
+          width: '600px',
+          validate: false,
+          showCancelBtn: false,
+          top: '20vh',
+          onSubmit: async (instance) => {
+            instance.close()
+          },
+        },
+        () => <EditForm meta={row} />
       ).show()
     },
 
     modifyItem(row) {
       this.$createDialog(
         {
-          title: '更新店铺Sku',
+          title: '查看订单Sku详情',
           width: '600px',
           validate: false,
+          showCancelBtn: false,
+          top: '20vh',
           onSubmit: async (instance, slotRef) => {
             const form = slotRef.$refs.effectForm.getForm()
-            let payload = {}
-            Object.keys(form).forEach((item) => {
-              if (item.includes('Price')) {
-                payload[item] = Math.round(form[item] * 100)
-              } else {
-                payload[item] = form[item]
-              }
-            })
-            await patchShopSku({
-              usageId: row.usageId,
-              ...payload,
+            await patchAdminShopOrderSku({
+              orderSkuId: row.orderSkuId,
+              ...form,
             })
             this.fetchTableList(this.filtersCache)
             this.$notify.success('修改成功')
@@ -154,7 +168,7 @@ export default {
       })
 
       if (ifDel) {
-        await deleteShopSku({ usageId: row.usageId })
+        await deleteAdminShopOrderSku({ orderSkuId: row.orderSkuId })
         this.$notify.success('删除成功')
         this.fetchTableList(this.filtersCache)
       }
@@ -162,13 +176,7 @@ export default {
   },
 
   mounted() {
-    const { id } = this.$route.params
-    this.routerId = id
-    if (id) {
-      this.fetchTableList({ shopId: id })
-    } else {
-      this.fetchTableList()
-    }
+    this.fetchTableList()
   },
 }
 </script>

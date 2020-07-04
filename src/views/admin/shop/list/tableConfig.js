@@ -22,7 +22,7 @@ export function tableListCols(vm) {
           return (
             <router-link
               to={{ name: 'shopProfile', params: { id: this.row.shopId } }}>
-              <el-button type="text">{this.row.shopName}</el-button>
+              <el-link type="primary">{this.row.shopName}</el-link>
             </router-link>
           )
         },

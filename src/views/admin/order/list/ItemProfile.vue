@@ -13,7 +13,7 @@
     </el-card>
     <el-card class="profile_second_card">
       <el-tabs v-model="activeTab" class="profile_second_tabs">
-        <el-tab-pane label="订单Sku管理" name="sku"></el-tab-pane>
+        <el-tab-pane label="订单Sku" name="sku"></el-tab-pane>
         <component :is="activeTab"></component>
       </el-tabs>
     </el-card>

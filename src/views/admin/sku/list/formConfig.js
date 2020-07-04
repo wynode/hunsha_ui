@@ -1,9 +1,27 @@
-export const filterFields = () => {
+export const filterFields = (vm) => {
   return [
     {
-      title: 'sku名称',
+      // title: 'sku名称',
       name: 'keyword',
       widget: 'text',
+      xProps: {
+        placeholder: 'sku名称',
+      },
+    },
+    {
+      // title: 'sku分类',
+      name: 'categoryId',
+      widget: 'select',
+      xProps: {
+        filterable: true,
+        placeholder: 'sku分类',
+        options: vm.skuCategory.map((item) => {
+          return {
+            label: item.categoryName,
+            value: item.categoryId,
+          }
+        }),
+      },
     },
   ]
 }
@@ -29,12 +47,14 @@ export const addFields = (vm) => {
       title: 'sku名称',
       name: 'skuName',
       widget: 'text',
+
       rules: [{ required: true, message: '请填写sku名称', trigger: 'blur' }],
     },
     {
       title: 'sku编码',
       name: 'skuCode',
       widget: 'text',
+
       rules: [{ required: true, message: '请填写sku编码', trigger: 'blur' }],
     },
     {
@@ -51,6 +71,7 @@ export const addFields = (vm) => {
       title: '简介',
       name: 'brief',
       widget: 'text',
+
       xProps: {
         type: 'textarea',
         autosize: { minRows: 2 },
@@ -61,54 +82,81 @@ export const addFields = (vm) => {
       title: '进货成本价',
       name: 'costPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写进货成本价', trigger: 'blur' }],
     },
     {
       title: '建议售出价',
       name: 'recommendSalePrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写建议售出价', trigger: 'blur' }],
     },
     {
       title: '租赁成本价',
       name: 'rentCostPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写租赁成本价', trigger: 'blur' }],
     },
     {
       title: '建议租赁价',
       name: 'recommendRentPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写建议租赁价', trigger: 'blur' }],
     },
     {
       title: '定制成本价',
       name: 'customizeCostPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写定制成本价', trigger: 'blur' }],
     },
     {
       title: '建议定制价',
       name: 'recommendCustomizePrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写建议定制价', trigger: 'blur' }],
     },
     {
       title: '销售总次数',
       name: 'saleTimes',
       widget: 'text',
+      xProps: {
+        ext: '次',
+      },
       rules: [{ required: true, message: '请填写销售总次数', trigger: 'blur' }],
     },
     {
       title: '租赁总次数',
       name: 'rentTimes',
       widget: 'text',
+      xProps: {
+        ext: '次',
+      },
       rules: [{ required: true, message: '请填写租赁总次数', trigger: 'blur' }],
     },
     {
       title: '定制总次数',
       name: 'customizeTimes',
       widget: 'text',
+      xProps: {
+        ext: '次',
+      },
       rules: [{ required: true, message: '请填写定制总次数', trigger: 'blur' }],
     },
     {
@@ -127,6 +175,7 @@ export const editFields = () => {
       title: 'sku名称',
       name: 'skuName',
       widget: 'text',
+
       rules: [{ required: true, message: '请填写sku名称', trigger: 'blur' }],
     },
     {
@@ -143,6 +192,7 @@ export const editFields = () => {
       title: '简介',
       name: 'brief',
       widget: 'text',
+
       xProps: {
         type: 'textarea',
         autosize: { minRows: 2 },
@@ -153,54 +203,81 @@ export const editFields = () => {
       title: '进货成本价',
       name: 'costPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写进货成本价', trigger: 'blur' }],
     },
     {
       title: '建议售出价',
       name: 'recommendSalePrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写建议售出价', trigger: 'blur' }],
     },
     {
       title: '租赁成本价',
       name: 'rentCostPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写租赁成本价', trigger: 'blur' }],
     },
     {
       title: '建议租赁价',
       name: 'recommendRentPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写建议租赁价', trigger: 'blur' }],
     },
     {
       title: '定制成本价',
       name: 'customizeCostPrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写定制成本价', trigger: 'blur' }],
     },
     {
       title: '建议定制价',
       name: 'recommendCustomizePrice',
       widget: 'text',
+      xProps: {
+        ext: '元',
+      },
       rules: [{ required: true, message: '请填写建议定制价', trigger: 'blur' }],
     },
     {
       title: '销售总次数',
       name: 'saleTimes',
       widget: 'text',
+      xProps: {
+        ext: '次',
+      },
       rules: [{ required: true, message: '请填写销售总次数', trigger: 'blur' }],
     },
     {
       title: '租赁总次数',
       name: 'rentTimes',
       widget: 'text',
+      xProps: {
+        ext: '次',
+      },
       rules: [{ required: true, message: '请填写租赁总次数', trigger: 'blur' }],
     },
     {
       title: '定制总次数',
       name: 'customizeTimes',
       widget: 'text',
+      xProps: {
+        ext: '次',
+      },
       rules: [{ required: true, message: '请填写定制总次数', trigger: 'blur' }],
     },
     {

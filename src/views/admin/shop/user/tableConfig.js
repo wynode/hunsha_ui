@@ -1,14 +1,14 @@
 // import { FormatTime } from '@/components/CellTools.jsx'
 
 export function tableListCols(vm) {
-  return [
+  const cols = [
+    {
+      label: '店铺Id',
+      prop: 'shopId',
+    },
     {
       label: '店员账号',
       prop: 'account',
-    },
-    {
-      label: '密码',
-      prop: 'password',
     },
     {
       label: '店员名称',
@@ -71,4 +71,9 @@ export function tableListCols(vm) {
       },
     }, // 操作
   ]
+  if (vm.routerId) {
+    return cols.slice(1)
+  } else {
+    return cols
+  }
 }

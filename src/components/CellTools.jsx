@@ -1,4 +1,4 @@
-import { splite, textCutOff } from '@/utils/common'
+import { splite, textCutOff, getStatus } from '@/utils/common'
 import { dateFormat } from '@/utils/dateFormat'
 // import parseHTMLDom from '@/utils/parseHTMLDom'
 
@@ -18,6 +18,16 @@ export const DatetimeCell = ({ props }) => {
   )
 }
 
+export const PriceFormat = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+  const price = row[prop] / 100
+
+  return <div>{price ? price : ''}</div>
+}
+
 export const FormatTime = ({ props }) => {
   const {
     row,
@@ -29,6 +39,17 @@ export const FormatTime = ({ props }) => {
   return <div>{date}</div>
 }
 
+export const TransStatus = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+
+  const statusS = getStatus(row[prop], row.dealType)
+
+  return <div>{statusS}</div>
+}
+
 export const AddCm = ({ props }) => {
   const {
     row,
@@ -36,6 +57,17 @@ export const AddCm = ({ props }) => {
   } = props
 
   const render = `${row[prop]}cm`
+
+  return <div>{render}</div>
+}
+
+export const AddCi = ({ props }) => {
+  const {
+    row,
+    column: { prop },
+  } = props
+
+  const render = `${row[prop]}次`
 
   return <div>{render}</div>
 }

@@ -17,19 +17,19 @@ export const addFields = () => {
     //   rules: [{ required: true, message: '请选择sku', trigger: 'blur' }],
     // },
     // {
-    //   title: '销售类型',
+    //   title: '订单类型',
     //   name: 'dealType',
     //   widget: 'select',
 
     //   xProps: {
     //     filterable: true,
     //     options: [
-    //       { label: '销售', value: 1 },
+    //       { label: '出售', value: 1 },
     //       { label: '租赁', value: 2 },
     //       { label: '定制', value: 3 },
     //     ],
     //   },
-    //   rules: [{ required: true, message: '请选择销售类型', trigger: 'blur' }],
+    //   rules: [{ required: true, message: '请选择订单类型', trigger: 'blur' }],
     // },
     // {
     //   title: '客户身高',
@@ -203,19 +203,19 @@ export const editFields = () => {
     //   rules: [{ required: true, message: '请选择sku', trigger: 'blur' }],
     // },
     // {
-    //   title: '销售类型',
+    //   title: '订单类型',
     //   name: 'dealType',
     //   widget: 'select',
 
     //   xProps: {
     //     filterable: true,
     //     options: [
-    //       { label: '销售', value: 1 },
+    //       { label: '出售', value: 1 },
     //       { label: '租赁', value: 2 },
     //       { label: '定制', value: 3 },
     //     ],
     //   },
-    //   rules: [{ required: true, message: '请选择销售类型', trigger: 'blur' }],
+    //   rules: [{ required: true, message: '请选择订单类型', trigger: 'blur' }],
     // },
     // {
     //   title: '客户身高',

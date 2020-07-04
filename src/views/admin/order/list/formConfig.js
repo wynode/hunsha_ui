@@ -1,12 +1,54 @@
 export const filterFields = () => {
   return [
     {
-      title: '店铺编码或者店铺名称',
-      name: 'keyword',
+      // title: '店铺Id',
+      name: 'shopId',
       widget: 'text',
+      xProps: {
+        placeholder: '店铺Id',
+      },
+    },
+    // {
+    //   // title: '店员Id',
+    //   name: 'shopUserId',
+    //   widget: 'text',
+    //   xProps: {
+    //     placeholder: '店员Id',
+    //   },
+    // },
+    {
+      // title: '订单号',
+      name: 'orderNumber',
+      widget: 'text',
+      xProps: {
+        placeholder: '店铺Id',
+      },
+    },
+    {
+      // title: '录入时间',
+      name: 'dateTimeRange',
+      widget: 'datetimepicker',
+      xProps: {
+        type: 'datetimerange',
+        startPlaceholder: '录入开始时间',
+        endPlaceholder: '录入结束时间',
+        'value-format': 'yyyy-MM-dd HH:mm:ss',
+      },
+    },
+    {
+      // title: '预期收货时间',
+      name: 'receiveDateTimeRange',
+      widget: 'datetimepicker',
+      xProps: {
+        type: 'datetimerange',
+        startPlaceholder: '预期收货开始时间',
+        endPlaceholder: '预期收货时间结束时间',
+        'value-format': 'yyyy-MM-dd HH:mm:ss',
+      },
     },
   ]
 }
+
 export const addFields = () => {
   return [
     {

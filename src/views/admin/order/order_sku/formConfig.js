@@ -1,3 +1,67 @@
+// import { dateFormat } from '@/utils/dateFormat'
+import Mutation from '@what-a-faka/obj-mutation'
+import { join } from '@/utils/common'
+export const filtersMutation = new Mutation({
+  status: { format: join },
+})
+
+export const filterFields = (vm) => {
+  return [
+    {
+      // title: '订单Id',
+      name: 'orderId',
+      widget: 'text',
+      xProps: {
+        placeholder: '订单Id',
+      },
+    },
+    {
+      // title: 'skuId',
+      name: 'skuId',
+      widget: 'text',
+      xProps: {
+        placeholder: 'skuId',
+      },
+    },
+    {
+      // title: '订单类型',
+      name: 'dealType',
+      widget: 'select',
+      xProps: {
+        filterable: true,
+        placeholder: '订单类型',
+        options: [
+          { label: '出售', value: 1 },
+          { label: '租赁', value: 2 },
+          { label: '定制', value: 3 },
+        ],
+      },
+    },
+    {
+      // title: '销售状态',
+      name: 'status',
+      widget: 'select',
+      xProps: {
+        placeholder: '销售状态',
+        multiple: true,
+        filterable: true,
+        options: vm.statusList,
+      },
+    },
+    {
+      // title: '录入时间',
+      name: 'dateTimeRange',
+      widget: 'datetimepicker',
+      xProps: {
+        startPlaceholder: '录入开始时间',
+        endPlaceholder: '录入结束时间',
+        type: 'datetimerange',
+        'value-format': 'yyyy-MM-dd HH:mm:ss',
+      },
+    },
+  ]
+}
+
 export const addFields = (vm) => {
   return [
     {
@@ -52,7 +116,7 @@ export const addFields = (vm) => {
     {
       title: '衣长',
       name: 'clothesLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -60,7 +124,7 @@ export const addFields = (vm) => {
     {
       title: '袖长',
       name: 'sleeveLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -68,7 +132,7 @@ export const addFields = (vm) => {
     {
       title: '肩宽',
       name: 'shoulderWidth',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -76,7 +140,7 @@ export const addFields = (vm) => {
     {
       title: '胸围',
       name: 'bust',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -84,7 +148,7 @@ export const addFields = (vm) => {
     {
       title: '中腰',
       name: 'middleWaisted',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -92,7 +156,7 @@ export const addFields = (vm) => {
     {
       title: '下摆',
       name: 'hem',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -100,7 +164,7 @@ export const addFields = (vm) => {
     {
       title: '马甲',
       name: 'vest',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -108,7 +172,7 @@ export const addFields = (vm) => {
     {
       title: '裤长',
       name: 'trousersLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -116,7 +180,7 @@ export const addFields = (vm) => {
     {
       title: '腰围',
       name: 'waistLine',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -124,7 +188,7 @@ export const addFields = (vm) => {
     {
       title: '臀围',
       name: 'hipLine',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -132,7 +196,7 @@ export const addFields = (vm) => {
     {
       title: '大腿',
       name: 'thighLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -140,7 +204,7 @@ export const addFields = (vm) => {
     {
       title: '小腿',
       name: 'shankLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -187,7 +251,7 @@ export const addFields = (vm) => {
 export const editFields = (vm) => {
   return [
     {
-      title: 'skuName',
+      title: 'sku名称',
       name: 'skuId',
       widget: 'select',
 
@@ -215,12 +279,13 @@ export const editFields = (vm) => {
           { label: '定制', value: 3 },
         ],
       },
-      rules: [{ required: true, message: '请填写订单类型', trigger: 'blur' }],
+      rules: [{ required: true, message: '请选择订单类型', trigger: 'blur' }],
     },
     {
       title: '客户身高',
       name: 'customerHeight',
       widget: 'text',
+
       xProps: {
         ext: 'cm',
       },
@@ -229,6 +294,7 @@ export const editFields = (vm) => {
       title: '客户体重',
       name: 'customerWeight',
       widget: 'text',
+
       xProps: {
         ext: 'kg',
       },
@@ -236,7 +302,7 @@ export const editFields = (vm) => {
     {
       title: '衣长',
       name: 'clothesLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -244,7 +310,7 @@ export const editFields = (vm) => {
     {
       title: '袖长',
       name: 'sleeveLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -252,7 +318,7 @@ export const editFields = (vm) => {
     {
       title: '肩宽',
       name: 'shoulderWidth',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -260,7 +326,7 @@ export const editFields = (vm) => {
     {
       title: '胸围',
       name: 'bust',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -268,7 +334,7 @@ export const editFields = (vm) => {
     {
       title: '中腰',
       name: 'middleWaisted',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -276,7 +342,7 @@ export const editFields = (vm) => {
     {
       title: '下摆',
       name: 'hem',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -284,7 +350,7 @@ export const editFields = (vm) => {
     {
       title: '马甲',
       name: 'vest',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -292,7 +358,7 @@ export const editFields = (vm) => {
     {
       title: '裤长',
       name: 'trousersLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -300,7 +366,7 @@ export const editFields = (vm) => {
     {
       title: '腰围',
       name: 'waistLine',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -308,7 +374,7 @@ export const editFields = (vm) => {
     {
       title: '臀围',
       name: 'hipLine',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -316,7 +382,7 @@ export const editFields = (vm) => {
     {
       title: '大腿',
       name: 'thighLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },
@@ -324,7 +390,7 @@ export const editFields = (vm) => {
     {
       title: '小腿',
       name: 'shankLength',
-      widget: 'text',
+      widget: 'puretext',
       xProps: {
         ext: 'cm',
       },

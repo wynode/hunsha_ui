@@ -50,6 +50,42 @@ export const numberJoin = (raw, mixSymbl = ',') => {
   return join(raw, mixSymbl)
 }
 
+export const getStatusOptions = (delType) => {
+  if (delType === 1) {
+    return [
+      { label: '订单已付款', value: 0 },
+      { label: '已发货', value: 1 },
+      { label: '已收货', value: 2 },
+      { label: '已退款', value: -1 },
+    ]
+  } else if (delType === 2) {
+    return [
+      { label: '订单已付款', value: 0 },
+      { label: '已发货', value: 1 },
+      { label: '客户已收货', value: 2 },
+      { label: '客户退还商品', value: 3 },
+      { label: '已退款', value: -1 },
+    ]
+  } else if (delType === 3) {
+    return [
+      { label: '订单已付款', value: 0 },
+      { label: '已定制完成', value: 1 },
+      { label: '已收货', value: 2 },
+      { label: '已退款', value: -1 },
+    ]
+  }
+}
+
+export const getStatus = (status, delType) => {
+  let statusString = ''
+  getStatusOptions(delType).forEach((item) => {
+    if (item.value === status) {
+      statusString = item.label
+    }
+  })
+  return statusString
+}
+
 export const cascaderJoin = (raw, mixSymbl = ',') => {
   if (Array.isArray(raw)) {
     // NOTE 数组 v 可能为空，导致 dp 里最终数据可能会出现 undefined

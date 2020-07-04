@@ -1,11 +1,12 @@
 export const filterFields = (vm) => {
   return [
     {
-      title: 'sku分类',
+      // title: 'sku分类',
       name: 'categoryId',
       widget: 'select',
       xProps: {
         filterable: true,
+        placeholder: 'sku分类',
         options: vm.skuCategory.map((item) => {
           return {
             label: item.categoryName,

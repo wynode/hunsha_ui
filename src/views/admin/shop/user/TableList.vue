@@ -1,6 +1,26 @@
 <template>
   <div>
-    <el-card>
+    <el-card v-if="!this.routerId">
+      <EffectForm
+        ref="effectForm"
+        inline
+        size="small"
+        label-position="left"
+        class="table_filter"
+        submitText="搜索"
+        cancelText="刷新"
+        @submit="handleFilter"
+        @cancel="handleFilterReset"
+      >
+        <EffectFormField
+          v-for="field in filterFields"
+          v-bind="field"
+          :key="field.name"
+        />
+      </EffectForm>
+    </el-card>
+
+    <el-card :class="{ Mt15: !this.routerId }">
       <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
         新增店员
       </el-button>
@@ -34,6 +54,7 @@ import {
 } from '@/apis'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
+import { filterFields } from './formConfig'
 
 const table = tableMixins({
   pagerInit: { page: 1, page_size: 10 },
@@ -47,6 +68,7 @@ export default {
   data() {
     return {
       forbidden: false,
+      routerId: '',
     }
   },
 
@@ -57,6 +79,10 @@ export default {
 
     tableListCols() {
       return tableListCols(this)
+    },
+
+    filterFields() {
+      return filterFields(this)
     },
   },
 
@@ -91,7 +117,7 @@ export default {
             }
           },
         },
-        () => <EditForm />
+        () => <EditForm routerId={this.routerId} />
       ).show()
     },
 
@@ -137,7 +163,12 @@ export default {
 
   mounted() {
     const { id } = this.$route.params
-    this.fetchTableList({ shopId: id })
+    this.routerId = id
+    if (id) {
+      this.fetchTableList({ shopId: id })
+    } else {
+      this.fetchTableList()
+    }
   },
 }
 </script>

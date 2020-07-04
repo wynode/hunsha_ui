@@ -15,7 +15,7 @@ export function tableListCols(vm) {
       prop: 'skuName',
     },
     {
-      label: '销售类型',
+      label: '订单类型',
       width: 80,
       prop: 'dealType',
       component: {
@@ -23,7 +23,7 @@ export function tableListCols(vm) {
         render() {
           let node = ''
           if (this.row.dealType === 1) {
-            node = '销售'
+            node = '出售'
           } else if (this.row.dealType === 2) {
             node = '租赁'
           } else if (this.row.dealType === 3) {

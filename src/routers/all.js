@@ -11,6 +11,26 @@ export default [
     component: () => import('@/views/admin/shop/list/TableList.vue'),
   },
   {
+    path: '/admin/shop-sku',
+    name: 'shopSkuList',
+    meta: {
+      title: '店铺管理',
+      breadcrumb: ['店铺管理', '店铺sku列表'],
+      type: 'admin',
+    },
+    component: () => import('@/views/admin/shop/sku/TableList.vue'),
+  },
+  {
+    path: '/admin/shop-user',
+    name: 'shopUserList',
+    meta: {
+      title: '店铺管理',
+      breadcrumb: ['店铺管理', '店铺员工列表'],
+      type: 'admin',
+    },
+    component: () => import('@/views/admin/shop/user/TableList.vue'),
+  },
+  {
     path: '/admin/shop/:id',
     name: 'shopProfile',
     meta: {
@@ -25,7 +45,7 @@ export default [
     name: 'adminOrderList',
     meta: {
       title: '订单列表',
-      breadcrumb: ['商品订单管理', '订单列表'],
+      breadcrumb: ['订单管理', '订单列表'],
       type: 'admin',
     },
     component: () => import('@/views/admin/order/list/TableList.vue'),
@@ -35,13 +55,23 @@ export default [
     name: 'adminOrderProfile',
     meta: {
       title: '订单详情',
-      breadcrumb: ['商品订单管理', '订单详情'],
+      breadcrumb: ['订单管理', '订单详情'],
       type: 'admin',
     },
     component: () => import('@/views/admin/order/list/ItemProfile.vue'),
   },
   {
-    path: '/admin/sku',
+    path: '/admin/order-sku',
+    name: 'adminOrderSku',
+    meta: {
+      title: '订单sku列表',
+      breadcrumb: ['订单管理', '订单sku列表'],
+      type: 'admin',
+    },
+    component: () => import('@/views/admin/order/order_sku/TableList.vue'),
+  },
+  {
+    path: '/admin/sku-list',
     name: 'skuList',
     meta: {
       title: 'sku管理',
@@ -83,7 +113,7 @@ export default [
   },
   {
     path: '/user/shop-sku',
-    name: 'shopSkuList',
+    name: 'userShopSkuList',
     meta: {
       title: '店铺sku管理',
       breadcrumb: ['店铺sku管理'],

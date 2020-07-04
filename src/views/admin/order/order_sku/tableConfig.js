@@ -4,6 +4,7 @@ import {
   AddJian,
   AddKg,
   AddYuan,
+  TransStatus,
   FormatTime,
 } from '@/components/CellTools.jsx'
 
@@ -13,6 +14,11 @@ export function tableListCols(vm) {
       label: 'sku名称',
       width: 120,
       prop: 'skuName',
+    },
+    {
+      label: '所属订单',
+      width: 120,
+      prop: 'orderId',
     },
     {
       label: '订单类型',
@@ -142,12 +148,18 @@ export function tableListCols(vm) {
     {
       label: '录入时间',
       prop: 'addTime',
-      width: 180,
+      width: 160,
       component: FormatTime,
     },
     {
-      label: '查看详情',
-      width: 150,
+      label: '订单状态',
+      prop: 'status',
+      width: 140,
+      component: TransStatus,
+    },
+    {
+      label: '操作',
+      width: 140,
       component: {
         props: { row: Object },
         render() {
@@ -159,6 +171,13 @@ export function tableListCols(vm) {
                 onClick={() => vm.showItem(this.row)}>
                 查看详情
               </el-button>
+              {/* <el-button
+                type="text"
+                size="small"
+                style="margin-left: 20px"
+                onClick={() => vm.modifyItem(this.row)}>
+                编辑
+              </el-button> */}
 
               {/* <el-button
                 type="text"

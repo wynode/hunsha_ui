@@ -5,8 +5,10 @@
         ref="effectForm"
         inline
         size="small"
-        label-position="top"
-        cancelText="重置"
+        label-position="left"
+        class="table_filter"
+        submitText="搜索"
+        cancelText="刷新"
         @submit="handleFilter"
         @cancel="handleFilterReset"
       >

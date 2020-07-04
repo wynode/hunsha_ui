@@ -10,7 +10,8 @@
         size="medium"
         label-position="left"
         label-width="auto"
-        cancelText="重置"
+        submitText="搜索"
+        cancelText="刷新"
         @submit="handleLogin"
         @cancel="handleFilterResetFn"
       >
@@ -49,7 +50,7 @@
 import store from 'store2'
 import { AUTH_TOKEN, USER_INFO } from '@/config'
 import { LoginFields } from './formConfig'
-import { postUserLogin, postAdminLogin, getUserUserInfo } from '@/apis/login'
+import { postUserLogin, postAdminLogin } from '@/apis/login'
 
 export default {
   data() {
@@ -110,18 +111,15 @@ export default {
         ...form,
       })
         .then((data) => {
-          const { user_session } = data.result
-          store.set(AUTH_TOKEN, user_session)
-          getUserUserInfo().then((data) => {
-            const { name, shopId, shopUserId } = data.result
-            store.set(USER_INFO, {
-              name,
-              shopId,
-              shopUserId,
-            })
-
-            this.$router.push('/user/order-list')
+          const { session, name, shopId, shopUserId } = data.result
+          store.set(USER_INFO, {
+            name,
+            shopId,
+            shopUserId,
           })
+          store.set(AUTH_TOKEN, session)
+
+          this.$router.push('/user/order-list')
         })
         .catch(() => {
           this.errorMsg = ''

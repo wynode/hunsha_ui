@@ -1,5 +1,31 @@
-export const addFields = (vm) => {
+export const filterFields = () => {
   return [
+    {
+      // title: '店铺Id',
+      name: 'shopId',
+      widget: 'text',
+      xProps: {
+        placeholder: '店铺Id',
+      },
+    },
+    {
+      // title: 'skuId',
+      name: 'skuId',
+      widget: 'text',
+      xProps: {
+        placeholder: 'skuId',
+      },
+    },
+  ]
+}
+export const addFields = (vm) => {
+  const cols = [
+    {
+      title: '店铺Id',
+      name: 'shopId',
+      widget: 'text',
+      rules: [{ required: true, message: '请填写店铺Id', trigger: 'blur' }],
+    },
     {
       title: 'skuName',
       name: 'skuId',
@@ -40,30 +66,17 @@ export const addFields = (vm) => {
       ],
     },
     {
-      title: '出售次数',
-      name: 'saleTimes',
-      widget: 'inputNumber',
-      rules: [{ required: true, message: '请填写出售次数', trigger: 'blur' }],
-    },
-    {
-      title: '租赁次数',
-      name: 'rentTimes',
-      widget: 'inputNumber',
-      rules: [{ required: true, message: '请填写租赁次数', trigger: 'blur' }],
-    },
-    {
-      title: '定制次数',
-      name: 'customizeTimes',
-      widget: 'inputNumber',
-      rules: [{ required: true, message: '请填写定制次数', trigger: 'blur' }],
-    },
-    {
       title: '库存',
       name: 'skuNum',
       widget: 'inputNumber',
       rules: [{ required: true, message: '请填写库存', trigger: 'blur' }],
     },
   ]
+  if (vm.routerId) {
+    return cols.slice(1)
+  } else {
+    return cols
+  }
 }
 
 export const editFields = () => {
@@ -91,24 +104,6 @@ export const editFields = () => {
       rules: [
         { required: true, message: '请填写店铺定制价格', trigger: 'blur' },
       ],
-    },
-    {
-      title: '出售次数',
-      name: 'saleTimes',
-      widget: 'inputNumber',
-      rules: [{ required: true, message: '请填写出售次数', trigger: 'blur' }],
-    },
-    {
-      title: '租赁次数',
-      name: 'rentTimes',
-      widget: 'inputNumber',
-      rules: [{ required: true, message: '请填写租赁次数', trigger: 'blur' }],
-    },
-    {
-      title: '定制次数',
-      name: 'customizeTimes',
-      widget: 'inputNumber',
-      rules: [{ required: true, message: '请填写定制次数', trigger: 'blur' }],
     },
     {
       title: '库存',

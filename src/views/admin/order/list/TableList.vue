@@ -1,12 +1,14 @@
 <template>
   <div>
-    <!-- <el-card>
+    <el-card>
       <EffectForm
         ref="effectForm"
         inline
         size="small"
-        label-position="top"
-        cancelText="重置"
+        label-position="left"
+        submitText="搜索"
+        cancelText="刷新"
+        class="table_filter"
         @submit="handleFilter"
         @cancel="handleFilterReset"
       >
@@ -16,8 +18,8 @@
           :key="field.name"
         />
       </EffectForm>
-    </el-card> -->
-    <el-card>
+    </el-card>
+    <el-card class="Mt15">
       <!-- <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
         新增店铺订单
       </el-button> -->

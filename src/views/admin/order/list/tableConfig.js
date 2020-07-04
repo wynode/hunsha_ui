@@ -2,10 +2,16 @@ import { OneLineText, FormatTime } from '@/components/CellTools.jsx'
 
 export function tableListCols() {
   return [
+    // {
+    //   label: '订单Id',
+    //   prop: 'orderId',
+    //   width: 150,
+
+    // },
     {
-      label: '订单Id',
-      prop: 'orderId',
-      width: 150,
+      label: '订单号',
+      width: 200,
+      prop: 'orderNumber',
       component: {
         props: { row: Object },
         render() {
@@ -15,7 +21,7 @@ export function tableListCols() {
                 name: 'adminOrderProfile',
                 params: { id: this.row.orderId },
               }}>
-              <el-button type="text">{this.row.orderId}</el-button>
+              <el-link type="primary">{this.row.orderNumber}</el-link>
             </router-link>
           )
         },

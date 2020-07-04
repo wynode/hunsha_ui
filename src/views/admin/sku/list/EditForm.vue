@@ -71,8 +71,11 @@ export default {
 .admin_sku_form {
   display: flex;
   flex-wrap: wrap;
+  .el-form-item {
+    margin-left: 10px;
+  }
   .el-input__inner {
-    width: 200px;
+    width: 190px;
   }
   .Upload {
     width: 700px;

@@ -25,6 +25,10 @@ export default {
       type: Object,
       default: null,
     },
+    routerId: {
+      type: String,
+      default: '',
+    },
   },
 
   computed: {

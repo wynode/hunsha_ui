@@ -4,6 +4,7 @@ import { allErrors } from '@/utils/errorFormat'
 import requests from '@/apis/requests'
 import exportCsv from '@/utils/exportCSV'
 import { translate } from '@/utils/mappings'
+// import { delete } from 'vue/types/umd'
 /**
  * TODO 需要重构为 interface
  * TODO 需要重新整理请求逻辑
@@ -48,32 +49,35 @@ export default ({
             ...params,
           }
           let payload = {}
-          if (params.isForbidden === 0) {
-            payload = {
-              ...this.filtersCache,
+
+          payload = this.filtersMutate.parse(this.filtersCache)
+          Object.keys(payload).forEach((item) => {
+            if (item === 'dateTimeRange') {
+              payload.startTime = payload[item][0]
+              payload.endTime = payload[item][1]
+              delete payload.dateTimeRange
             }
-          } else {
-            payload = this.filtersMutate.parse(this.filtersCache)
-          }
+            if (item === 'receiveDateTimeRange') {
+              payload.receiveStartTime = payload[item][0]
+              payload.receiveEndTime = payload[item][1]
+              delete payload.receiveDateTimeRange
+            }
+          })
 
           const res = await this.fetchTableListMethod(payload)
-          if (this.$route.name === 'monitorDiskSplit') {
-            this.tableList = res.result
-          } else {
-            this.tableList = res.result.list || []
-          }
-          if (
-            this.$route.name === 'logAccess' ||
-            this.$route.name === 'ipList'
-          ) {
-            if (this.tableList.length > 9) {
-              this.tableTotal = 100000
-            } else {
-              this.tableTotal = 0
-            }
-          } else {
-            this.tableTotal = res.result.total
-          }
+          this.tableList =
+            res.result.list.map((item) => {
+              let tempItem = {}
+              Object.keys(item).forEach((item2) => {
+                if (item2.includes('Price')) {
+                  tempItem[item2] = item[item2] / 100
+                } else {
+                  tempItem[item2] = item[item2]
+                }
+              })
+              return tempItem
+            }) || []
+          this.tableTotal = res.result.total
         } catch (error) {
           allErrors(error.data || error)
         } finally {

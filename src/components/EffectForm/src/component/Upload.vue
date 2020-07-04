@@ -240,11 +240,11 @@ export default {
         this.type === 'video'
       ) {
         this.$emit('input', res.result.path)
-        this.pdfName = res.path.substring(1)
+        // this.pdfName = res.path.substring(1)
       } else {
         this.fileListTemp.push(res.result.path)
         this.$emit('input', this.fileListTemp)
-        this.pdfName = res.path.substring(1)
+        // this.pdfName = res.path.substring(1)
       }
       this.loading = false
     },
