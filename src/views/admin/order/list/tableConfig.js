@@ -43,9 +43,55 @@ export function tableListCols() {
       prop: 'customerWeiXin',
     },
     {
+      label: '店铺名称',
+      prop: 'shopInfo',
+      component: {
+        props: { row: Object },
+        render() {
+          return (
+            <router-link
+              to={{
+                name: 'adminOrderList',
+                query: {
+                  shopId: this.row.shopInfo.shopId,
+                  shopName: this.row.shopInfo.shopName,
+                  shopUserId: this.$route.query.shopUserId,
+                  shopUserName: this.$route.query.shopUserName,
+                },
+              }}>
+              <el-link type="primary">{this.row.shopInfo.shopName}</el-link>
+            </router-link>
+          )
+        },
+      },
+    },
+    {
       label: '客户资料备注',
       prop: 'customerNote',
       component: OneLineText,
+    },
+    {
+      label: '店员名称',
+      prop: 'shopUserInfo',
+      component: {
+        props: { row: Object },
+        render() {
+          return (
+            <router-link
+              to={{
+                name: 'adminOrderList',
+                query: {
+                  shopUserId: this.row.shopUserInfo.shopUserId,
+                  shopUserName: this.row.shopUserInfo.name,
+                  shopId: this.$route.query.shopId,
+                  shopName: this.$route.query.shopName,
+                },
+              }}>
+              <el-link type="primary">{this.row.shopUserInfo.name}</el-link>
+            </router-link>
+          )
+        },
+      },
     },
     {
       label: '收货地址',

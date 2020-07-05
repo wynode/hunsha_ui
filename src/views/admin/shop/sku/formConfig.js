@@ -1,21 +1,52 @@
-export const filterFields = () => {
+export const filterFields = (vm) => {
   return [
-    {
-      // title: '店铺Id',
-      name: 'shopId',
-      widget: 'text',
-      xProps: {
-        placeholder: '店铺Id',
-      },
-    },
+    // {
+    //   // title: '店铺Id',
+    //   name: 'shopId',
+    //   widget: 'text',
+    //   xProps: {
+    //     placeholder: '店铺Id',
+    //   },
+    // },
+    // {
+    //   // title: 'skuId',
+    //   name: 'skuId',
+    //   widget: 'text',
+    //   xProps: {
+    //     placeholder: 'skuId',
+    //   },
+    // },
     {
       // title: 'skuId',
-      name: 'skuId',
+      name: 'keyword',
       widget: 'text',
       xProps: {
-        placeholder: 'skuId',
+        placeholder: 'sku名称或sku编码',
       },
     },
+    {
+      // title: 'sku分类',
+      name: 'categoryId',
+      widget: 'select',
+      xProps: {
+        filterable: true,
+        placeholder: 'sku分类',
+        options: vm.skuCategory.map((item) => {
+          return {
+            label: item.categoryName,
+            value: item.categoryId,
+          }
+        }),
+      },
+    },
+    // {
+    //   // title: 'skuId',
+    //   name: 'categoryName',
+    //   widget: 'text',
+    //   xProps: {
+    //     placeholder: 'sku分类',
+    //   },
+    // },
   ]
 }
 export const addFields = (vm) => {
@@ -44,7 +75,7 @@ export const addFields = (vm) => {
     {
       title: '店铺销售价格',
       name: 'shopSalePrice',
-      widget: 'inputNumber',
+      widget: 'text',
       rules: [
         { required: true, message: '请填写店铺销售价格', trigger: 'blur' },
       ],
@@ -52,7 +83,7 @@ export const addFields = (vm) => {
     {
       title: '店铺租赁价格',
       name: 'shopRentPrice',
-      widget: 'inputNumber',
+      widget: 'text',
       rules: [
         { required: true, message: '请填写店铺租赁价格', trigger: 'blur' },
       ],
@@ -60,7 +91,7 @@ export const addFields = (vm) => {
     {
       title: '店铺定制价格',
       name: 'shopCustomizePrice',
-      widget: 'inputNumber',
+      widget: 'text',
       rules: [
         { required: true, message: '请填写店铺定制价格', trigger: 'blur' },
       ],
@@ -68,7 +99,7 @@ export const addFields = (vm) => {
     {
       title: '库存',
       name: 'skuNum',
-      widget: 'inputNumber',
+      widget: 'pureNumber',
       rules: [{ required: true, message: '请填写库存', trigger: 'blur' }],
     },
   ]
@@ -120,7 +151,7 @@ export const editFields = () => {
       xProps: {
         ext: '件',
       },
-      widget: 'text',
+      widget: 'pureNumber',
       rules: [{ required: true, message: '请填写库存', trigger: 'blur' }],
     },
   ]

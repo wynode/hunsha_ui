@@ -19,7 +19,7 @@ export const addFields = () => {
     // {
     //   title: '订单类型',
     //   name: 'dealType',
-    //   widget: 'select',
+    //   widget: 'radio',
 
     //   xProps: {
     //     filterable: true,
@@ -205,7 +205,7 @@ export const editFields = () => {
     // {
     //   title: '订单类型',
     //   name: 'dealType',
-    //   widget: 'select',
+    //   widget: 'radio',
 
     //   xProps: {
     //     filterable: true,

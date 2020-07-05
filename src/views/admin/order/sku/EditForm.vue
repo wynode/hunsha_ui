@@ -11,6 +11,7 @@
       <EffectFormField
         v-for="field in formFields"
         v-bind="field"
+        :class="field.name"
         :key="field.name"
       />
     </EffectForm>
@@ -79,26 +80,3 @@ export default {
   // },
 }
 </script>
-
-<style lang="scss">
-.shop_sku_form {
-  display: flex;
-  flex-wrap: wrap;
-  .el-form-item {
-    margin-bottom: 18px;
-    margin-left: 40px;
-  }
-  .el-input__inner {
-    width: 140px;
-  }
-  .el-select {
-    width: 320px;
-    .el-input__inner {
-      width: 100%;
-    }
-  }
-  .el-textarea__inner {
-    width: 390px;
-  }
-}
-</style>

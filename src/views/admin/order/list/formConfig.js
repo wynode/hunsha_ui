@@ -1,13 +1,13 @@
 export const filterFields = () => {
   return [
-    {
-      // title: '店铺Id',
-      name: 'shopId',
-      widget: 'text',
-      xProps: {
-        placeholder: '店铺Id',
-      },
-    },
+    // {
+    //   // title: '店铺Id',
+    //   name: 'shopId',
+    //   widget: 'text',
+    //   xProps: {
+    //     placeholder: '店铺Id',
+    //   },
+    // },
     // {
     //   // title: '店员Id',
     //   name: 'shopUserId',
@@ -21,7 +21,7 @@ export const filterFields = () => {
       name: 'orderNumber',
       widget: 'text',
       xProps: {
-        placeholder: '店铺Id',
+        placeholder: '订单号',
       },
     },
     {

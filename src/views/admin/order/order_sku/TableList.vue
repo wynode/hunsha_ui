@@ -99,7 +99,7 @@ export default {
       this.$createDialog(
         {
           title: '新增订单Sku',
-          width: '600px',
+          width: '860px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
               const { effectForm } = slotRef.$refs
@@ -124,10 +124,9 @@ export default {
       this.$createDialog(
         {
           title: '查看订单Sku详情',
-          width: '600px',
+          width: '860px',
           validate: false,
           showCancelBtn: false,
-          top: '20vh',
           onSubmit: async (instance) => {
             instance.close()
           },
@@ -139,11 +138,10 @@ export default {
     modifyItem(row) {
       this.$createDialog(
         {
-          title: '查看订单Sku详情',
-          width: '600px',
+          title: '修改订单Sku详情',
+          width: '860px',
           validate: false,
           showCancelBtn: false,
-          top: '20vh',
           onSubmit: async (instance, slotRef) => {
             const form = slotRef.$refs.effectForm.getForm()
             await patchAdminShopOrderSku({

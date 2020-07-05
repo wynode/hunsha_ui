@@ -1,6 +1,14 @@
 export const filterFields = (vm) => {
   return [
     {
+      // title: 'sku名称',
+      name: 'keyword',
+      widget: 'text',
+      xProps: {
+        placeholder: 'sku名称,编码',
+      },
+    },
+    {
       // title: 'sku分类',
       name: 'categoryId',
       widget: 'select',
@@ -47,7 +55,7 @@ export const addFields = () => {
     {
       title: '库存',
       name: 'skuNum',
-      widget: 'text',
+      widget: 'pureNumber',
       xProps: {
         ext: '件',
       },
@@ -84,7 +92,7 @@ export const editFields = () => {
     {
       title: '库存',
       name: 'skuNum',
-      widget: 'text',
+      widget: 'pureNumber',
       xProps: {
         ext: '件',
       },

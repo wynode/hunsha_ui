@@ -12,6 +12,12 @@
         @submit="handleFilter"
         @cancel="handleFilterReset"
       >
+        <div style="margin-top: 9px; margin-right: 15px;">
+          <span v-if="shopName">店铺名：{{ shopName }}</span>
+          <span v-if="shopUserName" class="M20">
+            店员名：{{ shopUserName }}
+          </span>
+        </div>
         <EffectFormField
           v-for="field in filterFields"
           v-bind="field"
@@ -65,7 +71,10 @@ export default {
   mixins: [table],
 
   data() {
-    return {}
+    return {
+      shopName: '',
+      shopUserName: '',
+    }
   },
 
   computed: {
@@ -143,10 +152,43 @@ export default {
         this.fetchTableList(this.filtersCache)
       }
     },
+    getPath() {
+      const { shopId, shopName, shopUserId, shopUserName } = this.$route.query
+      this.shopName = shopName
+      this.shopUserName = shopUserName
+      if (shopId || shopUserId) {
+        this.$nextTick(() => {
+          const { getForm, setForm } = this.$refs.effectForm
+          setForm('shopId', Number(shopId))
+          setForm('shopUserId', Number(shopUserId))
+          const data = getForm()
+          this.fetchTableList(data)
+        })
+      } else {
+        this.fetchTableList()
+      }
+    },
+  },
+
+  watch: {
+    $route: 'getPath',
   },
 
   mounted() {
-    this.fetchTableList()
+    const { shopId, shopName, shopUserId, shopUserName } = this.$route.query
+    this.shopName = shopName
+    this.shopUserName = shopUserName
+    if (shopId || shopUserId) {
+      this.$nextTick(() => {
+        const { getForm, setForm } = this.$refs.effectForm
+        setForm('shopId', Number(shopId))
+        setForm('shopUserId', Number(shopUserId))
+        const data = getForm()
+        this.fetchTableList(data)
+      })
+    } else {
+      this.fetchTableList()
+    }
   },
 }
 </script>

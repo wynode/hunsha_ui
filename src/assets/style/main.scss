@@ -25,6 +25,56 @@ body {
 .g_search {
   width: 40%;
 }
+
+.no_more_text {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 60px;
+}
+
+.shop_sku_form {
+  display: flex;
+  flex-wrap: wrap;
+  .el-form-item {
+    margin-bottom: 18px;
+    width: 260px;
+  }
+  .dealType {
+    width: 320px;
+    margin-right: 380px;
+    .el-form-item__content {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+  }
+  .skuId {
+    margin-right: 400px;
+  }
+  .customerWeight {
+    margin-right: 140px;
+  }
+  .skuNum {
+    margin-right: 400px;
+  }
+  .el-input {
+    width: 140px;
+  }
+  .note {
+    width: 580px;
+  }
+  .el-select {
+    width: 520px;
+    .el-input__inner {
+      width: 100%;
+    }
+  }
+  .el-textarea__inner {
+    width: 500px;
+  }
+}
+
 .table_filter {
   display: flex;
   justify-content: center;

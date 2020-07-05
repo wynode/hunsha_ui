@@ -83,7 +83,7 @@ export const addFields = (vm) => {
     {
       title: '订单类型',
       name: 'dealType',
-      widget: 'select',
+      widget: 'radio',
 
       xProps: {
         filterable: true,
@@ -216,6 +216,7 @@ export const addFields = (vm) => {
       xProps: {
         ext: '天',
       },
+      rules: [{ required: true, message: '请填写租赁周期', trigger: 'blur' }],
     },
     {
       title: '租赁押金',
@@ -224,11 +225,12 @@ export const addFields = (vm) => {
       xProps: {
         ext: '元',
       },
+      rules: [{ required: true, message: '请填写租赁押金', trigger: 'blur' }],
     },
     {
       title: '购买数量',
       name: 'skuNum',
-      widget: 'text',
+      widget: 'pureNumber',
       xProps: {
         ext: '件',
       },
@@ -269,7 +271,7 @@ export const editFields = (vm) => {
     {
       title: '订单类型',
       name: 'dealType',
-      widget: 'select',
+      widget: 'radio',
 
       xProps: {
         filterable: true,
@@ -402,6 +404,7 @@ export const editFields = (vm) => {
       xProps: {
         ext: '天',
       },
+      rules: [{ required: true, message: '请填写租赁周期', trigger: 'blur' }],
     },
     {
       title: '租赁押金',
@@ -410,11 +413,12 @@ export const editFields = (vm) => {
       xProps: {
         ext: '元',
       },
+      rules: [{ required: true, message: '请填写租赁押金', trigger: 'blur' }],
     },
     {
       title: '购买数量',
       name: 'skuNum',
-      widget: 'text',
+      widget: 'pureNumber',
       xProps: {
         ext: '件',
       },

@@ -146,7 +146,17 @@ export default {
   },
 
   mounted() {
-    this.fetchTableList()
+    const { shopCode } = this.$route.query
+    if (shopCode) {
+      this.$nextTick(() => {
+        const { getForm, setForm } = this.$refs.effectForm
+        setForm('keyword', shopCode)
+        const data = getForm()
+        this.fetchTableList(data)
+      })
+    } else {
+      this.fetchTableList()
+    }
   },
 }
 </script>

@@ -39,6 +39,8 @@
             <span>收货地址：</span>
             {{ orderData.address }}
           </li>
+        </ul>
+        <ul>
           <li>
             <span>
               订单录入时间：
@@ -53,23 +55,26 @@
           </li>
         </ul>
         <ul>
-          <li>
-            <span>订单总租赁价格：</span>
+          <li style="min-width: 100px">
+            <span>订单价格统计：</span>
+          </li>
+          <li style="min-width: 150px">
+            <span>租赁：</span>
             {{ orderData.rentTotalPrice || 0 }}元
           </li>
-          <li>
-            <span>订单总出售价格：</span>
+          <li style="min-width: 150px">
+            <span>出售：</span>
             {{ orderData.saleTotalPrice || 0 }}元
           </li>
-          <li>
+          <li style="min-width: 150px">
             <span>
-              订单总定制价格：
+              定制：
             </span>
             {{ orderData.customizeTotalPrice || 0 }}元
           </li>
-          <li>
-            <span>订单总价格：</span>
-            {{ orderData.totalPrice }}
+          <li style="min-width: 150px">
+            <span>合计</span>
+            {{ orderData.totalPrice }}元
           </li>
         </ul>
         <ul>
@@ -82,7 +87,7 @@
     </el-card>
     <el-card class="profile_second_card">
       <el-tabs v-model="activeTab" class="profile_second_tabs">
-        <el-tab-pane label="Sku管理" name="sku"></el-tab-pane>
+        <el-tab-pane label="店铺Sku订单管理" name="sku"></el-tab-pane>
         <component :is="activeTab"></component>
       </el-tabs>
     </el-card>

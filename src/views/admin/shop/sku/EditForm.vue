@@ -27,7 +27,7 @@ export default {
       default: null,
     },
     routerId: {
-      type: Number,
+      type: [String, Number],
       default: 0,
     },
   },
@@ -41,6 +41,7 @@ export default {
   data() {
     return {
       skuList: [],
+      skuCategory: [],
     }
   },
 

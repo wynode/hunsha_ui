@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card v-if="!this.routerId">
+    <!-- <el-card v-if="!this.routerId">
       <EffectForm
         ref="effectForm"
         inline
@@ -18,7 +18,7 @@
           :key="field.name"
         />
       </EffectForm>
-    </el-card>
+    </el-card> -->
 
     <el-card :class="{ Mt15: !this.routerId }">
       <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">

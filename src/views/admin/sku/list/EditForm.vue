@@ -75,7 +75,7 @@ export default {
   .el-form-item {
     margin-left: 10px;
   }
-  .el-input__inner {
+  .el-input {
     width: 190px;
   }
   .Upload {
@@ -92,6 +92,15 @@ export default {
   }
   .recommendCustomizePrice {
     margin-right: 200px;
+  }
+  .saleTimes {
+    width: 330px;
+  }
+  .rentTimes {
+    width: 330px;
+  }
+  .customizeTimes {
+    width: 330px;
   }
   .costPrice {
     &::before {

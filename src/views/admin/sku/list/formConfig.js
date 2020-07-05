@@ -133,32 +133,38 @@ export const addFields = (vm) => {
       rules: [{ required: true, message: '请填写建议定制价', trigger: 'blur' }],
     },
     {
-      title: '销售总次数',
-      name: 'saleTimes',
+      title: '其他备注(面料)',
+      name: 'otherNote',
       widget: 'text',
-      xProps: {
-        ext: '次',
-      },
-      rules: [{ required: true, message: '请填写销售总次数', trigger: 'blur' }],
+      // rules: [{ required: true, message: '请填写建议定制价', trigger: 'blur' }],
     },
-    {
-      title: '租赁总次数',
-      name: 'rentTimes',
-      widget: 'text',
-      xProps: {
-        ext: '次',
-      },
-      rules: [{ required: true, message: '请填写租赁总次数', trigger: 'blur' }],
-    },
-    {
-      title: '定制总次数',
-      name: 'customizeTimes',
-      widget: 'text',
-      xProps: {
-        ext: '次',
-      },
-      rules: [{ required: true, message: '请填写定制总次数', trigger: 'blur' }],
-    },
+    // {
+    //   title: '销售总次数',
+    //   name: 'saleTimes',
+    //   widget: 'text',
+    //   xProps: {
+    //     ext: '次',
+    //   },
+    //   rules: [{ required: true, message: '请填写销售总次数', trigger: 'blur' }],
+    // },
+    // {
+    //   title: '租赁总次数',
+    //   name: 'rentTimes',
+    //   widget: 'text',
+    //   xProps: {
+    //     ext: '次',
+    //   },
+    //   rules: [{ required: true, message: '请填写租赁总次数', trigger: 'blur' }],
+    // },
+    // {
+    //   title: '定制总次数',
+    //   name: 'customizeTimes',
+    //   widget: 'text',
+    //   xProps: {
+    //     ext: '次',
+    //   },
+    //   rules: [{ required: true, message: '请填写定制总次数', trigger: 'blur' }],
+    // },
     {
       title: '详细介绍',
       name: 'description',
@@ -259,6 +265,7 @@ export const editFields = () => {
       widget: 'text',
       xProps: {
         ext: '次',
+        disabled: true,
       },
       rules: [{ required: true, message: '请填写销售总次数', trigger: 'blur' }],
     },
@@ -268,6 +275,7 @@ export const editFields = () => {
       widget: 'text',
       xProps: {
         ext: '次',
+        disabled: true,
       },
       rules: [{ required: true, message: '请填写租赁总次数', trigger: 'blur' }],
     },
@@ -277,6 +285,7 @@ export const editFields = () => {
       widget: 'text',
       xProps: {
         ext: '次',
+        disabled: true,
       },
       rules: [{ required: true, message: '请填写定制总次数', trigger: 'blur' }],
     },

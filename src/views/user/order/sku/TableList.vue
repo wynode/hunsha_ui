@@ -3,7 +3,7 @@
     <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
       录入新sku订单
     </el-button>
-    <div class="user_order_sku_profile Mt15">
+    <div class="user_order_sku_profile Mt15" v-if="tableList.length">
       <el-card v-for="sku in tableList" :key="sku.orderSkuId">
         <div class="table_sku">
           <div class="ts_item">
@@ -18,7 +18,12 @@
                 alt=""
               />
               <p slot="reference">
-                <img :src="imgUrl + sku.thumb" alt="" />
+                <img
+                  :src="imgUrl + sku.thumb"
+                  alt=""
+                  style="cursor: pointer;"
+                  @click="goSkuProfile(sku)"
+                />
               </p>
             </el-popover>
             <div class="ost_right">
@@ -39,8 +44,8 @@
           <div class="ts_item">
             <span>订单类型：{{ sku.dealType | translate('dealType') }}</span>
             <template v-if="sku.dealType == 2">
-              <span>租赁周期：{{ sku.rentNum }}天</span>
-              <span>租赁押金：{{ sku.rentDepositNum }}元</span>
+              <span>租赁周期：{{ sku.rentNum || 0 }}天</span>
+              <span>租赁押金：{{ sku.rentDepositNum || 0 }}元</span>
             </template>
           </div>
           <div class="ts_item">
@@ -88,15 +93,31 @@
             </span>
           </div>
           <div class="ts_item">
-            <span>订单状态：{{ getStatus(sku.status, sku.dealType) }}</span>
+            <span>
+              订单状态：
+              <i :style="statusColor(sku)">
+                {{ getStatus(sku.status, sku.dealType) }}
+              </i>
+            </span>
             <span>下单时间：{{ dateFormat(sku.addTime * 1000) }}</span>
+          </div>
+          <div class="ts_item" v-if="sku.status > 0">
+            <span>物流公司：{{ sku.expressName }}</span>
+            <span>物流信息：{{ sku.expressValue }}</span>
           </div>
           <div class="ts_item">
             <span>单价：{{ sku.price }}元</span>
-            <span>数量：{{ sku.skuName }}件</span>
+            <span>数量：{{ sku.skuNum }}件</span>
+            <span>合计：{{ sku.totalPrice }}元</span>
           </div>
           <div class="ts_item">
             <span>备注：{{ sku.note }}</span>
+          </div>
+          <div class="ts_item">
+            <span>
+              异常备注：
+              <i style="color:#F56C6C">{{ sku.abnormalNote }}</i>
+            </span>
           </div>
         </div>
         <ul class="card_btn">
@@ -162,7 +183,7 @@
               发货
             </el-button>
             <el-button
-              v-if="sku.status === 1"
+              v-if="sku.status === 2"
               size="small"
               type="primary"
               @click="modifyCustomStatus(10, sku)"
@@ -170,6 +191,15 @@
               客户确认收货
             </el-button>
           </template>
+          <el-button
+            size="small"
+            type="warning"
+            @click="abnormal(sku)"
+            class="Mt20"
+            v-if="sku.status !== -2 && sku.status !== -1"
+          >
+            异常/退款
+          </el-button>
           <el-button
             size="small"
             type="primary"
@@ -181,6 +211,9 @@
         </ul>
       </el-card>
     </div>
+    <div v-else class="no_more_text">
+      暂无店铺sku订单
+    </div>
   </div>
 </template>
 
@@ -189,18 +222,23 @@ import tableMixins from '@/mixins/table'
 import {
   fetchShopOrderSkuList,
   // fetchShopOrderSku,
-  postShopOrderSku,
+  // postShopOrderSku,
   patchShopOrderSku,
   deleteShopOrderSku,
   // patchOrderSkuStatus,
   updateCustomerStatus,
   updateSaleStatus,
   updateRentStatus,
+  postAbnormal,
+  getSkuProfile,
 } from '@/apis'
 import { IMG_URL } from '@/config'
 import { getStatus } from '@/utils/common'
 import { dateFormat } from '@/utils/dateFormat'
+import ShowForm from '@/views/user/shop_sku/ShowForm'
 import EditForm from './EditForm'
+import Abnormal from './Abnormal'
+
 import FaHuo from './FaHuo'
 
 const table = tableMixins({
@@ -227,22 +265,62 @@ export default {
   },
 
   methods: {
+    async goSkuProfile(row) {
+      const data = await getSkuProfile({ skuId: row.skuId })
+      let payload = { ...data.result }
+      Object.keys(data.result.skuInfo).forEach((item) => {
+        payload[item] = data.result.skuInfo[item]
+      })
+      Object.keys(payload).forEach((item) => {
+        if (item.includes('Price') || item.includes('price')) {
+          payload[item] = payload[item] / 100
+        }
+      })
+      this.$createDialog(
+        {
+          fullscreen: true,
+          footer: false,
+        },
+        () => <ShowForm meta={payload} orderId={row.orderId} />
+      ).show()
+      // this.$router.push({ name: 'showSku' })
+    },
     getStatus(value, type) {
       return getStatus(value, type)
     },
     dateFormat(value) {
       return dateFormat(value)
     },
+    // goSkuProfile(sku) {
+    //   this.$router.push({
+    //     name: 'userShopSkuList',
+    //     query: {
+    //       orderId: this.$route.params.id,
+    //       skuId: sku.skuId,
+    //     },
+    //   })
+    // },
     modifySaleStatus(status, row) {
+      let title = ''
       if (status === 1) {
-        this.$createDialog(
-          {
-            title: '出售订单发货',
-            width: '600px',
-            onSubmit: async (instance, slotRef) => {
-              if (slotRef.$refs.effectForm) {
-                const { effectForm } = slotRef.$refs
-                if (await effectForm.useValidator()) {
+        title = '出售订单-发货'
+      } else if (status === 10) {
+        title = '出售订单-客户确认收货'
+      }
+
+      this.$createDialog(
+        {
+          title: title,
+          width: '600px',
+          onSubmit: async (instance, slotRef) => {
+            if (slotRef.$refs.effectForm) {
+              const { effectForm } = slotRef.$refs
+              if (await effectForm.useValidator()) {
+                this.$confirm('操作将更改订单状态, 是否继续?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning',
+                }).then(async () => {
                   const form = slotRef.$refs.effectForm.getForm()
                   await updateSaleStatus({
                     orderSkuId: row.orderSkuId,
@@ -250,30 +328,38 @@ export default {
                     ...form,
                   })
                   this.fetchTableList(this.filtersCache)
-                  this.$notify.success('发货成功')
+                  this.$notify.success(`修改状态为${title}成功`)
                   instance.close()
-                }
+                })
               }
-            },
+            }
           },
-          () => <FaHuo />
-        ).show()
-      } else {
-        updateCustomerStatus({ status }).then(() => {
-          this.$message.success('修改订单状态成功')
-        })
-      }
+        },
+        () => <FaHuo title={title} meta={row} />
+      ).show()
     },
     modifyRentStatus(status, row) {
+      let title = ''
       if (status === 1) {
-        this.$createDialog(
-          {
-            title: '租赁订单发货',
-            width: '600px',
-            onSubmit: async (instance, slotRef) => {
-              if (slotRef.$refs.effectForm) {
-                const { effectForm } = slotRef.$refs
-                if (await effectForm.useValidator()) {
+        title = '租赁订单-发货'
+      } else if (status === 2) {
+        title = '租赁订单-客户确认收货'
+      } else if (status === 10) {
+        title = '租赁订单-客户归还商品'
+      }
+      this.$createDialog(
+        {
+          title: title,
+          width: '600px',
+          onSubmit: async (instance, slotRef) => {
+            if (slotRef.$refs.effectForm) {
+              const { effectForm } = slotRef.$refs
+              if (await effectForm.useValidator()) {
+                this.$confirm('操作将更改订单状态, 是否继续?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning',
+                }).then(async () => {
                   const form = slotRef.$refs.effectForm.getForm()
                   await updateRentStatus({
                     orderSkuId: row.orderSkuId,
@@ -281,51 +367,66 @@ export default {
                     ...form,
                   })
                   this.fetchTableList(this.filtersCache)
-                  this.$notify.success('发货成功')
+                  this.$notify.success(`修改状态为${title}成功`)
                   instance.close()
-                }
+                })
               }
-            },
+            }
           },
-          () => <FaHuo />
-        ).show()
-      } else {
-        updateCustomerStatus({ status }).then(() => {
-          this.$message.success('修改订单状态成功')
-        })
-      }
+        },
+        () => <FaHuo title={title} meta={row} />
+      ).show()
     },
     modifyCustomStatus(status, row) {
-      if (status === 2) {
-        this.$createDialog(
-          {
-            title: '定制订单发货',
-            width: '600px',
-            onSubmit: async (instance, slotRef) => {
-              if (slotRef.$refs.effectForm) {
-                const { effectForm } = slotRef.$refs
-                if (await effectForm.useValidator()) {
-                  const form = slotRef.$refs.effectForm.getForm()
-                  await postShopOrderSku({
+      let title = ''
+      if (status === 1) {
+        title = '定制订单-定制完成'
+      } else if (status === 2) {
+        title = '定制订单-发货'
+      } else if (status === 10) {
+        title = '定制订单-客户确认收货'
+      }
+      this.$createDialog(
+        {
+          title: title,
+          width: '600px',
+          onSubmit: async (instance, slotRef) => {
+            if (slotRef.$refs.effectForm) {
+              const { effectForm } = slotRef.$refs
+              if (await effectForm.useValidator()) {
+                const form = slotRef.$refs.effectForm.getForm()
+                this.$confirm('操作将更改订单状态, 是否继续?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning',
+                }).then(async () => {
+                  await updateCustomerStatus({
                     orderSkuId: row.orderSkuId,
                     status,
                     ...form,
                   })
                   this.fetchTableList(this.filtersCache)
-                  this.$notify.success('发货成功')
+                  this.$notify.success(`修改状态为${title}成功`)
                   instance.close()
-                }
+                })
               }
-            },
+            }
           },
-          () => <FaHuo />
-        ).show()
-      } else {
-        updateCustomerStatus({ status }).then(() => {
-          this.$message.success('修改订单状态成功')
-        })
+        },
+        () => <FaHuo title={title} meta={row} />
+      ).show()
+    },
+
+    statusColor(sku) {
+      if (sku.status === 10) {
+        return 'color: #67C23A'
+      } else if (sku.status === 0) {
+        return 'color: #F56C6C'
+      } else if (sku.status === -1 || sku.status === -2) {
+        return 'color: #E6A23C'
       }
     },
+
     addItem() {
       this.$router.push({
         name: 'userShopSkuList',
@@ -361,11 +462,44 @@ export default {
       // ).show()
     },
 
+    abnormal(row) {
+      this.$createDialog(
+        {
+          title: '提交异常/退款',
+          width: '600px',
+          validate: false,
+          onSubmit: async (instance, slotRef) => {
+            if (slotRef.$refs.effectForm) {
+              const { effectForm } = slotRef.$refs
+              if (await effectForm.useValidator()) {
+                const form = slotRef.$refs.effectForm.getForm()
+                this.$confirm('操作将更改订单状态, 是否继续?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning',
+                }).then(async () => {
+                  await postAbnormal({
+                    orderSkuId: row.orderSkuId,
+                    ...form,
+                  })
+                  this.fetchTableList(this.filtersCache)
+
+                  instance.close()
+                  this.$notify.success('提交异常/退款成功')
+                })
+              }
+            }
+          },
+        },
+        () => <Abnormal meta={row} />
+      ).show()
+    },
+
     modifyItem(row) {
       this.$createDialog(
         {
           title: '更新订单Sku',
-          width: '600px',
+          width: '860px',
           validate: false,
           onSubmit: async (instance, slotRef) => {
             const form = slotRef.$refs.effectForm.getForm()
@@ -373,6 +507,11 @@ export default {
               form.rentNum = 0
               form.rentDepositNum = 0
             }
+            Object.keys(form).forEach((item) => {
+              if (!form[item]) {
+                form[item] = ''
+              }
+            })
             await patchShopOrderSku({
               orderSkuId: row.orderSkuId,
               ...form,

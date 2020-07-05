@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="admin_sku">
     <el-card>
       <EffectForm
         ref="effectForm"
@@ -24,7 +24,7 @@
         新增sku
       </el-button>
 
-      <Txcel
+      <!-- <Txcel
         v-loading="mixTableLoading"
         element-loading-text="数据加载中"
         class="Txcel"
@@ -37,7 +37,47 @@
           total: tableTotal,
         }"
         @change="handleTableChange"
-      />
+      /> -->
+      <el-row :gutter="20" style="margin-bottom: 10px">
+        <el-col :span="4" v-for="sku in tableList" :key="sku.skuId">
+          <el-card class="sku_card">
+            <div class="sc_img_box">
+              <img :src="imgUrl + sku.thumb" alt="" @click="goView(sku)" />
+            </div>
+            <div @click="goView(sku)" class="sc_info_list">
+              <h1 style="font-size: 16px;">
+                <span>{{ sku.skuName }}</span>
+              </h1>
+              <h1>
+                sku编号：
+                <span>{{ sku.skuCode }}</span>
+              </h1>
+              <div>
+                <h1>
+                  分类名称：
+                  <span>
+                    {{ sku.categoryInfo.categoryName
+                    }}{{
+                      sku.categoryInfo.gender == 1 ? '（男装）' : '（女装）'
+                    }}
+                  </span>
+                </h1>
+              </div>
+
+              <!-- <div class="sc_price">
+                <p style="font-weight: bold">
+                  <span>￥</span>
+                  <i>{{ sku.shopSalePrice }}</i>
+                </p>
+                <p>
+                  <span>￥</span>
+                  <i class="sc_rprice">{{ sku.recommendSalePrice }}</i>
+                </p>
+              </div> -->
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
     </el-card>
   </div>
 </template>
@@ -52,6 +92,7 @@ import {
   deleteSku,
   fetchSkuCategoryList,
 } from '@/apis'
+import { IMG_URL } from '@/config'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
 import ShowForm from './ShowForm'
@@ -67,10 +108,19 @@ export default {
   mixins: [table],
 
   data() {
-    return { skuCategory: [] }
+    return {
+      skuCategory: [],
+      signal: false,
+      rowD: {},
+      skuId: '',
+      closeDialog: false,
+    }
   },
 
   computed: {
+    imgUrl() {
+      return IMG_URL
+    },
     fetchTableListMethod() {
       return fetchSkuList
     },
@@ -88,7 +138,7 @@ export default {
       this.$createDialog(
         {
           title: '新增Sku',
-          width: '1127px',
+          width: '1097px',
           top: '10px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
@@ -115,13 +165,22 @@ export default {
       ).show()
     },
 
-    showItem(row) {
+    goView(row) {
+      this.rowD = row
+      this.skuId = row.skuId
       this.$createDialog(
         {
           fullscreen: true,
           footer: false,
         },
-        () => <ShowForm meta={row} />
+        () => (
+          <ShowForm
+            meta={this.rowD}
+            modifysku={this.modifyItem}
+            delsku={this.deleteItem}
+            closeDialog={this.closeDialog}
+          />
+        )
       ).show()
       // this.$router.push({ name: 'showSku' })
     },
@@ -130,7 +189,7 @@ export default {
       this.$createDialog(
         {
           title: '更新店铺Sku',
-          width: '1127px',
+          width: '1097px',
           top: '10px',
           onSubmit: async (instance, slotRef) => {
             const { effectForm } = slotRef.$refs
@@ -159,6 +218,7 @@ export default {
     },
 
     async deleteItem(row) {
+      this.closeDialog = false
       const ifDel = await this.$confirm('请确认此删除操作, 是否继续?', '提示', {
         type: 'warning',
       }).catch(() => {
@@ -170,6 +230,7 @@ export default {
         await deleteSku({ skuId: row.skuId })
         this.$notify.success('删除成功')
         this.fetchTableList(this.filtersCache)
+        this.closeDialog = true
       }
     },
 
@@ -215,4 +276,52 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.admin_sku {
+  .sku_card {
+    cursor: pointer;
+    margin-top: 15px;
+    &:hover {
+      box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.1) !important;
+    }
+    .sc_img_box {
+      width: 100%;
+      padding-bottom: 100%;
+      position: relative;
+    }
+    .sc_info_list {
+      span {
+        color: #333;
+      }
+    }
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    h1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 4px 0 4px;
+    }
+    h2 {
+    }
+    .sc_price {
+      display: flex;
+      justify-content: space-between;
+      p {
+        font-size: 16px;
+        color: #333;
+      }
+      span {
+        font-size: 12px;
+      }
+      .sc_rprice {
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+</style>

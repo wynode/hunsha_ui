@@ -2,7 +2,7 @@ export const filterFields = () => {
   return [
     {
       // title: '店铺Id',
-      name: 'shopId',
+      name: 'keyword',
       widget: 'text',
       xProps: {
         placeholder: '店铺Id',

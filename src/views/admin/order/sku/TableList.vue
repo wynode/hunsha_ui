@@ -1,5 +1,5 @@
 <template>
-  <div class="order_sku_profile">
+  <div class="order_sku_profile" v-if="tableList.length">
     <el-card v-for="sku in tableList" :key="sku.orderSkuId">
       <div class="table_sku">
         <div class="ts_item">
@@ -14,7 +14,12 @@
               alt=""
             />
             <p slot="reference">
-              <img :src="imgUrl + sku.thumb" alt="" />
+              <img
+                :src="imgUrl + sku.thumb"
+                alt=""
+                style="cursor: pointer;"
+                @click="goSkuProfile(sku)"
+              />
             </p>
           </el-popover>
           <div class="ost_right">
@@ -35,8 +40,8 @@
         <div class="ts_item">
           <span>订单类型：{{ sku.dealType | translate('dealType') }}</span>
           <template v-if="sku.dealType == 2">
-            <span>租赁周期：{{ sku.rentNum }}天</span>
-            <span>租赁押金：{{ sku.rentDepositNum }}元</span>
+            <span>租赁周期：{{ sku.rentNum || 0 }}天</span>
+            <span>租赁押金：{{ sku.rentDepositNum || 0 }}元</span>
           </template>
         </div>
         <div class="ts_item">
@@ -84,19 +89,37 @@
           </span>
         </div>
         <div class="ts_item">
-          <span>订单状态：{{ getStatus(sku.status, sku.dealType) }}</span>
+          <span>
+            订单状态：
+            <i :style="statusColor(sku)">
+              {{ getStatus(sku.status, sku.dealType) }}
+            </i>
+          </span>
+
           <span>下单时间：{{ dateFormat(sku.addTime * 1000) }}</span>
+        </div>
+        <div class="ts_item" v-if="sku.status > 0">
+          <span>物流类型：{{ sku.expressName }}</span>
+          <span>物流单号：{{ sku.expressValue }}</span>
         </div>
         <div class="ts_item">
           <span>单价：{{ sku.price }}元</span>
-          <span>数量：{{ sku.skuName }}件</span>
+          <span>数量：{{ sku.skuNum }}件</span>
+          <span>合计：{{ sku.totalPrice }}元</span>
         </div>
         <div class="ts_item">
           <span>备注：{{ sku.note }}</span>
         </div>
+        <div class="ts_item">
+          <span>
+            异常备注：
+            <i style="color:#F56C6C">{{ sku.abnormalNote }}</i>
+          </span>
+        </div>
       </div>
     </el-card>
   </div>
+  <div v-else class="no_more_text">暂无订单Sku</div>
 </template>
 
 <script>
@@ -113,6 +136,7 @@ import { getStatus } from '@/utils/common'
 import { dateFormat } from '@/utils/dateFormat'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
+import ShowForm from '@/views/admin/sku/list/ShowForm'
 
 const table = tableMixins({
   pagerInit: { page: 1, page_size: 10 },
@@ -148,11 +172,32 @@ export default {
     dateFormat(value) {
       return dateFormat(value)
     },
+
+    // goSkuProfile(sku) {
+    //   this.$router.push({
+    //     name: 'skuList',
+    //     query: {
+    //       // orderId: this.$route.params.id,
+    //       skuId: sku.skuId,
+    //     },
+    //   })
+    // },
+
+    goSkuProfile(row) {
+      this.$createDialog(
+        {
+          fullscreen: true,
+          footer: false,
+        },
+        () => <ShowForm meta={row.skuInfo} />
+      ).show()
+      // this.$router.push({ name: 'showSku' })
+    },
     addItem() {
       this.$createDialog(
         {
           title: '新增订单Sku',
-          width: '600px',
+          width: '860px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
               const { effectForm } = slotRef.$refs
@@ -173,11 +218,21 @@ export default {
       ).show()
     },
 
+    statusColor(sku) {
+      if (sku.status === 10) {
+        return 'color: #67C23A'
+      } else if (sku.status === 0) {
+        return 'color: #F56C6C'
+      } else if (sku.status === -1 || sku.status === -2) {
+        return 'color: #E6A23C'
+      }
+    },
+
     showItem(row) {
       this.$createDialog(
         {
           title: '查看订单Sku详情',
-          width: '600px',
+          width: '860px',
           validate: false,
           showCancelBtn: false,
           top: '20vh',

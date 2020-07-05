@@ -18,8 +18,8 @@
 
 <script>
 // import { fetchShopUserSkuList } from '@/apis'
-import { getStatusOptions } from '@/utils/common'
-import { FahuoFields, NoteFields } from './formConfig'
+// import { getStatusOptions } from '@/utils/common'
+import { NoteFields } from './formConfig'
 
 export default {
   props: {
@@ -27,15 +27,11 @@ export default {
       type: Object,
       default: null,
     },
-    title: {
-      type: String,
-      default: '',
-    },
   },
 
   computed: {
     formFields() {
-      return this.title.includes('发货') ? FahuoFields(this) : NoteFields(this)
+      return NoteFields(this)
     },
   },
 
@@ -58,7 +54,7 @@ export default {
               // setForm(fieldName, isPass ? '' : this.meta[fieldName])
               setForm(fieldName, this.meta[fieldName])
             })
-            this.statusList = getStatusOptions(this.meta.dealType)
+            // this.statusList = getStatusOptions(this.meta.dealType)
           }
         })
       },

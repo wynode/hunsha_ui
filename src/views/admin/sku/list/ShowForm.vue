@@ -29,6 +29,30 @@
             <li>{{ meta.recommendCustomizePrice }}元</li>
           </ul>
         </div>
+        <h3 style="margin-top: 20px">商品销量：</h3>
+        <div class="ssf_table">
+          <ul>
+            <li>类型</li>
+            <li>租赁</li>
+            <li>出售</li>
+            <li>定制</li>
+          </ul>
+          <ul>
+            <li>次数</li>
+            <li>{{ meta.saleTimes }}次</li>
+            <li>{{ meta.rentTimes }}次</li>
+            <li>{{ meta.customizeTimes }}次</li>
+          </ul>
+        </div>
+        <div class="sku_btngroup">
+          <el-button type="primary" size="small" @click="modifyskuFn">
+            编辑
+          </el-button>
+
+          <el-button type="danger" class="Ml8" size="small" @click="delskuFn">
+            删除
+          </el-button>
+        </div>
       </div>
     </div>
     <div class="ssf_content">
@@ -39,6 +63,10 @@
         <p>
           商品简介：
           {{ meta.brief }}
+        </p>
+        <p class="Mt10">
+          面料备注：
+          {{ meta.otherNote }}
         </p>
       </div>
 
@@ -59,15 +87,46 @@ export default {
       type: Object,
       default: () => {},
     },
+    closeDialog: {
+      type: Boolean,
+      default: false,
+    },
+    modifysku: {
+      type: Function,
+      default: () => Promise.reslove,
+    },
+    delsku: {
+      type: Function,
+      default: () => Promise.reslove,
+    },
   },
 
   data() {
     return {}
   },
 
+  watch: {
+    closeDialog(newValue) {
+      if (newValue) {
+        // this.$parent.doClose()
+        this.$parent.handleClose()
+      }
+    },
+  },
+
   computed: {
     imgUrl() {
       return IMG_URL
+    },
+  },
+
+  methods: {
+    modifyskuFn() {
+      this.modifysku(this.meta)
+    },
+
+    delskuFn() {
+      this.delsku(this.meta)
     },
   },
 }
@@ -113,6 +172,7 @@ export default {
     .ssf_right {
       width: 596px;
       margin-left: 32px;
+      position: relative;
       h1 {
         font-size: 18px;
         font-family: PingFang;
@@ -167,21 +227,28 @@ export default {
     }
     .ssfc_html {
       margin: 0 auto;
-      width: 969px;
+      width: 940px;
       margin-top: 16px;
-      background: #f1f1f1;
-      padding: 40px 24px;
+      // background: #f1f1f1;
+      padding: 10px 0;
       margin-bottom: 40px;
-      p {
-        background: #f1f1f1 !important;
-      }
+      // p {
+      //   background: #f1f1f1 !important;
+      // }
     }
     .ssfc_divi {
-      height: 2px;
+      height: 1px;
       margin-bottom: 24px;
-      background: #979797;
+      background: #eee;
+      margin-left: -20px;
+      margin-right: -20px;
     }
   }
+}
+.sku_btngroup {
+  position: absolute;
+  right: 0;
+  top: 10px;
 }
 .is-fullscreen {
   .el-dialog__close {

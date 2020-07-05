@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="table_filter" v-if="!this.routerId">
+    <el-card class="table_filter">
       <EffectForm
         ref="effectForm"
         inline
@@ -9,8 +9,8 @@
         submitText="搜索"
         cancelText="刷新"
         class="table_filter"
-        @submit="handleFilter"
-        @cancel="handleFilterReset"
+        @submit="handleFilterFn"
+        @cancel="handleFilterResetFn"
       >
         <EffectFormField
           v-for="field in filterFields"
@@ -51,11 +51,15 @@ import {
   postShopSku,
   patchShopSku,
   deleteShopSku,
+  fetchSkuCategoryList,
 } from '@/apis'
 import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
 import ShowForm from './ShowForm'
 import { filterFields } from './formConfig'
+
+const pagerInit = { page: 1, page_size: 10 }
+const filtersInit = {}
 
 const table = tableMixins({
   pagerInit: { page: 1, page_size: 10 },
@@ -69,6 +73,7 @@ export default {
   data() {
     return {
       routerId: '',
+      skuCategory: [],
     }
   },
 
@@ -87,6 +92,22 @@ export default {
   },
 
   methods: {
+    handleFilterFn(form) {
+      const { id } = this.$route.params
+      let payload = { ...form, shopId: id }
+      this.pager = { ...pagerInit }
+      this.ordering = ''
+      this.fetchTableList(payload)
+    },
+
+    handleFilterResetFn() {
+      const { id } = this.$route.params
+      this.filters = { ...filtersInit, shopId: id }
+      this.pager = { ...pagerInit }
+      this.ordering = ''
+      this.fetchTableList()
+    },
+
     addItem() {
       this.$createDialog(
         {
@@ -173,6 +194,9 @@ export default {
     } else {
       this.fetchTableList()
     }
+    fetchSkuCategoryList().then((data) => {
+      this.skuCategory = data.result.list
+    })
   },
 }
 </script>

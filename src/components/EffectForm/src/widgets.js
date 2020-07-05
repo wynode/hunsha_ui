@@ -7,6 +7,7 @@ import UEditor from './component/UEditor'
 import DynamicLabels from './component/DynamicLabels'
 import MultipleInput from './component/MultipleInput'
 import puretext from './component/puretext'
+import pureNumber from './component/pureNumber'
 
 export default {
   text: {
@@ -23,6 +24,10 @@ export default {
 
   select: {
     component: WrapSelect,
+  },
+
+  pureNumber: {
+    component: pureNumber,
   },
 
   UEditor: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <el-card>
+    <el-card>
       <EffectForm
         ref="effectForm"
         inline
@@ -18,13 +18,14 @@
           :key="field.name"
         />
       </EffectForm>
-    </el-card> -->
-    <el-card>
+    </el-card>
+    <el-card class="Mt15">
       <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
         新增店铺订单
       </el-button>
 
       <Txcel
+        v-if="tableList.length"
         v-loading="mixTableLoading"
         element-loading-text="数据加载中"
         class="Txcel"
@@ -38,6 +39,10 @@
         }"
         @change="handleTableChange"
       />
+
+      <div v-else>
+        暂无店铺sku订单
+      </div>
     </el-card>
   </div>
 </template>

@@ -1,35 +1,11 @@
 export const filterFields = () => {
   return [
-    // {
-    //   // title: '店铺编码或者店铺名称',
-    //   name: 'customerName',
-    //   widget: 'text',
-    //   xProps: {
-    //     placeholder: '客户名称',
-    //   },
-    // },
-    // {
-    //   // title: '店铺编码或者店铺名称',
-    //   name: 'customerPhone',
-    //   widget: 'text',
-    //   xProps: {
-    //     placeholder: '客户电话',
-    //   },
-    // },
-    // {
-    //   // title: '店铺编码或者店铺名称',
-    //   name: 'customerWeiXin',
-    //   widget: 'text',
-    //   xProps: {
-    //     placeholder: '客户微信',
-    //   },
-    // },
     {
       // title: '店铺编码或者店铺名称',
       name: 'keyword',
       widget: 'text',
       xProps: {
-        placeholder: '客户名称，电话或微信',
+        placeholder: '店铺编码或名称',
       },
     },
   ]

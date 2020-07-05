@@ -207,6 +207,10 @@ export const fetchShopUserSkuCategory = (params = {}) => {
   return requests.get('/Api/ShopUser/ShopSku/getCategoryList', { params })
 }
 
+export const getSkuProfile = (params = {}) => {
+  return requests.get('/Api/ShopUser/ShopSku/getOneBySkuId', { params })
+}
+
 export const postShopUserSku = (payload) => {
   return requests.post('/Api/ShopUser/ShopSku/add', payload)
 }
@@ -226,6 +230,9 @@ export const updateCustomerStatus = (payload) => {
     '/Api/ShopUser/ShopOrderSku/updateCustomerStatus',
     payload
   )
+}
+export const postAbnormal = (payload) => {
+  return requests.post('/Api/ShopUser/ShopOrderSku/orderSkuAbnormal', payload)
 }
 
 export const deleteShopUserSku = (payload) => {

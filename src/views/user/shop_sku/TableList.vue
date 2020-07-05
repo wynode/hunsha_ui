@@ -45,10 +45,31 @@
             <div class="sc_img_box">
               <img :src="imgUrl + sku.thumb" alt="" @click="goView(sku)" />
             </div>
-            <div @click="goView(sku)">
-              <h1>{{ sku.skuName }}</h1>
+            <div @click="goView(sku)" class="sc_info_list">
+              <h1 style="font-size: 16px;">
+                <span>{{ sku.skuName }}</span>
+              </h1>
+              <h1>
+                sku编号：
+                <span>{{ sku.skuCode }}</span>
+              </h1>
+              <div>
+                <h1>
+                  分类名称：
+                  <span>
+                    {{ sku.categoryName
+                    }}{{ sku.gender == 1 ? '（男装）' : '（女装）' }}
+                  </span>
+                </h1>
 
-              <div class="sc_price">
+                <h1>
+                  库存：
+                  <span>{{ sku.skuNum }}</span>
+                  件
+                </h1>
+              </div>
+
+              <!-- <div class="sc_price">
                 <p style="font-weight: bold">
                   <span>￥</span>
                   <i>{{ sku.shopSalePrice }}</i>
@@ -57,7 +78,7 @@
                   <span>￥</span>
                   <i class="sc_rprice">{{ sku.recommendSalePrice }}</i>
                 </p>
-              </div>
+              </div> -->
             </div>
           </el-card>
         </el-col>
@@ -80,6 +101,7 @@ import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
 import { IMG_URL } from '@/config'
 import ShowForm from './ShowForm'
+
 import { filterFields } from './formConfig'
 
 const table = tableMixins({
@@ -109,6 +131,10 @@ export default {
     filterFields() {
       return filterFields(this)
     },
+    orderId() {
+      const { orderId } = this.$route.query
+      return orderId || ''
+    },
   },
 
   methods: {
@@ -129,7 +155,7 @@ export default {
           fullscreen: true,
           footer: false,
         },
-        () => <ShowForm meta={row} />
+        () => <ShowForm meta={row} orderId={this.orderId} />
       ).show()
       // this.$router.push({ name: 'showSku' })
     },
@@ -217,6 +243,11 @@ export default {
       padding-bottom: 100%;
       position: relative;
     }
+    .sc_info_list {
+      span {
+        color: #333;
+      }
+    }
     img {
       position: absolute;
       width: 100%;
@@ -227,7 +258,7 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin: 10px 0 6px;
+      margin: 4px 0 4px;
     }
     h2 {
     }

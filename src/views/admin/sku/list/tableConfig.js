@@ -129,7 +129,7 @@ export function tableListCols(vm) {
               <el-button
                 type="text"
                 size="small"
-                onClick={() => vm.showItem(this.row)}>
+                onClick={() => vm.goView(this.row)}>
                 预览
               </el-button>
             </span>

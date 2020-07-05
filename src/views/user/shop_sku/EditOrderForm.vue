@@ -17,9 +17,8 @@
 </template>
 
 <script>
-// import { fetchShopUserSkuList } from '@/apis'
-import { getStatusOptions } from '@/utils/common'
-import { FahuoFields, NoteFields } from './formConfig'
+import { dateFormat } from '@/utils/dateFormat'
+import { addFields, editFields } from './orderFormConfig'
 
 export default {
   props: {
@@ -27,22 +26,17 @@ export default {
       type: Object,
       default: null,
     },
-    title: {
-      type: String,
-      default: '',
-    },
   },
 
   computed: {
     formFields() {
-      return this.title.includes('发货') ? FahuoFields(this) : NoteFields(this)
+      return this.meta ? editFields(this) : addFields(this)
     },
   },
 
   data() {
     return {
-      statusList: [],
-      shopSkuList: [],
+      kw_categoryOpt: [],
     }
   },
 
@@ -54,11 +48,14 @@ export default {
           const { fields, setForm } = this.$refs.effectForm
           if (this.meta) {
             Object.keys(fields).forEach((fieldName) => {
-              // const isPass = fieldName === 'adminPassword'
-              // setForm(fieldName, isPass ? '' : this.meta[fieldName])
-              setForm(fieldName, this.meta[fieldName])
+              const isSpecial = fieldName === 'receiveGoodsTime'
+              setForm(
+                fieldName,
+                isSpecial
+                  ? dateFormat(this.meta[fieldName] * 1000)
+                  : this.meta[fieldName]
+              )
             })
-            this.statusList = getStatusOptions(this.meta.dealType)
           }
         })
       },

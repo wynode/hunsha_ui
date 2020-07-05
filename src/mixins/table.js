@@ -26,6 +26,7 @@ export default ({
         filtersCache: {},
         filtersMutate: filtersMutateInit,
         formItemList: [],
+        completeCV: false,
       }
     },
 
@@ -39,7 +40,7 @@ export default ({
 
       async fetchTableList(params = {}) {
         this.mixTableLoading = true
-
+        this.completeCV = false
         try {
           this.filtersCache = {
             page: this.pager.page,
@@ -68,8 +69,19 @@ export default ({
             res.result.list.map((item) => {
               let tempItem = {}
               Object.keys(item).forEach((item2) => {
-                if (item2.includes('Price')) {
+                if (item2.includes('Price') || item2.includes('price')) {
                   tempItem[item2] = item[item2] / 100
+                } else if (item2 == 'skuInfo') {
+                  const skuInfo = item.skuInfo
+                  let tempSku = { ...skuInfo }
+                  if (skuInfo) {
+                    Object.keys(skuInfo).forEach((item3) => {
+                      if (item3.includes('Price') || item3.includes('price')) {
+                        tempSku[item3] = skuInfo[item3] / 100
+                      }
+                    })
+                  }
+                  tempItem[item2] = tempSku
                 } else {
                   tempItem[item2] = item[item2]
                 }
@@ -77,6 +89,26 @@ export default ({
               return tempItem
             }) || []
           this.tableTotal = res.result.total
+          this.completeCV = true
+          if (this.rowD) {
+            if (Object.keys(this.rowD).length) {
+              this.rowD = this.tableList.filter((item) => {
+                return item.skuId == this.skuId
+              })[0]
+            }
+          }
+          // if (this.$route) {
+          //   const { skuId } = this.$route.query
+          //   if (skuId) {
+          //     const row = this.tableList.filter(
+          //       (item) => item.skuId == skuId
+          //     )[0]
+          //     if (!row) {
+          //       this.$message.error('没有找到这个sku')
+          //     }
+          //     this.goView(row)
+          //   }
+          // }
         } catch (error) {
           allErrors(error.data || error)
         } finally {

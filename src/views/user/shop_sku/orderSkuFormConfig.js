@@ -1,34 +1,3 @@
-export const abnormalFields = () => {
-  return [
-    {
-      title: '订单状态',
-      name: 'status',
-      widget: 'radio',
-      xProps: {
-        filterable: true,
-        options: [
-          { label: '退款', value: -1 },
-          { label: '异常', value: -2 },
-        ],
-      },
-      rules: [{ required: true, message: '请选择订单类型', trigger: 'blur' }],
-    },
-    {
-      title: '异常/退款备注',
-      name: 'abnormalNote',
-      widget: 'text',
-      xProps: {
-        type: 'textarea',
-        maxlength: '255',
-        'show-word-limit': true,
-      },
-      rules: [
-        { required: true, message: '请填写异常/退款备注', trigger: 'blur' },
-      ],
-    },
-  ]
-}
-
 export const FahuoFields = () => {
   return [
     {
@@ -43,34 +12,6 @@ export const FahuoFields = () => {
       widget: 'text',
       // rules: [{ required: true, message: '请选择物流信息', trigger: 'blur' }],
     },
-
-    {
-      title: '备注',
-      name: 'note',
-      widget: 'text',
-      xProps: {
-        type: 'textarea',
-        maxlength: '255',
-        'show-word-limit': true,
-      },
-    },
-  ]
-}
-
-export const NoteFields = () => {
-  return [
-    // {
-    //   title: '物流公司',
-    //   name: 'expressName',
-    //   widget: 'text',
-    //   // rules: [{ required: true, message: '请选择物流公司', trigger: 'blur' }],
-    // },
-    // {
-    //   title: '物流信息',
-    //   name: 'expressValue',
-    //   widget: 'text',
-    //   // rules: [{ required: true, message: '请选择物流信息', trigger: 'blur' }],
-    // },
 
     {
       title: '备注',
@@ -273,39 +214,39 @@ export const addFields = (vm) => {
   ]
 }
 
-export const editFields = () => {
+export const editFields = (vm) => {
   return [
-    // {
-    //   title: 'skuName',
-    //   name: 'skuId',
-    //   widget: 'select',
+    {
+      title: 'skuName',
+      name: 'skuId',
+      widget: 'select',
 
-    //   xProps: {
-    //     filterable: true,
-    //     options: vm.shopSkuList.map((item) => {
-    //       return {
-    //         label: item.skuInfo.skuName,
-    //         value: item.skuInfo.skuId,
-    //       }
-    //     }),
-    //   },
-    //   rules: [{ required: true, message: '请选择sku', trigger: 'blur' }],
-    // },
-    // {
-    //   title: '订单类型',
-    //   name: 'dealType',
-    //   widget: 'radio',
+      xProps: {
+        filterable: true,
+        options: vm.shopSkuList.map((item) => {
+          return {
+            label: item.skuInfo.skuName,
+            value: item.skuInfo.skuId,
+          }
+        }),
+      },
+      rules: [{ required: true, message: '请选择sku', trigger: 'blur' }],
+    },
+    {
+      title: '订单类型',
+      name: 'dealType',
+      widget: 'radio',
 
-    //   xProps: {
-    //     filterable: true,
-    //     options: [
-    //       { label: '出售', value: 1 },
-    //       { label: '租赁', value: 2 },
-    //       { label: '定制', value: 3 },
-    //     ],
-    //   },
-    //   rules: [{ required: true, message: '请填写订单类型', trigger: 'blur' }],
-    // },
+      xProps: {
+        filterable: true,
+        options: [
+          { label: '出售', value: 1 },
+          { label: '租赁', value: 2 },
+          { label: '定制', value: 3 },
+        ],
+      },
+      rules: [{ required: true, message: '请填写订单类型', trigger: 'blur' }],
+    },
     {
       title: '客户身高',
       name: 'customerHeight',
@@ -436,16 +377,15 @@ export const editFields = () => {
       },
       rules: [{ required: true, message: '请填写租赁押金', trigger: 'blur' }],
     },
-
-    // {
-    //   title: '购买数量',
-    //   name: 'skuNum',
-    //   widget: 'text',
-    //   xProps: {
-    //     ext: '件',
-    //   },
-    //   rules: [{ required: true, message: '请填写购买数量', trigger: 'blur' }],
-    // },
+    {
+      title: '购买数量',
+      name: 'skuNum',
+      widget: 'pureNumber',
+      xProps: {
+        ext: '件',
+      },
+      rules: [{ required: true, message: '请填写购买数量', trigger: 'blur' }],
+    },
     {
       title: '其他备注',
       name: 'note',

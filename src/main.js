@@ -16,6 +16,28 @@ import routers from './routers'
 import stores from './stores'
 import plugins from './plugins'
 
+Vue.directive('enterNumber', {
+  inserted: function(el) {
+    el.addEventListener('keypress', function(e) {
+      const ees = e || window.event
+      let charcode =
+        typeof ees.charCode === 'number' ? ees.charCode : ees.keyCode
+      let re = /\d/
+      if (
+        !re.test(String.fromCharCode(charcode)) &&
+        charcode > 9 &&
+        !ees.ctrlKey
+      ) {
+        if (ees.preventDefault) {
+          ees.preventDefault()
+        } else {
+          ees.returnValue = false
+        }
+      }
+    })
+  },
+})
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(Txcel)
