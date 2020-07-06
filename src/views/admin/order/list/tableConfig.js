@@ -33,18 +33,20 @@ export function tableListCols() {
       component: {
         props: { row: Object },
         render() {
+          const { shopUserId, shopUserName } = this.$route.query || {}
+          const { shopId, shopName } = this.row.shopInfo || {}
           return (
             <router-link
               to={{
                 name: 'adminOrderList',
                 query: {
-                  shopId: this.row.shopInfo.shopId,
-                  shopName: this.row.shopInfo.shopName,
-                  shopUserId: this.$route.query.shopUserId,
-                  shopUserName: this.$route.query.shopUserName,
+                  shopId: shopId,
+                  shopName: shopName,
+                  shopUserId: shopUserId,
+                  shopUserName: shopUserName,
                 },
               }}>
-              <el-link type="primary">{this.row.shopInfo.shopName}</el-link>
+              <el-link type="primary">{shopName}</el-link>
             </router-link>
           )
         },
@@ -56,18 +58,20 @@ export function tableListCols() {
       component: {
         props: { row: Object },
         render() {
+          const { shopId, shopName } = this.$route.query || {}
+          const { shopUserId, name } = this.row.shopUserInfo || {}
           return (
             <router-link
               to={{
                 name: 'adminOrderList',
                 query: {
-                  shopUserId: this.row.shopUserInfo.shopUserId,
-                  shopUserName: this.row.shopUserInfo.name,
-                  shopId: this.$route.query.shopId,
-                  shopName: this.$route.query.shopName,
+                  shopUserId: shopUserId,
+                  shopUserName: name,
+                  shopId: shopId,
+                  shopName: shopName,
                 },
               }}>
-              <el-link type="primary">{this.row.shopUserInfo.name}</el-link>
+              <el-link type="primary">{name}</el-link>
             </router-link>
           )
         },

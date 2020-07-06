@@ -78,7 +78,7 @@
           </el-card>
         </el-col>
       </el-row>
-      <div class="no_more_text">暂无服装</div>
+      <div class="no_more_text" v-else>暂无服装</div>
     </el-card>
   </div>
 </template>

@@ -1,6 +1,11 @@
 export const adminMenusConfig = () => {
   return [
     {
+      title: '数据统计',
+      icon: 'el-icon-data-line',
+      router: { name: 'statistic' },
+    },
+    {
       title: '店铺管理',
       icon: 'el-icon-s-shop',
       children: [

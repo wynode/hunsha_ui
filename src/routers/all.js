@@ -1,6 +1,16 @@
 export default [
   // admin
   {
+    path: '/admin/statistic',
+    name: 'statistic',
+    meta: {
+      title: '店铺管理',
+      breadcrumb: ['店铺管理', '店铺列表'],
+      type: 'admin',
+    },
+    component: () => import('@/views/dashboard.vue'),
+  },
+  {
     path: '/admin/shop-list',
     name: 'shopList',
     meta: {

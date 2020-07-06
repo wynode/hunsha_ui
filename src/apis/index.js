@@ -195,6 +195,14 @@ export const deleteAdminShopOrderSku = (payload) => {
 }
 
 // ShopUserSku
+export const fetchStatistic = (params = {}) => {
+  return requests.get('/Api/Admin/Statistics/countOrderGroupByDate', { params })
+}
+
+export const fetchRanking = (params = {}) => {
+  return requests.get('/Api/Admin/Statistics/countOrderGroupList', { params })
+}
+
 export const fetchShopUserSkuList = (params = {}) => {
   return requests.get('/Api/ShopUser/ShopSku/getList', { params })
 }

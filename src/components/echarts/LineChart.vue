@@ -9,39 +9,58 @@ require('echarts/lib/component/grid')
 require('echarts/lib/component/title')
 require('echarts/lib/component/legend')
 import echarts from 'echarts'
-import { dateFormat } from '@/utils/dateFormat'
+import { get } from 'lodash'
+// import { dateFormat } from '@/utils/dateFormat'
 import { getMapOptions } from '@/utils/mappings'
 import { byteToMGb } from '@/utils/common'
 
-const colorBoard = {
-  requestTimes: 'rgba(0,150,136,0.6)',
-  qps: 'rgba(48,70,85,0.6)',
-  status10x: '#5142B3',
-  status20x: 'rgba(15,154,195, 0.6)',
-  status30x: '#f1e0c8',
-  status40x: '#70a6ff',
-  status50x: 'rgb(224,99,93)',
-  incomeTransfer: 'rgba(0,150,136,0.6)',
-  incomeAverageTransfer: 'rgba(212,130,101, 0.6)',
-  outcomeTransfer: 'rgba(15,154,195, 0.6)',
-  outcomeAverageTransfer: 'rgba(195,56,52, 0.6)',
-  attackTimes: 'rgba(0,150,136,0.6)',
-}
+// const colorBoard = {
+//   requestTimes: 'rgba(0,150,136,0.6)',
+//   qps: 'rgba(48,70,85,0.6)',
+//   status10x: '#5142B3',
+//   status20x: 'rgba(15,154,195, 0.6)',
+//   status30x: '#f1e0c8',
+//   status40x: '#70a6ff',
+//   status50x: 'rgb(224,99,93)',
+//   incomeTransfer: 'rgba(0,150,136,0.6)',
+//   incomeAverageTransfer: 'rgba(212,130,101, 0.6)',
+//   outcomeTransfer: 'rgba(15,154,195, 0.6)',
+//   outcomeAverageTransfer: 'rgba(195,56,52, 0.6)',
+//   attackTimes: 'rgba(0,150,136,0.6)',
+// }
 
-const colorBoardNoGraph = {
-  requestTimes: 'rgb(0,150,136)',
-  qps: 'rgb(48,70,85)',
-  status10x: '#5142B3',
-  status20x: 'rgb(15,154,195)',
-  status30x: '#f1e0c8',
-  status40x: '#70a6ff',
-  status50x: 'rgb(224,99,93)',
-  incomeTransfer: 'rgb(0,150,136)',
-  incomeAverageTransfer: 'rgb(212,130,101)',
-  outcomeTransfer: 'rgb(15,154,195, 1)',
-  outcomeAverageTransfer: 'rgb(195,56,52)',
-  attackTimes: 'rgb(0,150,136)',
-}
+// export const totalNum = new Map([
+//   ['rentTotalNum', '出售总单数'],
+//   ['saleTotalNum', '租赁总单数'],
+//   ['customizeTotalNum', '定制总单数'],
+// ])
+
+// export const totalPrice = new Map([
+//   ['rentTotalPrice', '出售总单数'],
+//   ['saleTotalPrice', '租赁总单数'],
+//   ['customizeTotalPrice', '定制总单数'],
+// ])
+
+// export const totalAbnormalNum = new Map([
+//   ['rentAbnormalTotalNum', '出售总单数'],
+//   ['saleAbnormalTotalNum', '租赁总单数'],
+//   ['customizeAbnormalTotalNum', '定制总单数'],
+// ])
+
+// const colorBoardNoGraph = {
+//   rentTotalNum: 'rgb(0,150,136)',
+//   saleTotalNum: 'rgb(48,70,85)',
+//   customizeTotalNum: 'rgb(195,56,52)',
+//   rentTotalPrice: 'rgb(15,154,195)',
+//   saleTotalPrice: '#f1e0c8',
+//   customizeTotalPrice: '#70a6ff',
+//   rentAbnormalTotalNum: 'rgb(224,99,93)',
+//   saleAbnormalTotalNum: 'rgb(0,150,136)',
+//   customizeAbnormalTotalNum: 'rgb(212,130,101)',
+//   // outcomeTransfer: 'rgb(15,154,195, 1)',
+//   // outcomeAverageTransfer: 'rgb(195,56,52)',
+//   // attackTimes: 'rgb(0,150,136)',
+// }
 
 export default {
   props: {
@@ -85,6 +104,11 @@ export default {
         })
       },
     },
+
+    mapOption() {
+      this.myChart.clear()
+      this.myChart.setOption(this.option)
+    },
   },
 
   computed: {
@@ -104,9 +128,8 @@ export default {
         }
       }
       xAxisData = this.chartData.map((val) => {
-        return dateFormat(val.time * 1000).slice(11, 16)
+        return val.dateShow
       })
-
       this.liveTimeOptions.forEach((item) => {
         // legendData.push(
         //   `${dateFormat(this.chartData[index]['time'] * 1000)}${item.label}`
@@ -115,32 +138,32 @@ export default {
           name: item.label,
           type: 'line',
           smooth: true,
-          itemStyle: {
-            color: colorBoardNoGraph[item.value] || '',
-          },
+          // itemStyle: {
+          //   color: get(colorBoardNoGraph, item.value) || '',
+          // },
           lineStyle: {
             width: 2,
           },
           showSymbol: false,
           hoverAnimation: false,
-          areaStyle: {
-            color: colorBoard[item.value] || '',
-            // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            //   {
-            //     offset: 0,
-            //     color: colorBoardNoGraph[item.value] || '',
-            //   },
-            //   {
-            //     offset: 0.5,
-            //     color: colorBoard[item.value] || '',
-            //   },
-            //   {
-            //     offset: 1.0,
-            //     color: '#fff',
-            //   },
-            // ]),
-          },
-          data: this.chartData.map((val) => val[item.value]),
+          // areaStyle: {
+          //   color: get(colorBoard, item.value) || '',
+          //   // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          //   //   {
+          //   //     offset: 0,
+          //   //     color: colorBoardNoGraph, item.value || '',
+          //   //   },
+          //   //   {
+          //   //     offset: 0.5,
+          //   //     color: colorBoard, item.value || '',
+          //   //   },
+          //   //   {
+          //   //     offset: 1.0,
+          //   //     color: '#fff',
+          //   //   },
+          //   // ]),
+          // },
+          data: this.chartData.map((val) => get(val, item.value)),
         })
       })
       return {
