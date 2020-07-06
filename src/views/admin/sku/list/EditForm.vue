@@ -3,7 +3,7 @@
     <EffectForm
       ref="effectForm"
       size="medium"
-      label-position="left"
+      label-position="right"
       label-width="auto"
       class="admin_sku_form"
       :needToolBtnGroup="false"
@@ -72,9 +72,9 @@ export default {
 .admin_sku_form {
   display: flex;
   flex-wrap: wrap;
-  .el-form-item {
-    margin-left: 10px;
-  }
+  // .el-form-item {
+  //   margin-left: 0px;
+  // }
   .el-input {
     width: 190px;
   }
@@ -104,33 +104,33 @@ export default {
   }
   .costPrice {
     &::before {
-      content: '出售：';
+      // content: '出售：';
       position: absolute;
-      left: 10px;
+      left: -25px;
       top: 8px;
     }
     position: relative;
-    padding-left: 60px;
+    // padding-left: 60px;
   }
   .rentCostPrice {
     &::before {
-      content: '租赁：';
+      // content: '租赁：';
       position: absolute;
-      left: 10px;
+      left: -25px;
       top: 8px;
     }
     position: relative;
-    padding-left: 60px;
+    // padding-left: 60px;
   }
   .customizeCostPrice {
     &::before {
-      content: '定制：';
+      // content: '定制：';
       position: absolute;
-      left: 10px;
+      left: -25px;
       top: 8px;
     }
     position: relative;
-    padding-left: 60px;
+    // padding-left: 60px;
   }
 }
 </style>

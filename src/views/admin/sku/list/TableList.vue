@@ -21,7 +21,7 @@
     </el-card>
     <el-card class="Mt15">
       <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
-        新增sku
+        新增服装
       </el-button>
 
       <!-- <Txcel
@@ -38,7 +38,7 @@
         }"
         @change="handleTableChange"
       /> -->
-      <el-row :gutter="20" style="margin-bottom: 10px">
+      <el-row :gutter="20" style="margin-bottom: 10px" v-if="tableList.length">
         <el-col :span="4" v-for="sku in tableList" :key="sku.skuId">
           <el-card class="sku_card">
             <div class="sc_img_box">
@@ -49,7 +49,7 @@
                 <span>{{ sku.skuName }}</span>
               </h1>
               <h1>
-                sku编号：
+                服装编号：
                 <span>{{ sku.skuCode }}</span>
               </h1>
               <div>
@@ -78,6 +78,7 @@
           </el-card>
         </el-col>
       </el-row>
+      <div class="no_more_text">暂无服装</div>
     </el-card>
   </div>
 </template>
@@ -137,7 +138,7 @@ export default {
     addItem() {
       this.$createDialog(
         {
-          title: '新增Sku',
+          title: '新增服装',
           width: '1097px',
           top: '10px',
           onSubmit: async (instance, slotRef) => {
@@ -188,7 +189,7 @@ export default {
     modifyItem(row) {
       this.$createDialog(
         {
-          title: '更新店铺Sku',
+          title: '更新店铺服装',
           width: '1097px',
           top: '10px',
           onSubmit: async (instance, slotRef) => {
@@ -306,8 +307,7 @@ export default {
       text-overflow: ellipsis;
       margin: 4px 0 4px;
     }
-    h2 {
-    }
+
     .sc_price {
       display: flex;
       justify-content: space-between;

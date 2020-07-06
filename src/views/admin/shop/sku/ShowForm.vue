@@ -2,10 +2,10 @@
   <div class="add_sku_form">
     <el-form ref="showForm" :model="showForm" label-width="auto">
       <div v-if="!showXz">
-        <el-form-item label="sku分类名称筛选">
+        <el-form-item label="服装分类名称筛选" style="display: inline-block;">
           <el-select
             v-model="skuCategory"
-            placeholder="选择sku分类名称进行筛选"
+            placeholder="选择服装分类名称进行筛选"
             @change="searchChange"
           >
             <el-option
@@ -16,7 +16,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="sku关键字搜索">
+        <el-form-item
+          label="服装关键字搜索"
+          style="display: inline-block;margin-left: 30px;"
+        >
           <el-input v-model="keyword" @input="searchChange"></el-input>
         </el-form-item>
         <Txcel

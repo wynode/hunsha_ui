@@ -7,7 +7,7 @@
 
       <div class="ssf_right">
         <h1>{{ meta.skuName }}</h1>
-        <h2>sku编号：{{ meta.skuCode }}</h2>
+        <h2>服装编号：{{ meta.skuCode }}</h2>
         <h3>商品价格：</h3>
         <div class="ssf_table">
           <ul>

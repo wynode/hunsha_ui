@@ -29,7 +29,7 @@ export const FahuoFields = () => {
 export const addFields = (vm) => {
   return [
     {
-      title: 'sku名称',
+      title: '服装名称',
       name: 'skuId',
       widget: 'select',
 

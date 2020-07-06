@@ -16,10 +16,10 @@ export const addFields = () => {
       },
     },
     {
-      title: '店员名称',
+      title: '录单店员',
       name: 'name',
       widget: 'text',
-      rules: [{ required: true, message: '请填写店员名称', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写录单店员', trigger: 'blur' }],
     },
     {
       title: '身份证号码',
@@ -54,10 +54,10 @@ export const editFields = () => {
       },
     },
     {
-      title: '店员名称',
+      title: '录单店员',
       name: 'name',
       widget: 'text',
-      rules: [{ required: true, message: '请填写店员名称', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写录单店员', trigger: 'blur' }],
     },
     {
       title: '身份证号码',

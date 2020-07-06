@@ -4,7 +4,7 @@ import { AddYuan, AddJian } from '@/components/CellTools.jsx'
 export function tableListCols(vm) {
   return [
     {
-      label: 'sku名称',
+      label: '服装名称',
       prop: 'skuInfo.skuName',
     },
     {

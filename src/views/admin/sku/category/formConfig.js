@@ -1,17 +1,17 @@
 export const addFields = () => {
   return [
     {
-      title: '性别',
+      title: '男装/女装',
       name: 'gender',
-      widget: 'select',
+      widget: 'radio',
       xProps: {
         filterable: true,
         options: [
-          { label: '男', value: 1 },
-          { label: '女', value: 2 },
+          { label: '男装', value: 1 },
+          { label: '女装', value: 2 },
         ],
       },
-      rules: [{ required: true, message: '请填写性别', trigger: 'blur' }],
+      rules: [{ required: true, message: '请选择男装/女装', trigger: 'blur' }],
     },
     {
       title: '分类名称',
@@ -25,17 +25,17 @@ export const addFields = () => {
 export const editFields = () => {
   return [
     {
-      title: '性别',
+      title: '男装/女装',
       name: 'gender',
-      widget: 'select',
+      widget: 'radio',
       xProps: {
         filterable: true,
         options: [
-          { label: '男', value: 1 },
-          { label: '女', value: 2 },
+          { label: '男装', value: 1 },
+          { label: '女装', value: 2 },
         ],
       },
-      rules: [{ required: true, message: '请填写性别', trigger: 'blur' }],
+      rules: [{ required: true, message: '请选择男装/女装', trigger: 'blur' }],
     },
     {
       title: '分类名称',

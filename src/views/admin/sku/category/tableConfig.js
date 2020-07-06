@@ -27,7 +27,7 @@ export function tableListCols(vm) {
       prop: 'categoryName',
     },
     {
-      label: 'sku列表',
+      label: '服装列表',
       component: {
         props: { row: Object },
         render() {
@@ -37,7 +37,7 @@ export function tableListCols(vm) {
                 name: 'skuList',
                 query: { categoryId: this.row.categoryId },
               }}>
-              <el-button type="text">sku列表</el-button>
+              <el-button type="text">服装列表</el-button>
             </router-link>
           )
         },

@@ -14,10 +14,19 @@ export const filterFields = () => {
 export const addFields = (vm) => {
   const cols = [
     {
-      title: '店铺Id',
+      title: '店铺名称',
       name: 'shopId',
-      widget: 'text',
-      rules: [{ required: true, message: '请填写店铺Id', trigger: 'blur' }],
+      widget: 'select',
+      xProps: {
+        filterable: true,
+        options: vm.shopList.map((item) => {
+          return {
+            label: item.shopName,
+            value: item.shopId,
+          }
+        }),
+      },
+      rules: [{ required: true, message: '请填写店铺名称', trigger: 'blur' }],
     },
     {
       title: '店员账号',
@@ -35,10 +44,10 @@ export const addFields = (vm) => {
       },
     },
     {
-      title: '店员名称',
+      title: '录单店员',
       name: 'name',
       widget: 'text',
-      rules: [{ required: true, message: '请填写店员名称', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写录单店员', trigger: 'blur' }],
     },
     {
       title: '身份证号码',
@@ -78,10 +87,10 @@ export const editFields = () => {
       },
     },
     {
-      title: '店员名称',
+      title: '录单店员',
       name: 'name',
       widget: 'text',
-      rules: [{ required: true, message: '请填写店员名称', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写录单店员', trigger: 'blur' }],
     },
     {
       title: '身份证号码',

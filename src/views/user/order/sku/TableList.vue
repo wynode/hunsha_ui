@@ -7,7 +7,7 @@
       <el-card v-for="sku in tableList" :key="sku.orderSkuId">
         <div class="table_sku">
           <div class="ts_item">
-            <span>订单sku编号：{{ sku.orderInfo.orderNumber }}</span>
+            <span>订单服装编号：{{ sku.orderInfo.orderNumber }}</span>
           </div>
           <div class="order_sku_tupian ts_item">
             <!-- <img :src="imgUrl + sku.thumb" alt="" /> -->
@@ -34,10 +34,10 @@
                 </span>
               </div>
               <div>
-                <span>sku名称：{{ sku.skuName }}</span>
+                <span>服装名称：{{ sku.skuName }}</span>
               </div>
               <div class="ost_right_1">
-                <span>sku编号：{{ sku.skuCode }}</span>
+                <span>服装编号：{{ sku.skuCode }}</span>
               </div>
             </div>
           </div>
@@ -212,7 +212,7 @@
       </el-card>
     </div>
     <div v-else class="no_more_text">
-      暂无店铺sku订单
+      暂无店铺服装订单
     </div>
   </div>
 </template>

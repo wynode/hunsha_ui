@@ -11,7 +11,7 @@ import {
 export function tableListCols(vm) {
   return [
     {
-      label: 'sku名称',
+      label: '服装名称',
       width: 120,
       prop: 'skuName',
     },

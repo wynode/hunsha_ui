@@ -22,7 +22,7 @@
 
     <el-card :class="{ Mt15: !this.routerId }">
       <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
-        新增店铺sku
+        新增店铺服装
       </el-button>
 
       <Txcel
@@ -111,7 +111,7 @@ export default {
     addItem() {
       this.$createDialog(
         {
-          title: '新增店铺Sku',
+          title: '新增店铺服装',
           width: '1100px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.showForm) {
@@ -144,7 +144,7 @@ export default {
     modifyItem(row) {
       this.$createDialog(
         {
-          title: '更新店铺Sku',
+          title: '更新店铺服装',
           width: '500px',
           validate: false,
           onSubmit: async (instance, slotRef) => {

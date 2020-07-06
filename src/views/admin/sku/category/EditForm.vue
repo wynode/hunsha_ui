@@ -10,6 +10,7 @@
       <EffectFormField
         v-for="field in formFields"
         v-bind="field"
+        :class="field.name"
         :key="field.name"
       />
     </EffectForm>
@@ -59,4 +60,15 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.gender {
+  height: 36px;
+  line-height: 36px;
+  .el-form-item__content {
+    height: 36px;
+    line-height: 36px;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>

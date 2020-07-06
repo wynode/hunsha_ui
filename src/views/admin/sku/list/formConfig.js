@@ -1,20 +1,20 @@
 export const filterFields = (vm) => {
   return [
     {
-      // title: 'sku名称',
+      // title: '服装名称',
       name: 'keyword',
       widget: 'text',
       xProps: {
-        placeholder: 'sku名称',
+        placeholder: '服装名称',
       },
     },
     {
-      // title: 'sku分类',
+      // title: '服装分类',
       name: 'categoryId',
       widget: 'select',
       xProps: {
         filterable: true,
-        placeholder: 'sku分类',
+        placeholder: '服装分类',
         options: vm.skuCategory.map((item) => {
           return {
             label: item.categoryName,
@@ -44,24 +44,24 @@ export const addFields = (vm) => {
       rules: [{ required: true, message: '请填写分类名称', trigger: 'blur' }],
     },
     {
-      title: 'sku名称',
+      title: '服装名称',
       name: 'skuName',
       widget: 'text',
 
-      rules: [{ required: true, message: '请填写sku名称', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写服装名称', trigger: 'blur' }],
     },
     {
-      title: 'sku编码',
+      title: '服装编码',
       name: 'skuCode',
       widget: 'text',
 
-      rules: [{ required: true, message: '请填写sku编码', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写服装编码', trigger: 'blur' }],
     },
     {
-      title: 'sku图',
+      title: '服装图',
       name: 'thumb',
       widget: 'upload',
-      rules: [{ required: true, message: '请上传sku图', trigger: 'blur' }],
+      rules: [{ required: true, message: '请上传服装图', trigger: 'blur' }],
       xProps: {
         type: 'img',
         disabled: false,
@@ -178,17 +178,17 @@ export const addFields = (vm) => {
 export const editFields = () => {
   return [
     {
-      title: 'sku名称',
+      title: '服装名称',
       name: 'skuName',
       widget: 'text',
 
-      rules: [{ required: true, message: '请填写sku名称', trigger: 'blur' }],
+      rules: [{ required: true, message: '请填写服装名称', trigger: 'blur' }],
     },
     {
-      title: 'sku图',
+      title: '服装图',
       name: 'thumb',
       widget: 'upload',
-      rules: [{ required: true, message: '请上传sku图', trigger: 'blur' }],
+      rules: [{ required: true, message: '请上传服装图', trigger: 'blur' }],
       xProps: {
         type: 'img',
         disabled: false,

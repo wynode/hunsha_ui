@@ -28,21 +28,6 @@ export function tableListCols() {
       },
     },
     {
-      label: '客户名称',
-      width: 120,
-      prop: 'customerName',
-    },
-    {
-      label: '客户手机号码',
-      width: 120,
-      prop: 'customerPhone',
-    },
-    {
-      label: '客户微信',
-      width: 120,
-      prop: 'customerWeiXin',
-    },
-    {
       label: '店铺名称',
       prop: 'shopInfo',
       component: {
@@ -66,12 +51,7 @@ export function tableListCols() {
       },
     },
     {
-      label: '客户资料备注',
-      prop: 'customerNote',
-      component: OneLineText,
-    },
-    {
-      label: '店员名称',
+      label: '录单店员',
       prop: 'shopUserInfo',
       component: {
         props: { row: Object },
@@ -93,6 +73,28 @@ export function tableListCols() {
         },
       },
     },
+    {
+      label: '客户名称',
+      width: 120,
+      prop: 'customerName',
+    },
+    {
+      label: '客户手机号码',
+      width: 120,
+      prop: 'customerPhone',
+    },
+    {
+      label: '客户微信',
+      width: 120,
+      prop: 'customerWeiXin',
+    },
+
+    {
+      label: '客户资料备注',
+      prop: 'customerNote',
+      component: OneLineText,
+    },
+
     {
       label: '收货地址',
       prop: 'address',

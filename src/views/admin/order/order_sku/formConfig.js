@@ -65,7 +65,7 @@ export const filterFields = (vm) => {
 export const addFields = (vm) => {
   return [
     {
-      title: 'sku名称',
+      title: '服装名称',
       name: 'skuId',
       widget: 'select',
 
@@ -253,7 +253,7 @@ export const addFields = (vm) => {
 export const editFields = (vm) => {
   return [
     {
-      title: 'sku名称',
+      title: '服装名称',
       name: 'skuId',
       widget: 'select',
 

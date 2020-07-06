@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
-        新增sku分类
+        新增服装分类
       </el-button>
 
       <Txcel
@@ -62,7 +62,7 @@ export default {
     addItem() {
       this.$createDialog(
         {
-          title: '新增sku分类',
+          title: '新增服装分类',
           width: '600px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
@@ -84,7 +84,7 @@ export default {
     modifyItem(row) {
       this.$createDialog(
         {
-          title: '更新sku分类',
+          title: '更新服装分类',
           width: '600px',
           validate: false,
           onSubmit: async (instance, slotRef) => {

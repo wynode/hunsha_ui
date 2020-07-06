@@ -9,7 +9,7 @@ export const adminMenusConfig = () => {
           router: { name: 'shopList' },
         },
         // {
-        //   title: '店铺sku管理',
+        //   title: '店铺服装管理',
         //   router: { name: 'shopSkuList' },
         // },
         {
@@ -27,21 +27,21 @@ export const adminMenusConfig = () => {
           router: { name: 'adminOrderList' },
         },
         // {
-        //   title: '订单sku管理',
+        //   title: '订单服装管理',
         //   router: { name: 'adminOrderSku' },
         // },
       ],
     },
     {
-      title: 'Sku管理',
+      title: '服装管理',
       icon: 'el-icon-s-goods',
       children: [
         {
-          title: 'Sku列表',
+          title: '服装列表',
           router: { name: 'skuList' },
         },
         {
-          title: 'Sku分类管理',
+          title: '服装分类管理',
           router: { name: 'skuCategory' },
         },
       ],
@@ -57,7 +57,7 @@ export const userMenusConfig = () => {
       router: { name: 'orderList' },
     },
     {
-      title: '店铺Sku管理',
+      title: '店铺服装管理',
       icon: 'el-icon-s-goods',
       router: { name: 'userShopSkuList' },
     },

@@ -1,7 +1,7 @@
 export const addFields = () => {
   return [
     // {
-    //   title: 'sku名称',
+    //   title: '服装名称',
     //   name: 'skuId',
     //   widget: 'select',
 
@@ -187,7 +187,7 @@ export const addFields = () => {
 export const editFields = () => {
   return [
     // {
-    //   title: 'sku名称',
+    //   title: '服装名称',
     //   name: 'skuId',
     //   widget: 'select',
 

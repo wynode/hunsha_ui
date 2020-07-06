@@ -7,7 +7,7 @@ export function tableListCols(vm) {
       prop: 'account',
     },
     {
-      label: '店员名称',
+      label: '录单店员',
       prop: 'name',
     },
     {

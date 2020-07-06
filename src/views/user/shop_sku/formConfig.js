@@ -1,20 +1,20 @@
 export const filterFields = (vm) => {
   return [
     {
-      // title: 'sku名称',
+      // title: '服装名称',
       name: 'keyword',
       widget: 'text',
       xProps: {
-        placeholder: 'sku名称,编码',
+        placeholder: '服装名称,编码',
       },
     },
     {
-      // title: 'sku分类',
+      // title: '服装分类',
       name: 'categoryId',
       widget: 'select',
       xProps: {
         filterable: true,
-        placeholder: 'sku分类',
+        placeholder: '服装分类',
         options: vm.skuCategory.map((item) => {
           return {
             label: item.categoryName,

@@ -27,17 +27,17 @@ export function tableListCols(vm) {
       },
     },
     {
-      label: 'sku名称',
+      label: '服装名称',
       prop: 'skuName',
       width: 160,
     },
     {
-      label: 'sku编码',
+      label: '服装编码',
       prop: 'skuCode',
       width: 120,
     },
     {
-      label: 'sku图',
+      label: '服装图',
       prop: 'thumb',
       component: {
         props: { row: Object },

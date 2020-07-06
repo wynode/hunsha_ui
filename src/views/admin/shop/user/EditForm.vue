@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { fetchShopList } from '@/apis'
 import { editFields, addFields } from './formConfig'
 
 export default {
@@ -40,6 +41,7 @@ export default {
   data() {
     return {
       kw_categoryOpt: [],
+      shopList: [],
     }
   },
 
@@ -69,6 +71,11 @@ export default {
   //     })
   //   },
   // },
+  mounted() {
+    fetchShopList().then((data) => {
+      this.shopList = data.result.list
+    })
+  },
 }
 </script>
 

@@ -21,16 +21,16 @@ export const filterFields = (vm) => {
       name: 'keyword',
       widget: 'text',
       xProps: {
-        placeholder: 'sku名称或sku编码',
+        placeholder: '服装名称或服装编码',
       },
     },
     {
-      // title: 'sku分类',
+      // title: '服装分类',
       name: 'categoryId',
       widget: 'select',
       xProps: {
         filterable: true,
-        placeholder: 'sku分类',
+        placeholder: '服装分类',
         options: vm.skuCategory.map((item) => {
           return {
             label: item.categoryName,
@@ -44,7 +44,7 @@ export const filterFields = (vm) => {
     //   name: 'categoryName',
     //   widget: 'text',
     //   xProps: {
-    //     placeholder: 'sku分类',
+    //     placeholder: '服装分类',
     //   },
     // },
   ]

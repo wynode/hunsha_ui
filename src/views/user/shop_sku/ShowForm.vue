@@ -7,7 +7,7 @@
 
       <div class="ssf_right">
         <h1>{{ meta.skuName }}</h1>
-        <h2>sku编号：{{ meta.skuCode }}</h2>
+        <h2>服装编号：{{ meta.skuCode }}</h2>
         <h3>商品价格：</h3>
         <div class="ssf_table">
           <ul>
@@ -142,7 +142,7 @@ export default {
                   orderId: orderId,
                   ...form,
                 })
-                this.$notify.success('新增sku订单成功')
+                this.$notify.success('新增服装订单成功')
                 // this.$router.push({
                 //   name: 'orderProfile',
                 //   params: {

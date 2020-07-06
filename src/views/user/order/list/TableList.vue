@@ -41,7 +41,7 @@
       />
 
       <div v-else>
-        暂无店铺sku订单
+        暂无店铺服装订单
       </div>
     </el-card>
   </div>

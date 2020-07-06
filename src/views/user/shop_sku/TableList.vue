@@ -22,7 +22,7 @@
     </el-card>
     <div class="sku_contnet">
       <!-- <el-button size="small" type="primary" class="Mb20 Mr20" @click="addItem">
-        新增店铺Sku
+        新增店铺服装
       </el-button> -->
 
       <!-- <Txcel
@@ -50,7 +50,7 @@
                 <span>{{ sku.skuName }}</span>
               </h1>
               <h1>
-                sku编号：
+                服装编号：
                 <span>{{ sku.skuCode }}</span>
               </h1>
               <div>
@@ -162,7 +162,7 @@ export default {
     addItem() {
       this.$createDialog(
         {
-          title: '新增店铺Sku',
+          title: '新增店铺服装',
           width: '600px',
           onSubmit: async (instance, slotRef) => {
             if (slotRef.$refs.effectForm) {
@@ -184,7 +184,7 @@ export default {
     modifyItem(row) {
       this.$createDialog(
         {
-          title: '更新店铺Sku',
+          title: '更新店铺服装',
           width: '500px',
           validate: false,
           onSubmit: async (instance, slotRef) => {
