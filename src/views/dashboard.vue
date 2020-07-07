@@ -1,17 +1,17 @@
 <template>
   <div class="dash_board">
     <el-card>
-      <el-form label-position="left" label-width="0" :model="form">
+      <el-form label-position="left" label-width="0" :model="form1">
         <el-form-item style="margin-bottom: 10px; margin-top: 10px">
           <el-date-picker
-            v-model="form.dateRange"
+            v-model="form1.dateRange"
             type="datetimerange"
             size="small"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             value-format="yyyy-MM-dd HH:mm:ss"
-            @change="handleDateChange"
+            @change="handleDate1Change"
           ></el-date-picker>
         </el-form-item>
       </el-form>
@@ -92,7 +92,21 @@
       </el-col>
     </el-row>
 
-    <el-row class="Mt15">
+    <el-row>
+      <el-form label-position="left" label-width="0" :model="form2">
+        <el-form-item style="margin-bottom: 15px; margin-top: 15px">
+          <el-date-picker
+            v-model="form2.dateRange"
+            type="datetimerange"
+            size="small"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            @change="handleDate2Change"
+          ></el-date-picker>
+        </el-form-item>
+      </el-form>
       <el-card class="box-card" style="height: 378px">
         <div slot="header" class="clearfix">
           <span>{{ dateName }}统计 - {{ activeName }}</span>
@@ -109,9 +123,39 @@
           暂无数据
         </div>
       </el-card>
+      <el-card class="box-card Mt15" style="height: 378px">
+        <div slot="header" class="clearfix">
+          <span>{{ dateName }}统计 - 异常订单数</span>
+        </div>
+        <LineChart
+          v-if="chartData2.length"
+          ref="statistic1"
+          chartId="statistic1"
+          :chartData="chartData2"
+          mapOption="totalAbnormalNum"
+          v-loading="loading"
+        />
+        <div v-else class="no_data">
+          暂无数据
+        </div>
+      </el-card>
     </el-row>
 
     <el-row :gutter="15" class="Mt15">
+      <el-form label-position="left" label-width="8px" :model="form3">
+        <el-form-item style="margin-bottom: 15px; margin-top: 15px">
+          <el-date-picker
+            v-model="form3.dateRange"
+            type="datetimerange"
+            size="small"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            @change="handleDate3Change"
+          ></el-date-picker>
+        </el-form-item>
+      </el-form>
       <el-col :span="12">
         <el-table
           :data="skuTableData"
@@ -191,8 +235,15 @@ export default {
       mapOptions: 'totalNum',
 
       chartData: [],
+      chartData2: [],
       loading: true,
-      form: {
+      form1: {
+        dateRange: [dateFormat(subDays(new Date(), 7)), dateFormat(new Date())],
+      },
+      form2: {
+        dateRange: [dateFormat(subDays(new Date(), 7)), dateFormat(new Date())],
+      },
+      form3: {
         dateRange: [dateFormat(subDays(new Date(), 7)), dateFormat(new Date())],
       },
 
@@ -231,8 +282,8 @@ export default {
     // },
 
     dateName() {
-      const date1 = dateFormat(this.form.dateRange[0], 'MM月dd日')
-      const date2 = dateFormat(this.form.dateRange[1], 'MM月dd日')
+      const date1 = dateFormat(this.form1.dateRange[0], 'MM月dd日')
+      const date2 = dateFormat(this.form1.dateRange[1], 'MM月dd日')
       const date3 = dateFormat(new Date(), 'MM月dd日')
       // let dateName = formDate
       // if (formDate == date) {
@@ -267,11 +318,14 @@ export default {
       this.activeName = '交易额'
       this.mapOptions = 'totalPrice'
     },
-    handleDateChange() {
-      //  const startTime = dateFormat(subDays(new Date(), 7))
-      // const endTime = dateFormat(new Date())
-      // const date = dateFormat(this.form.date || new Date(), 'yyMMdd')
-      this.fetchAllData(this.form.dateRange[0], this.form.dateRange[1])
+    handleDate1Change() {
+      this.fetchAllData(this.form1.dateRange[0], this.form1.dateRange[1])
+    },
+    handleDate2Change() {
+      this.fetchChartData(this.form2.dateRange[0], this.form2.dateRange[1])
+    },
+    handleDate3Change() {
+      this.fetchTwoRankingFn(this.form3.dateRange[0], this.form3.dateRange[1])
     },
 
     async fetchStatisticFn(params) {
@@ -284,13 +338,7 @@ export default {
       return data.result
     },
 
-    async fetchAllData(startTime, endTime) {
-      const staData1 = await this.fetchStatisticFn({ startTime, endTime })
-      // const staData2 = await this.fetchStatisticFn({
-      //   startTime,
-      //   endTime,
-      //   status: '-1,-2',
-      // })
+    formatData(data, startTime, endTime) {
       let dateObj = {}
       this.dateDay = differenceInDays(new Date(endTime), new Date(startTime))
       for (let i = 0; i < this.dateDay; i++) {
@@ -299,53 +347,110 @@ export default {
         dateObj[dateName] = {
           customizeTotalNum: '0',
           customizeTotalPrice: '0',
+          customizeOrderNum: '0',
           date: dateName,
           dateShow: dateShow,
           rentTotalNum: '0',
           rentTotalPrice: '0',
+          rentOrderNum: '0',
+          saleOrderNum: '0',
           saleTotalNum: '0',
           saleTotalPrice: '0',
+          totalPrice: '0',
+          totalNum: '0',
+          totalTotalNum: '0',
         }
       }
       let rentTotalNum = 0
       let saleTotalNum = 0
       let customizeTotalNum = 0
-      // let rentAbnormalTotalNum = 0
-      // let saleAbnormalTotalNum = 0
-      // let customizeAbnormalTotalNum = 0
+      let rentTotalOrderNum = 0
+      let saleTotalOrderNum = 0
+      let customizeTotalOrderNum = 0
       let rentTotalPrice = 0
       let saleTotalPrice = 0
       let customizeTotalPrice = 0
-      staData1.forEach((item) => {
-        if (Object.keys(dateObj).includes(item.date)) {
-          const date = item.date
-          const date1 = item.date.slice(0, 4)
-          const date2 = item.date.slice(4, 6)
-          const date3 = item.date.slice(6, 8)
-          dateObj[date] = item
-          dateObj[date].dateShow = `${date1}-${date2}-${date3}`
-        }
+      data.forEach((item) => {
+        const date = item.date
+        const date1 = item.date.slice(0, 4)
+        const date2 = item.date.slice(4, 6)
+        const date3 = item.date.slice(6, 8)
+        dateObj[date] = item
+        dateObj[date].dateShow = `${date1}-${date2}-${date3}`
+        dateObj[date].totalNum =
+          Number(item.rentTotalNum) +
+          Number(item.saleTotalNum) +
+          Number(item.customizeTotalNum)
+        dateObj[date].totalPrice =
+          Number(item.rentOrderNum) +
+          Number(item.saleOrderNum) +
+          Number(item.customizeOrderNum)
+        dateObj[date].totalOrderNum =
+          Number(item.rentTotalPrice) +
+          Number(item.saleTotalPrice) +
+          Number(item.customizeTotalPrice)
         rentTotalNum += Number(item.rentTotalNum)
         saleTotalNum += Number(item.saleTotalNum)
         customizeTotalNum += Number(item.customizeTotalNum)
-        // rentAbnormalTotalNum += Number(item.rentAbnormalTotalNum)
-        // saleAbnormalTotalNum += Number(item.saleAbnormalTotalNum)
-        // customizeAbnormalTotalNum += Number(item.customizeAbnormalTotalNum)
+        rentTotalOrderNum += Number(item.rentOrderNum)
+        saleTotalOrderNum += Number(item.saleOrderNum)
+        customizeTotalOrderNum += Number(item.customizeOrderNum)
         rentTotalPrice += Number(item.rentTotalPrice)
         saleTotalPrice += Number(item.saleTotalPrice)
         customizeTotalPrice += Number(item.customizeTotalPrice)
       })
-      this.rentTotalNum = rentTotalNum
-      this.saleTotalNum = saleTotalNum
-      this.customizeTotalNum = customizeTotalNum
-      // this.rentAbnormalTotalNum = rentAbnormalTotalNum
-      // this.saleAbnormalTotalNum = saleAbnormalTotalNum
-      // this.customizeAbnormalTotalNum = customizeAbnormalTotalNum
-      this.rentTotalPrice = rentTotalPrice
-      this.saleTotalPrice = saleTotalPrice
-      this.customizeTotalPrice = customizeTotalPrice
-      this.chartData = Object.values(dateObj)
+      return [
+        rentTotalNum,
+        saleTotalNum,
+        customizeTotalNum,
+        rentTotalOrderNum,
+        saleTotalOrderNum,
+        customizeTotalOrderNum,
+        rentTotalPrice,
+        saleTotalPrice,
+        customizeTotalPrice,
+        dateObj,
+      ]
+    },
+
+    async fetchAllData(startTime, endTime) {
+      const staData1 = await this.fetchStatisticFn({ startTime, endTime })
+      const staData2 = await this.fetchStatisticFn({
+        startTime,
+        endTime,
+        status: '-1,-2',
+      })
+      const data1 = this.formatData(staData1, startTime, endTime)
+      const data2 = this.formatData(staData2, startTime, endTime)
+      this.rentTotalNum = data1[0]
+      this.saleTotalNum = data1[1]
+      this.customizeTotalNum = data1[2]
+      this.rentTotalOrderNum = data1[3]
+      this.saleTotalOrderNum = data1[4]
+      this.customizeTotalOrderNum = data1[5]
+      this.rentTotalPrice = data1[6]
+      this.saleTotalPrice = data1[7]
+      this.customizeTotalPrice = data1[8]
+      this.rentAbnormalTotalNum = data2[0]
+      this.saleAbnormalTotalNum = data2[1]
+      this.customizeAbnormalTotalNum = data2[2]
+    },
+
+    async fetchChartData(startTime, endTime) {
+      const staData1 = await this.fetchStatisticFn({ startTime, endTime })
+      const staData2 = await this.fetchStatisticFn({
+        startTime,
+        endTime,
+        status: '-1,-2',
+      })
+      const data1 = this.formatData(staData1, startTime, endTime)
+      const data2 = this.formatData(staData2, startTime, endTime)
+      this.chartData = Object.values(data1[9])
+      this.chartData2 = Object.values(data2[9])
       this.loading = false
+    },
+
+    async fetchTwoRankingFn(startTime, endTime) {
       this.skuTableData = await this.fetchRankingFn({
         startTime,
         endTime,
@@ -362,11 +467,16 @@ export default {
   },
 
   async mounted() {
-    this.fetchAllData(this.form.dateRange[0], this.form.dateRange[1])
+    this.fetchAllData(this.form1.dateRange[0], this.form1.dateRange[1])
+    this.fetchChartData(this.form2.dateRange[0], this.form2.dateRange[1])
+    this.fetchTwoRankingFn(this.form3.dateRange[0], this.form3.dateRange[1])
     this.$nextTick(() => {
       window.onresize = () => {
         if (this.$refs.statistic) {
           this.$refs.statistic.myChart.resize()
+        }
+        if (this.$refs.statistic1) {
+          this.$refs.statistic1.myChart.resize()
         }
       }
     })
