@@ -15,7 +15,7 @@ const router = new Router({
     ...login,
     {
       path: '/',
-      redirect: '/admin/shop-list',
+      redirect: '/admin/statistic',
       component: BasicWrapper,
       children: [...all],
     },
