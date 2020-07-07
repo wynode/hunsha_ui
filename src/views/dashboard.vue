@@ -1,20 +1,28 @@
 <template>
   <div class="dash_board">
     <el-card>
-      <el-form label-position="left" label-width="0" :model="form1">
-        <el-form-item style="margin-bottom: 10px; margin-top: 10px">
-          <el-date-picker
-            v-model="form1.dateRange"
-            type="datetimerange"
-            size="small"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            @change="handleDate1Change"
-          ></el-date-picker>
-        </el-form-item>
-      </el-form>
+      <div style="display: flex; align-items: center">
+        <el-radio-group
+          v-model="radioOne"
+          @change="radioOneChange"
+          size="small"
+        >
+          <el-radio-button :label="1">昨日</el-radio-button>
+          <el-radio-button :label="0">今日</el-radio-button>
+          <el-radio-button :label="7">7日</el-radio-button>
+          <el-radio-button :label="30">30日</el-radio-button>
+        </el-radio-group>
+        <el-date-picker
+          v-model="oneDateRange"
+          type="daterange"
+          size="small"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+          @change="handleDate1Change"
+        ></el-date-picker>
+      </div>
     </el-card>
 
     <el-row :gutter="15" class="Mt15">
@@ -22,7 +30,7 @@
         <el-card class="dash_top_card">
           <div slot="header" @click="goNum">
             <div class="dtc_header">
-              <h1>{{ dateName }}订单总数：</h1>
+              <h1>{{ oneDateName }} 订单总数：</h1>
               <h2>{{ totalNum }}</h2>
             </div>
           </div>
@@ -44,13 +52,13 @@
       </el-col>
       <el-col :span="8">
         <el-card class="dash_top_card">
-          <div slot="header" @click="goAbnormal">
+          <div slot="header">
             <div class="dtc_header">
-              <h1>{{ dateName }}异常订单总数：</h1>
+              <h1>{{ oneDateName }} 异常订单总数：</h1>
               <h2>{{ abnormalTotalNum }}</h2>
             </div>
           </div>
-          <ul @click="goAbnormal">
+          <ul>
             <li>
               租赁：
               <span>{{ rentAbnormalTotalNum }}</span>
@@ -68,13 +76,13 @@
       </el-col>
       <el-col :span="8">
         <el-card class="dash_top_card">
-          <div slot="header" @click="goPrice">
+          <div slot="header">
             <div class="dtc_header">
-              <h1>{{ dateName }}交易额：</h1>
+              <h1>{{ oneDateName }} 交易额：</h1>
               <h2>{{ totalPrice }}</h2>
             </div>
           </div>
-          <ul @click="goPrice">
+          <ul>
             <li>
               租赁：
               <span>{{ rentTotalPrice }}</span>
@@ -92,24 +100,40 @@
       </el-col>
     </el-row>
 
-    <el-row>
-      <el-form label-position="left" label-width="0" :model="form2">
-        <el-form-item style="margin-bottom: 15px; margin-top: 15px">
+    <el-row class="Mt15">
+      <el-card class="box-card" style="height: 378px">
+        <div slot="header" class="card_header">
+          <span class="Mr15">{{ twoDateName }}统计 - {{ activeName }}</span>
+          <el-radio-group
+            v-model="radioq"
+            @change="radioqChange"
+            size="small"
+            class="Mr15"
+          >
+            <el-radio-button :label="1">订单数</el-radio-button>
+            <el-radio-button :label="2">订单金额</el-radio-button>
+            <el-radio-button :label="3">订单商品数</el-radio-button>
+          </el-radio-group>
+          <el-radio-group
+            v-model="radioTwo"
+            @change="radioTwoChange"
+            size="small"
+          >
+            <el-radio-button :label="1">昨日</el-radio-button>
+            <el-radio-button :label="0">今日</el-radio-button>
+            <el-radio-button :label="7">7日</el-radio-button>
+            <el-radio-button :label="30">30日</el-radio-button>
+          </el-radio-group>
           <el-date-picker
-            v-model="form2.dateRange"
-            type="datetimerange"
+            v-model="twoDateRange"
+            type="daterange"
             size="small"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            value-format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd"
             @change="handleDate2Change"
           ></el-date-picker>
-        </el-form-item>
-      </el-form>
-      <el-card class="box-card" style="height: 378px">
-        <div slot="header" class="clearfix">
-          <span>{{ dateName }}统计 - {{ activeName }}</span>
         </div>
         <LineChart
           v-if="chartData.length"
@@ -125,7 +149,7 @@
       </el-card>
       <el-card class="box-card Mt15" style="height: 378px">
         <div slot="header" class="clearfix">
-          <span>{{ dateName }}统计 - 异常订单数</span>
+          <span>{{ twoDateName }}统计 - 异常订单数</span>
         </div>
         <LineChart
           v-if="chartData2.length"
@@ -141,70 +165,113 @@
       </el-card>
     </el-row>
 
-    <el-row :gutter="15" class="Mt15">
-      <el-form label-position="left" label-width="8px" :model="form3">
-        <el-form-item style="margin-bottom: 15px; margin-top: 15px">
+    <div class="Mt15">
+      <el-card>
+        <div slot="header" class="card_header">
+          <span class="Mr15">{{ threeDateName }}排行统计</span>
+          <el-radio-group
+            v-model="radioThree"
+            @change="radioThreeChange"
+            size="small"
+          >
+            <el-radio-button :label="1">昨日</el-radio-button>
+            <el-radio-button :label="0">今日</el-radio-button>
+            <el-radio-button :label="7">7日</el-radio-button>
+            <el-radio-button :label="30">30日</el-radio-button>
+          </el-radio-group>
+
           <el-date-picker
-            v-model="form3.dateRange"
-            type="datetimerange"
+            v-model="threeDateRange"
+            type="daterange"
             size="small"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            value-format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd"
             @change="handleDate3Change"
           ></el-date-picker>
-        </el-form-item>
-      </el-form>
-      <el-col :span="12">
-        <el-table
-          :data="skuTableData"
-          style="width: 100%"
-          :default-sort="{ prop: 'date', order: 'descending' }"
-        >
-          <el-table-column
-            prop="skuInfo.skuName"
-            label="服装名称"
-            width="180"
-          ></el-table-column>
-          <el-table-column
-            prop="totalNum"
-            label="订单总数"
-            sortable
-            width="180"
-          ></el-table-column>
-          <el-table-column
-            sortable
-            prop="totalPrice"
-            label="交易额"
-          ></el-table-column>
-        </el-table>
-      </el-col>
-      <el-col :span="12">
-        <el-table
-          :data="shopTableData"
-          style="width: 100%"
-          :default-sort="{ prop: 'date', order: 'descending' }"
-        >
-          <el-table-column
-            prop="shopInfo.shopName"
-            label="服装名称"
-            width="180"
-          ></el-table-column>
-          <el-table-column
-            prop="totalNum"
-            label="订单总数"
-            sortable
-            width="180"
-          ></el-table-column>
-          <el-table-column
-            sortable
-            prop="totalPrice"
-            label="交易额"
-          ></el-table-column>
-        </el-table>
-      </el-col>
-    </el-row>
+        </div>
+        <el-row :gutter="60">
+          <el-col :span="12">
+            <div class="rank_header">服装订单总数排行</div>
+            <el-table
+              :data="skuTableData"
+              style="width: 100%"
+              :default-sort="{ prop: 'date', order: 'descending' }"
+            >
+              <el-table-column prop="skuInfo.skuName" label="服装名称">
+                <template slot-scope="scope">
+                  <div>
+                    <el-link type="primary" @click="goSkuProfile(scope.row)">
+                      {{
+                        (scope.row.skuInfo && scope.row.skuInfo.skuName) || ''
+                      }}
+                    </el-link>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="totalNum"
+                label="订单总数"
+                sortable
+              ></el-table-column>
+              <el-table-column
+                sortable
+                prop="totalPrice"
+                label="交易额"
+              ></el-table-column>
+              <el-table-column
+                label="排行"
+                type="index"
+                width="120"
+              ></el-table-column>
+            </el-table>
+          </el-col>
+          <el-col :span="12">
+            <div class="rank_header">店铺订单总数排行</div>
+            <el-table
+              :data="shopTableData"
+              style="width: 100%"
+              :default-sort="{ prop: 'date', order: 'descending' }"
+            >
+              <el-table-column prop="shopInfo.shopName" label="店铺名称">
+                <template slot-scope="scope">
+                  <router-link
+                    :to="{
+                      name: 'shopProfile',
+                      params: { id: scope.row.shopInfo.shopId },
+                    }"
+                  >
+                    <el-link type="primary">
+                      {{ scope.row.shopInfo.shopName }}
+                    </el-link>
+                  </router-link>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="totalNum"
+                label="订单总数"
+                sortable
+              ></el-table-column>
+              <el-table-column
+                sortable
+                prop="totalPrice"
+                label="交易额"
+              ></el-table-column>
+              <el-table-column
+                prop="orderNum"
+                label="订单商品数"
+              ></el-table-column>
+              <el-table-column
+                label="排行"
+                type="index"
+                width="120"
+              ></el-table-column>
+            </el-table>
+          </el-col>
+        </el-row>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -213,6 +280,7 @@ import { dateFormat } from '@/utils/dateFormat'
 // import { getMapOptions } from '@/utils/mappings'
 import { fetchStatistic, fetchRanking } from '@/apis'
 import { subDays, differenceInDays } from 'date-fns'
+import ShowForm from '@/views/admin/sku/list/ShowForm'
 // import { filterFields } from './formConfig'
 
 export default {
@@ -233,24 +301,36 @@ export default {
 
       activeName: '订单总数',
       mapOptions: 'totalNum',
+      oneDateName: '7天内',
+      twoDateName: '7天内',
+      threeDateName: '7天内',
 
       chartData: [],
       chartData2: [],
       loading: true,
-      form1: {
-        dateRange: [dateFormat(subDays(new Date(), 7)), dateFormat(new Date())],
-      },
-      form2: {
-        dateRange: [dateFormat(subDays(new Date(), 7)), dateFormat(new Date())],
-      },
-      form3: {
-        dateRange: [dateFormat(subDays(new Date(), 7)), dateFormat(new Date())],
-      },
+      radioq: '',
+      oneDateRange: [
+        dateFormat(subDays(new Date(), 7), 'yyyy-MM-dd'),
+        dateFormat(new Date(), 'yyyy-MM-dd'),
+      ],
+
+      twoDateRange: [
+        dateFormat(subDays(new Date(), 7), 'yyyy-MM-dd'),
+        dateFormat(new Date(), 'yyyy-MM-dd'),
+      ],
+
+      threeDateRange: [
+        dateFormat(subDays(new Date(), 7), 'yyyy-MM-dd'),
+        dateFormat(new Date(), 'yyyy-MM-dd'),
+      ],
 
       dateDay: 7,
 
       skuTableData: [],
       shopTableData: [],
+      radioOne: 7,
+      radioTwo: 7,
+      radioThree: 7,
     }
   },
   components: {
@@ -273,39 +353,71 @@ export default {
         this.rentTotalPrice + this.saleTotalPrice + this.customizeTotalPrice
       )
     },
-    // liveTimeOptions() {
-    //   return getMapOptions('liveTime')
-    // },
-
-    // filterFields() {
-    //   return filterFields(this)
-    // },
-
-    dateName() {
-      const date1 = dateFormat(this.form1.dateRange[0], 'MM月dd日')
-      const date2 = dateFormat(this.form1.dateRange[1], 'MM月dd日')
-      const date3 = dateFormat(new Date(), 'MM月dd日')
-      // let dateName = formDate
-      // if (formDate == date) {
-      //   dateName = '今日'
-      // }
-      // if (this.dateDay == 0) {
-      //   return '今天'
-      // } else if (this.dateDay == 1) {
-      //   return '昨天'
-      // }
-      if (date2 == date3 && this.dateDay == 0) {
-        return '今天'
-      } else if (date2 == date3 && this.dateDay == 1) {
-        return '昨天'
-      } else if (date2 == date3) {
-        return `${this.dateDay}天内`
-      }
-      return `${date1}至${date2}`
-    },
   },
 
   methods: {
+    goSkuProfile(row) {
+      this.$createDialog(
+        {
+          fullscreen: true,
+          footer: false,
+        },
+        () => <ShowForm meta={row.skuInfo} />
+      ).show()
+    },
+    radioqChange(value) {
+      if (value === 1) {
+        this.activeName = '订单数'
+        this.mapOptions = 'totalNum'
+      } else if (value === 2) {
+        this.activeName = '交易额'
+        this.mapOptions = 'totalPrice'
+      } else if (value === 3) {
+        this.activeName = '订单商品数'
+        this.mapOptions = 'totalOrderNum'
+      }
+    },
+    radioOneChange() {
+      const date1 = dateFormat(subDays(new Date(), this.radioOne), 'yyyy-MM-dd')
+      const date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      this.oneDateRange[0] = date1
+      this.oneDateRange[1] = date2
+      this.handleDate1Change()
+    },
+    radioTwoChange() {
+      const date1 = dateFormat(subDays(new Date(), this.radioTwo), 'yyyy-MM-dd')
+      const date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      this.twoDateRange[0] = date1
+      this.twoDateRange[1] = date2
+      this.handleDate2Change()
+    },
+    radioThreeChange() {
+      const date1 = dateFormat(
+        subDays(new Date(), this.radioThree),
+        'yyyy-MM-dd'
+      )
+      const date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      // const date1 = subDays(new Date(), this.radioThree)
+
+      // const date2 = new Date()
+      this.threeDateRange[0] = date1
+      this.threeDateRange[1] = date2
+      this.handleDate3Change()
+    },
+    formatDateName(time1, time2) {
+      const date1 = dateFormat(time1, 'M-d')
+      const date2 = dateFormat(time2, 'M-d')
+      const date3 = dateFormat(new Date(), 'M-d')
+      const dateDay = differenceInDays(new Date(time2), new Date(time1))
+      if (date2 == date3 && dateDay == 0) {
+        return '今天'
+      } else if (date2 == date3 && dateDay == 1) {
+        return '昨天'
+      } else if (date2 == date3) {
+        return `${dateDay}天内`
+      }
+      return `${date1}至${date2}`
+    },
     goAbnormal() {
       this.activeName = '异常交易订单数'
       this.mapOptions = 'totalAbnormalNum'
@@ -319,13 +431,25 @@ export default {
       this.mapOptions = 'totalPrice'
     },
     handleDate1Change() {
-      this.fetchAllData(this.form1.dateRange[0], this.form1.dateRange[1])
+      this.fetchAllData(this.oneDateRange[0], this.oneDateRange[1])
+      this.oneDateName = this.formatDateName(
+        this.oneDateRange[0],
+        this.oneDateRange[1]
+      )
     },
     handleDate2Change() {
-      this.fetchChartData(this.form2.dateRange[0], this.form2.dateRange[1])
+      this.fetchChartData(this.twoDateRange[0], this.twoDateRange[1])
+      this.twoDateName = this.formatDateName(
+        this.twoDateRange[0],
+        this.twoDateRange[1]
+      )
     },
     handleDate3Change() {
-      this.fetchTwoRankingFn(this.form3.dateRange[0], this.form3.dateRange[1])
+      this.fetchTwoRankingFn(this.threeDateRange[0], this.threeDateRange[1])
+      this.threeDateName = this.formatDateName(
+        this.threeDateRange[0],
+        this.threeDateRange[1]
+      )
     },
 
     async fetchStatisticFn(params) {
@@ -358,7 +482,7 @@ export default {
           saleTotalPrice: '0',
           totalPrice: '0',
           totalNum: '0',
-          totalTotalNum: '0',
+          totalOrderNum: '0',
         }
       }
       let rentTotalNum = 0
@@ -381,11 +505,11 @@ export default {
           Number(item.rentTotalNum) +
           Number(item.saleTotalNum) +
           Number(item.customizeTotalNum)
-        dateObj[date].totalPrice =
+        dateObj[date].totalOrderNum =
           Number(item.rentOrderNum) +
           Number(item.saleOrderNum) +
           Number(item.customizeOrderNum)
-        dateObj[date].totalOrderNum =
+        dateObj[date].totalPrice =
           Number(item.rentTotalPrice) +
           Number(item.saleTotalPrice) +
           Number(item.customizeTotalPrice)
@@ -467,9 +591,9 @@ export default {
   },
 
   async mounted() {
-    this.fetchAllData(this.form1.dateRange[0], this.form1.dateRange[1])
-    this.fetchChartData(this.form2.dateRange[0], this.form2.dateRange[1])
-    this.fetchTwoRankingFn(this.form3.dateRange[0], this.form3.dateRange[1])
+    this.fetchAllData(this.oneDateRange[0], this.oneDateRange[1])
+    this.fetchChartData(this.twoDateRange[0], this.twoDateRange[1])
+    this.fetchTwoRankingFn(this.threeDateRange[0], this.threeDateRange[1])
     this.$nextTick(() => {
       window.onresize = () => {
         if (this.$refs.statistic) {
@@ -487,7 +611,6 @@ export default {
 <style lang="scss">
 .dash_board {
   .dash_top_card {
-    cursor: pointer;
     .dtc_header {
       display: flex;
     }
@@ -498,5 +621,16 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 120px;
+}
+.card_header {
+  display: flex;
+  align-items: center;
+  .el-form-item {
+    margin-bottom: 0;
+  }
+}
+.rank_header {
+  text-align: center;
+  font-size: 16px;
 }
 </style>

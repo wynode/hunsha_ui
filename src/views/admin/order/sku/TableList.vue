@@ -26,7 +26,7 @@
             <div>
               <span>分类：{{ sku.categoryInfo.categoryName }}</span>
               <span>
-                性别：{{ sku.categoryInfo.gender == 1 ? '男' : '女' }}
+                男装/女装：{{ sku.categoryInfo.gender == 1 ? '男装' : '女装' }}
               </span>
             </div>
             <div>

@@ -38,10 +38,10 @@ export function tableListCols(vm) {
         render() {
           const nannv = this.row.gender == 1 ? '（男装）' : '（女装）'
           return (
-            <div>
+            <el-link type="primary" onClick={() => vm.goSkuProfile(this.row)}>
               {this.row.skuName}
               {nannv}
-            </div>
+            </el-link>
           )
         },
       },

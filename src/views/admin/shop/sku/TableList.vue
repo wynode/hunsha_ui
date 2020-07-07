@@ -57,6 +57,7 @@ import { tableListCols } from './tableConfig'
 import EditForm from './EditForm'
 import ShowForm from './ShowForm'
 import { filterFields } from './formConfig'
+import ShowwForm from '@/views/admin/sku/list/ShowForm'
 
 const pagerInit = { page: 1, page_size: 10 }
 const filtersInit = {}
@@ -92,6 +93,15 @@ export default {
   },
 
   methods: {
+    goSkuProfile(row) {
+      this.$createDialog(
+        {
+          fullscreen: true,
+          footer: false,
+        },
+        () => <ShowwForm meta={row} />
+      ).show()
+    },
     handleFilterFn(form) {
       const { id } = this.$route.params
       let payload = { ...form, shopId: id }
