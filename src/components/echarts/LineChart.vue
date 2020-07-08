@@ -165,7 +165,7 @@ export default {
           // },
           data: this.chartData.map((val) => {
             if (item.value.includes('Price')) {
-              return get(val, item.value) / 100
+              return `${get(val, item.value) / 100}元`
             } else {
               return get(val, item.value)
             }

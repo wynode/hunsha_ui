@@ -84,21 +84,21 @@
           <div slot="header">
             <div class="dtc_header">
               <h1>{{ oneDateName }} 交易额：</h1>
-              <h2>{{ totalPrice }}</h2>
+              <h2>{{ totalPrice }}元</h2>
             </div>
           </div>
           <ul>
             <li>
               租赁：
-              <span>{{ rentTotalPrice }}</span>
+              <span>{{ rentTotalPrice }}元</span>
             </li>
             <li>
               出售：
-              <span>{{ saleTotalPrice }}</span>
+              <span>{{ saleTotalPrice }}元</span>
             </li>
             <li>
               定制：
-              <span>{{ customizeTotalPrice }}</span>
+              <span>{{ customizeTotalPrice }}元</span>
             </li>
           </ul>
         </el-card>
