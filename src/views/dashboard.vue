@@ -1,27 +1,32 @@
 <template>
   <div class="dash_board">
     <el-card>
-      <div style="display: flex; align-items: center">
-        <el-radio-group
-          v-model="radioOne"
-          @change="radioOneChange"
-          size="small"
-        >
-          <el-radio-button :label="1">昨日</el-radio-button>
-          <el-radio-button :label="0">今日</el-radio-button>
-          <el-radio-button :label="7">7日</el-radio-button>
-          <el-radio-button :label="30">30日</el-radio-button>
-        </el-radio-group>
-        <el-date-picker
-          v-model="oneDateRange"
-          type="daterange"
-          size="small"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          value-format="yyyy-MM-dd"
-          @change="handleDate1Change"
-        ></el-date-picker>
+      <div class="db_card_header">
+        <h1>
+          订单统计
+        </h1>
+        <div class="flex_center">
+          <el-radio-group
+            v-model="radioOne"
+            @change="radioOneChange"
+            size="small"
+          >
+            <el-radio-button :label="1">昨日</el-radio-button>
+            <el-radio-button :label="0">今日</el-radio-button>
+            <el-radio-button :label="7">7日</el-radio-button>
+            <el-radio-button :label="30">30日</el-radio-button>
+          </el-radio-group>
+          <el-date-picker
+            v-model="oneDateRange"
+            type="daterange"
+            size="small"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+            @change="handleDate1Change"
+          ></el-date-picker>
+        </div>
       </div>
     </el-card>
 
@@ -103,37 +108,42 @@
     <el-row class="Mt15">
       <el-card class="box-card" style="height: 378px">
         <div slot="header" class="card_header">
-          <span class="Mr15">{{ twoDateName }}统计 - {{ activeName }}</span>
-          <el-radio-group
-            v-model="radioq"
-            @change="radioqChange"
-            size="small"
-            class="Mr15"
-          >
-            <el-radio-button :label="1">订单数</el-radio-button>
-            <el-radio-button :label="2">订单金额</el-radio-button>
-            <el-radio-button :label="3">订单商品数</el-radio-button>
-          </el-radio-group>
-          <el-radio-group
-            v-model="radioTwo"
-            @change="radioTwoChange"
-            size="small"
-          >
-            <el-radio-button :label="1">昨日</el-radio-button>
-            <el-radio-button :label="0">今日</el-radio-button>
-            <el-radio-button :label="7">7日</el-radio-button>
-            <el-radio-button :label="30">30日</el-radio-button>
-          </el-radio-group>
-          <el-date-picker
-            v-model="twoDateRange"
-            type="daterange"
-            size="small"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            value-format="yyyy-MM-dd"
-            @change="handleDate2Change"
-          ></el-date-picker>
+          <div>
+            <span class="Mr15">{{ twoDateName }}统计 - 历史数据趋势</span>
+            <el-radio-group
+              v-model="radioq"
+              @change="radioqChange"
+              size="small"
+              class="Mr15"
+            >
+              <el-radio-button :label="1">订单数</el-radio-button>
+              <el-radio-button :label="2">订单金额</el-radio-button>
+              <el-radio-button :label="3">订单商品数</el-radio-button>
+            </el-radio-group>
+          </div>
+
+          <div class="flex_center">
+            <el-radio-group
+              v-model="radioTwo"
+              @change="radioTwoChange"
+              size="small"
+            >
+              <!-- <el-radio-button :label="1">昨日</el-radio-button> -->
+              <!-- <el-radio-button :label="0">今日</el-radio-button> -->
+              <el-radio-button :label="7">7日</el-radio-button>
+              <el-radio-button :label="30">30日</el-radio-button>
+            </el-radio-group>
+            <el-date-picker
+              v-model="twoDateRange"
+              type="daterange"
+              size="small"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
+              @change="handleDate2Change"
+            ></el-date-picker>
+          </div>
         </div>
         <LineChart
           v-if="chartData.length"
@@ -166,30 +176,32 @@
     </el-row>
 
     <div class="Mt15">
-      <el-card>
+      <el-card class="rank_card">
         <div slot="header" class="card_header">
           <span class="Mr15">{{ threeDateName }}排行统计</span>
-          <el-radio-group
-            v-model="radioThree"
-            @change="radioThreeChange"
-            size="small"
-          >
-            <el-radio-button :label="1">昨日</el-radio-button>
-            <el-radio-button :label="0">今日</el-radio-button>
-            <el-radio-button :label="7">7日</el-radio-button>
-            <el-radio-button :label="30">30日</el-radio-button>
-          </el-radio-group>
+          <div class="flex_center">
+            <el-radio-group
+              v-model="radioThree"
+              @change="radioThreeChange"
+              size="small"
+            >
+              <el-radio-button :label="1">昨日</el-radio-button>
+              <el-radio-button :label="0">今日</el-radio-button>
+              <el-radio-button :label="7">7日</el-radio-button>
+              <el-radio-button :label="30">30日</el-radio-button>
+            </el-radio-group>
 
-          <el-date-picker
-            v-model="threeDateRange"
-            type="daterange"
-            size="small"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            value-format="yyyy-MM-dd"
-            @change="handleDate3Change"
-          ></el-date-picker>
+            <el-date-picker
+              v-model="threeDateRange"
+              type="daterange"
+              size="small"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
+              @change="handleDate3Change"
+            ></el-date-picker>
+          </div>
         </div>
         <el-row :gutter="60">
           <el-col :span="12">
@@ -199,6 +211,11 @@
               style="width: 100%"
               :default-sort="{ prop: 'date', order: 'descending' }"
             >
+              <el-table-column
+                label="排行"
+                type="index"
+                width="120"
+              ></el-table-column>
               <el-table-column prop="skuInfo.skuName" label="服装名称">
                 <template slot-scope="scope">
                   <div>
@@ -220,11 +237,6 @@
                 prop="totalPrice"
                 label="交易额"
               ></el-table-column>
-              <el-table-column
-                label="排行"
-                type="index"
-                width="120"
-              ></el-table-column>
             </el-table>
           </el-col>
           <el-col :span="12">
@@ -234,6 +246,11 @@
               style="width: 100%"
               :default-sort="{ prop: 'date', order: 'descending' }"
             >
+              <el-table-column
+                label="排行"
+                type="index"
+                width="120"
+              ></el-table-column>
               <el-table-column prop="shopInfo.shopName" label="店铺名称">
                 <template slot-scope="scope">
                   <router-link
@@ -261,11 +278,6 @@
               <el-table-column
                 prop="orderNum"
                 label="订单商品数"
-              ></el-table-column>
-              <el-table-column
-                label="排行"
-                type="index"
-                width="120"
               ></el-table-column>
             </el-table>
           </el-col>
@@ -299,7 +311,7 @@ export default {
       saleTotalPrice: 0,
       customizeTotalPrice: 0,
 
-      activeName: '订单总数',
+      activeName: '订单数',
       mapOptions: 'totalNum',
       oneDateName: '7天内',
       twoDateName: '7天内',
@@ -308,7 +320,7 @@ export default {
       chartData: [],
       chartData2: [],
       loading: true,
-      radioq: '',
+      radioq: 1,
       oneDateRange: [
         dateFormat(subDays(new Date(), 7), 'yyyy-MM-dd'),
         dateFormat(new Date(), 'yyyy-MM-dd'),
@@ -352,6 +364,9 @@ export default {
       return (
         this.rentTotalPrice + this.saleTotalPrice + this.customizeTotalPrice
       )
+    },
+    shopId() {
+      return this.$route.params ? this.$route.params.id : ''
     },
   },
 
@@ -543,6 +558,7 @@ export default {
         startTime,
         endTime,
         status: '-1,-2',
+        shopId: this.shopId,
       })
       const data1 = this.formatData(staData1, startTime, endTime)
       const data2 = this.formatData(staData2, startTime, endTime)
@@ -552,9 +568,9 @@ export default {
       this.rentTotalOrderNum = data1[3]
       this.saleTotalOrderNum = data1[4]
       this.customizeTotalOrderNum = data1[5]
-      this.rentTotalPrice = data1[6]
-      this.saleTotalPrice = data1[7]
-      this.customizeTotalPrice = data1[8]
+      this.rentTotalPrice = data1[6] / 100
+      this.saleTotalPrice = data1[7] / 100
+      this.customizeTotalPrice = data1[8] / 100
       this.rentAbnormalTotalNum = data2[0]
       this.saleAbnormalTotalNum = data2[1]
       this.customizeAbnormalTotalNum = data2[2]
@@ -566,6 +582,7 @@ export default {
         startTime,
         endTime,
         status: '-1,-2',
+        shopId: this.shopId,
       })
       const data1 = this.formatData(staData1, startTime, endTime)
       const data2 = this.formatData(staData2, startTime, endTime)
@@ -578,12 +595,14 @@ export default {
       this.skuTableData = await this.fetchRankingFn({
         startTime,
         endTime,
+        shopId: this.shopId,
         groupByName: 'skuId',
         orderName: 'totalNum',
       })
       this.shopTableData = await this.fetchRankingFn({
         startTime,
         endTime,
+        shopId: this.shopId,
         groupByName: 'shopId',
         orderName: 'totalNum',
       })
@@ -615,6 +634,14 @@ export default {
       display: flex;
     }
   }
+  .el-link {
+    margin: 0;
+  }
+}
+.db_card_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .no_data {
   display: flex;
@@ -625,6 +652,7 @@ export default {
 .card_header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   .el-form-item {
     margin-bottom: 0;
   }
@@ -632,5 +660,19 @@ export default {
 .rank_header {
   text-align: center;
   font-size: 16px;
+}
+
+.flex_center {
+  display: flex;
+  align-items: center;
+  .el-date-editor {
+    width: 230px;
+  }
+}
+
+.rank_card {
+  .el-card__body {
+    min-height: 564px;
+  }
 }
 </style>

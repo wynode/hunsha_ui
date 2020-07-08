@@ -163,7 +163,13 @@ export default {
           //   //   },
           //   // ]),
           // },
-          data: this.chartData.map((val) => get(val, item.value)),
+          data: this.chartData.map((val) => {
+            if (item.value.includes('Price')) {
+              return get(val, item.value) / 100
+            } else {
+              return get(val, item.value)
+            }
+          }),
         })
       })
       return {

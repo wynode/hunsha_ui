@@ -23,6 +23,19 @@ export const filterFields = (vm) => {
         }),
       },
     },
+    {
+      // title: '服装分类',
+      name: 'gender',
+      widget: 'select',
+      xProps: {
+        filterable: true,
+        placeholder: '男装/女装',
+        options: [
+          { label: '男装', value: 1 },
+          { label: '女装', value: 2 },
+        ],
+      },
+    },
   ]
 }
 

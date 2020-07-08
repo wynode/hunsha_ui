@@ -21,7 +21,7 @@ const router = new Router({
     },
     {
       path: '/admin/*',
-      redirect: '/admin/shop-list',
+      redirect: '/admin/statistic',
     },
     {
       path: '/user/*',

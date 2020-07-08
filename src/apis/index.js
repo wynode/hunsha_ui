@@ -251,3 +251,15 @@ export const deleteShopUserSku = (payload) => {
 export const patchShopUserPassword = (payload) => {
   return requests.post('/Api/ShopUser/ShopUser/updatePassword', payload)
 }
+
+export const getVerify = (params = {}) => {
+  return requests.get('/Api/Common/VerifyCode/verifyCode', { params })
+}
+
+export const postVerify = (params = {}) => {
+  return requests.post('/Api/Common/Order/checkVerify', { params })
+}
+
+export const getOrderList = (params = {}) => {
+  return requests.get('/Api/Common/Order/getOrderList', { params })
+}

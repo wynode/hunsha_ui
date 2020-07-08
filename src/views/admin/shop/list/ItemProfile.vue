@@ -12,6 +12,7 @@
       <el-tabs v-model="activeTab" class="profile_second_tabs">
         <el-tab-pane label="服装管理" name="sku"></el-tab-pane>
         <el-tab-pane label="用户管理" name="user"></el-tab-pane>
+        <el-tab-pane label="数据统计" name="statistic"></el-tab-pane>
         <component :is="activeTab"></component>
       </el-tabs>
     </el-card>
@@ -28,6 +29,7 @@ export default {
   components: {
     sku: () => import('@/views/admin/shop/sku/TableList'),
     user: () => import('@/views/admin/shop/user/TableList'),
+    statistic: () => import('@/views/dashboard'),
   },
 
   data() {
