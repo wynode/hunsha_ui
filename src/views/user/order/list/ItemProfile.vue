@@ -60,21 +60,21 @@
           </li>
           <li style="min-width: 150px">
             <span>租赁：</span>
-            {{ orderData.rentTotalPrice || 0 }}元
+            {{ orderData.rentTotalPrice / 100 || 0 }}元
           </li>
           <li style="min-width: 150px">
             <span>出售：</span>
-            {{ orderData.saleTotalPrice || 0 }}元
+            {{ orderData.saleTotalPrice / 100 || 0 }}元
           </li>
           <li style="min-width: 150px">
             <span>
               定制：
             </span>
-            {{ orderData.customizeTotalPrice || 0 }}元
+            {{ orderData.customizeTotalPrice / 100 || 0 }}元
           </li>
           <li style="min-width: 150px">
             <span>合计</span>
-            {{ orderData.totalPrice }}元
+            {{ orderData.totalPrice / 100 }}元
           </li>
         </ul>
         <ul>
