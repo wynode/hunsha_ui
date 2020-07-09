@@ -12,7 +12,7 @@ import echarts from 'echarts'
 import { get } from 'lodash'
 // import { dateFormat } from '@/utils/dateFormat'
 import { getMapOptions } from '@/utils/mappings'
-import { byteToMGb } from '@/utils/common'
+// import { byteToMGb } from '@/utils/common'
 
 // const colorBoard = {
 //   requestTimes: 'rgba(0,150,136,0.6)',
@@ -165,7 +165,7 @@ export default {
           // },
           data: this.chartData.map((val) => {
             if (item.value.includes('Price')) {
-              return `${get(val, item.value) / 100}元`
+              return get(val, item.value) / 100
             } else {
               return get(val, item.value)
             }
@@ -260,8 +260,8 @@ export default {
 
   methods: {
     formatValue(label, value) {
-      if (label.includes('流量')) {
-        return byteToMGb(value)
+      if (label.includes('额')) {
+        return `${value}元`
       }
       return value
     },

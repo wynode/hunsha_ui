@@ -209,12 +209,12 @@
             <el-table
               :data="skuTableData"
               style="width: 100%"
-              :default-sort="{ prop: 'date', order: 'descending' }"
+              :default-sort="{ prop: 'totalNum', order: 'descending' }"
             >
               <el-table-column
                 label="排行"
                 type="index"
-                width="120"
+                width="100"
               ></el-table-column>
               <el-table-column prop="skuInfo.skuName" label="服装名称">
                 <template slot-scope="scope">
@@ -232,52 +232,62 @@
                 label="订单总数"
                 sortable
               ></el-table-column>
+              <el-table-column prop="totalPrice" label="交易额">
+                <template slot-scope="scope">
+                  <div>
+                    {{ scope.row.totalPrice / 100 }}
+                  </div>
+                </template>
+              </el-table-column>
               <el-table-column
+                prop="orderNum"
+                label="订单商品数"
                 sortable
-                prop="totalPrice"
-                label="交易额"
               ></el-table-column>
             </el-table>
           </el-col>
           <el-col :span="12">
-            <div class="rank_header">店铺订单总数排行</div>
+            <div class="rank_header">店员排行</div>
             <el-table
               :data="shopTableData"
               style="width: 100%"
-              :default-sort="{ prop: 'date', order: 'descending' }"
+              :default-sort="{ prop: 'totalNum', order: 'descending' }"
             >
               <el-table-column
                 label="排行"
                 type="index"
-                width="120"
+                width="100"
               ></el-table-column>
-              <el-table-column prop="shopInfo.shopName" label="店铺名称">
-                <template slot-scope="scope">
+              <el-table-column prop="shopUserInfo.name" label="店员名称">
+                <!-- <template slot-scope="scope">
                   <router-link
                     :to="{
                       name: 'shopProfile',
-                      params: { id: scope.row.shopInfo.shopId },
+                      params: { id: scope.row.shopUserInfo.shopUserId },
                     }"
                   >
                     <el-link type="primary">
-                      {{ scope.row.shopInfo.shopName }}
+                      {{ scope.row.shopUserInfo.name }}
                     </el-link>
                   </router-link>
-                </template>
+                </template> -->
               </el-table-column>
               <el-table-column
                 prop="totalNum"
                 label="订单总数"
                 sortable
               ></el-table-column>
-              <el-table-column
-                sortable
-                prop="totalPrice"
-                label="交易额"
-              ></el-table-column>
+              <el-table-column prop="totalPrice" label="交易额" sortable>
+                <template slot-scope="scope">
+                  <div>
+                    {{ scope.row.totalPrice / 100 }}
+                  </div>
+                </template>
+              </el-table-column>
               <el-table-column
                 prop="orderNum"
                 label="订单商品数"
+                sortable
               ></el-table-column>
             </el-table>
           </el-col>
@@ -628,7 +638,7 @@ export default {
         startTime,
         endTime,
         shopId: this.shopId,
-        groupByName: 'shopId',
+        groupByName: 'shopUserId',
         orderName: 'totalNum',
       })
     },
