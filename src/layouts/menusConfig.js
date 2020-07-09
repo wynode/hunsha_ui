@@ -57,7 +57,7 @@ export const adminMenusConfig = () => {
 export const userMenusConfig = () => {
   return [
     {
-      title: '店铺数据数据统计',
+      title: '数据统计',
       icon: 'el-icon-data-line',
       router: { name: 'userStatistic' },
     },
