@@ -117,6 +117,12 @@ export function tableListCols() {
       component: OneLineText,
     },
     {
+      label: '录入时间',
+      width: 160,
+      prop: 'addTime',
+      component: FormatTime,
+    },
+    {
       label: '备注',
       prop: 'note',
       component: OneLineText,

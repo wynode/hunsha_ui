@@ -291,7 +291,7 @@
 import { dateFormat } from '@/utils/dateFormat'
 // import { getMapOptions } from '@/utils/mappings'
 import { fetchStatistic, fetchRanking } from '@/apis'
-import { subDays, differenceInDays } from 'date-fns'
+import { subDays, addDays, differenceInDays } from 'date-fns'
 import ShowForm from '@/views/admin/sku/list/ShowForm'
 // import { filterFields } from './formConfig'
 
@@ -394,14 +394,20 @@ export default {
     },
     radioOneChange() {
       const date1 = dateFormat(subDays(new Date(), this.radioOne), 'yyyy-MM-dd')
-      const date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      let date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      if (date1 === date2) {
+        date2 = dateFormat(addDays(new Date(), 1), 'yyyy-MM-dd')
+      }
       this.oneDateRange[0] = date1
       this.oneDateRange[1] = date2
       this.handleDate1Change()
     },
     radioTwoChange() {
       const date1 = dateFormat(subDays(new Date(), this.radioTwo), 'yyyy-MM-dd')
-      const date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      let date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      if (date1 === date2) {
+        date2 = dateFormat(addDays(new Date(), 1), 'yyyy-MM-dd')
+      }
       this.twoDateRange[0] = date1
       this.twoDateRange[1] = date2
       this.handleDate2Change()
@@ -411,7 +417,10 @@ export default {
         subDays(new Date(), this.radioThree),
         'yyyy-MM-dd'
       )
-      const date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      let date2 = dateFormat(new Date(), 'yyyy-MM-dd')
+      if (date1 === date2) {
+        date2 = dateFormat(addDays(new Date(), 1), 'yyyy-MM-dd')
+      }
       // const date1 = subDays(new Date(), this.radioThree)
 
       // const date2 = new Date()
