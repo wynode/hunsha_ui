@@ -45,6 +45,7 @@ function responseFactory(httpClient) {
     (response) => response.data,
     (error) => {
       if (error.response.status === 401) {
+        Notification.error('未登陆，即将自动跳转登录')
         if (window.location.href.includes('/admin')) {
           window.location.replace('/admin/login')
           // store.remove('admin_session')
