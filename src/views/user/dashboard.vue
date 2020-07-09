@@ -84,21 +84,21 @@
           <div slot="header">
             <div class="dtc_header">
               <h1>{{ oneDateName }} 交易额：</h1>
-              <h2>{{ totalPrice / 100 }}元</h2>
+              <h2>{{ totalPrice }}元</h2>
             </div>
           </div>
           <ul>
             <li>
               租赁：
-              <span>{{ rentTotalPrice / 100 }}元</span>
+              <span>{{ rentTotalPrice }}元</span>
             </li>
             <li>
               出售：
-              <span>{{ saleTotalPrice / 100 }}元</span>
+              <span>{{ saleTotalPrice }}元</span>
             </li>
             <li>
               定制：
-              <span>{{ customizeTotalPrice / 100 }}元</span>
+              <span>{{ customizeTotalPrice }}元</span>
             </li>
           </ul>
         </el-card>
@@ -290,7 +290,7 @@
 <script>
 import { dateFormat } from '@/utils/dateFormat'
 // import { getMapOptions } from '@/utils/mappings'
-import { fetchStatistic, fetchRanking } from '@/apis'
+import { fetchUserStatistic, fetchUserRanking } from '@/apis'
 import { subDays, addDays, differenceInDays } from 'date-fns'
 import ShowForm from '@/views/admin/sku/list/ShowForm'
 // import { filterFields } from './formConfig'
@@ -492,13 +492,13 @@ export default {
       )
     },
 
-    async fetchStatisticFn(params) {
-      const data = await fetchStatistic(params)
+    async fetchUserStatisticFn(params) {
+      const data = await fetchUserStatistic(params)
       return data.result
     },
 
-    async fetchRankingFn(params) {
-      const data = await fetchRanking(params)
+    async fetchUserRankingFn(params) {
+      const data = await fetchUserRanking(params)
       return data.result
     },
 
@@ -578,8 +578,8 @@ export default {
     },
 
     async fetchAllData(startTime, endTime) {
-      const staData1 = await this.fetchStatisticFn({ startTime, endTime })
-      const staData2 = await this.fetchStatisticFn({
+      const staData1 = await this.fetchUserStatisticFn({ startTime, endTime })
+      const staData2 = await this.fetchUserStatisticFn({
         startTime,
         endTime,
         status: '-1,-2',
@@ -602,8 +602,8 @@ export default {
     },
 
     async fetchChartData(startTime, endTime) {
-      const staData1 = await this.fetchStatisticFn({ startTime, endTime })
-      const staData2 = await this.fetchStatisticFn({
+      const staData1 = await this.fetchUserStatisticFn({ startTime, endTime })
+      const staData2 = await this.fetchUserStatisticFn({
         startTime,
         endTime,
         status: '-1,-2',
@@ -617,14 +617,14 @@ export default {
     },
 
     async fetchTwoRankingFn(startTime, endTime) {
-      this.skuTableData = await this.fetchRankingFn({
+      this.skuTableData = await this.fetchUserRankingFn({
         startTime,
         endTime,
         shopId: this.shopId,
         groupByName: 'skuId',
         orderName: 'totalNum',
       })
-      this.shopTableData = await this.fetchRankingFn({
+      this.shopTableData = await this.fetchUserRankingFn({
         startTime,
         endTime,
         shopId: this.shopId,

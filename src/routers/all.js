@@ -4,8 +4,8 @@ export default [
     path: '/admin/statistic',
     name: 'statistic',
     meta: {
-      title: '店铺管理',
-      breadcrumb: ['店铺管理', '店铺列表'],
+      title: '数据统计',
+      breadcrumb: ['店铺管理', '数据统计'],
       type: 'admin',
     },
     component: () => import('@/views/dashboard.vue'),
@@ -101,6 +101,16 @@ export default [
     component: () => import('@/views/admin/sku/category/TableList.vue'),
   },
   // user
+  {
+    path: '/user/statistic',
+    name: 'userStatistic',
+    meta: {
+      title: '数据统计',
+      breadcrumb: ['店铺管理', '数据统计'],
+      type: 'user',
+    },
+    component: () => import('@/views/user/dashboard.vue'),
+  },
   {
     path: '/user/order-list',
     name: 'orderList',

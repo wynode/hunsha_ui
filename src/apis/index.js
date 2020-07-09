@@ -203,6 +203,18 @@ export const fetchRanking = (params = {}) => {
   return requests.get('/Api/Admin/Statistics/countOrderGroupList', { params })
 }
 
+export const fetchUserStatistic = (params = {}) => {
+  return requests.get('/Api/ShopUser/Statistics/countOrderGroupByDate', {
+    params,
+  })
+}
+
+export const fetchUserRanking = (params = {}) => {
+  return requests.get('/Api/ShopUser/Statistics/countOrderGroupList', {
+    params,
+  })
+}
+
 export const fetchShopUserSkuList = (params = {}) => {
   return requests.get('/Api/ShopUser/ShopSku/getList', { params })
 }
