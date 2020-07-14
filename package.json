@@ -1,5 +1,5 @@
 {
-  "name": "coconut_ui",
+  "name": "hunsha_ui",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,8 @@
     "build:test": "vue-cli-service build --mode testbuild",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "publish:dev": "sh deploy/bin/deploy_test.sh"
+    "publish:dev": "sh deploy/bin/deploy_test.sh",
+    "publish:my": "sh deploy/bin/deploy_my.sh"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "^1.1.4",
