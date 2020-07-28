@@ -117,7 +117,7 @@ import HeaderBoard from '@/components/HeaderBoard.vue'
 import { userMenusConfig, adminMenusConfig } from './menusConfig'
 import { patchShopUserPassword, fetchShopInfo } from '@/apis'
 import store from 'store2'
-import { AUTH_TOKEN } from '@/config'
+// import { AUTH_TOKEN } from '@/config'
 import EditForm from './EditForm'
 
 export default {
@@ -190,6 +190,9 @@ export default {
   },
 
   created() {
+    const AUTH_TOKEN = window.location.href.includes('admin')
+      ? 'admin_session'
+      : 'user_session'
     const token = store.get(AUTH_TOKEN)
     if (!token) {
       if (window.location.href.includes('/admin')) {
