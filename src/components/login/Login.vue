@@ -50,7 +50,7 @@
 import store from 'store2'
 import { AUTH_TOKEN, USER_INFO } from '@/config'
 import { LoginFields } from './formConfig'
-import { postUserLogin, postAdminLogin } from '@/apis/login'
+import { postShopUserLogin, postAdminLogin } from '@/apis/login'
 
 export default {
   data() {
@@ -107,7 +107,7 @@ export default {
     },
 
     userLogin(form) {
-      postUserLogin({
+      postShopUserLogin({
         ...form,
       })
         .then((data) => {
