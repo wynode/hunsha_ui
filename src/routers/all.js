@@ -91,6 +91,16 @@ export default [
     component: () => import('@/views/admin/sku/list/TableList.vue'),
   },
   {
+    path: '/admin/goods-list',
+    name: 'goodsList',
+    meta: {
+      title: '商品列表',
+      breadcrumb: ['商品管理', '商品列表'],
+      type: 'admin',
+    },
+    component: () => import('@/views/admin/goods/TableList.vue'),
+  },
+  {
     path: '/admin/sku-category',
     name: 'skuCategory',
     meta: {

@@ -84,6 +84,27 @@ export const deleteShopUser = (payload) => {
   return requests.post('/Api/Admin/ShopUser/delete', payload)
 }
 
+// Goods
+export const fetchGoodsList = (params = {}) => {
+  return requests.get('/Api/Admin/Goods/getList', { params })
+}
+
+export const fetchGoods = (params = {}) => {
+  return requests.get('/Api/Admin/Goods/getOne', { params })
+}
+
+export const postGoods = (payload) => {
+  return requests.post('/Api/Admin/Goods/add', payload)
+}
+
+export const patchGoods = (payload) => {
+  return requests.post('/Api/Admin/Goods/update', payload)
+}
+
+export const deleteGoods = (payload) => {
+  return requests.post('/Api/Admin/Goods/delete', payload)
+}
+
 // Sku
 export const fetchSkuList = (params = {}) => {
   return requests.get('/Api/Admin/Sku/getList', { params })

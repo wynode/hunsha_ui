@@ -38,6 +38,16 @@ export const adminMenusConfig = () => {
       ],
     },
     {
+      title: '商品管理',
+      icon: 'el-icon-takeaway-box',
+      children: [
+        {
+          title: '商品列表',
+          router: { name: 'goodsList' },
+        },
+      ],
+    },
+    {
       title: '服装管理',
       icon: 'el-icon-s-goods',
       children: [
